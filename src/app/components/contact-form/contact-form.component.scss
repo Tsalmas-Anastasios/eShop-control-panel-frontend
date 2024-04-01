@@ -1,0 +1,104 @@
+@import '../../../assets/scss/colors';
+
+
+
+.btn-custom-other-data-contact {
+    border-color: $card-background-color;
+    background-color: $card-background-color;
+    color: $label-color;
+    border-radius: 25px;
+
+
+    &:focus,
+    &:active {
+        box-shadow: none;
+    }
+
+    &:hover {
+        box-shadow: 0 0 0 0.2rem lighten($card-background-color, 15%);
+    }
+}
+
+
+
+
+
+
+@mixin object-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+$circleSize: 400px;
+$radius: 50%;
+$shadow: none;
+$fontColor: rgb(250, 250, 250);
+
+
+
+
+
+.profile-pic {
+    color: transparent;
+    transition: all .3s ease;
+    @include object-center;
+    position: relative;
+    transition: all .3s ease;
+    width: $circleSize;
+    height: $circleSize;
+
+    input {
+        display: none;
+    }
+
+    img {
+        position: absolute;
+        object-fit: cover;
+        width: $circleSize;
+        height: $circleSize;
+        box-shadow: $shadow;
+        border-radius: $radius;
+        z-index: 0;
+    }
+
+    .-label {
+        @include object-center;
+        cursor: pointer;
+        height: $circleSize;
+        width: $circleSize;
+        font-weight: bold;
+    }
+
+    &:hover {
+        .-label {
+            background-color: rgba(0, 0, 0, .8);
+            z-index: 10000;
+            color: $fontColor;
+            transition: background-color .2s ease-in-out;
+            border-radius: $radius;
+            margin-bottom: 0;
+        }
+    }
+
+    span {
+        display: inline-flex;
+        padding: .2em;
+        height: 2em;
+    }
+}
+
+
+
+.profile-pic-container {
+    @include object-center;
+}
+
+
+
+
+@media only screen and (max-width: 576px) {
+    $circleSize: 200px;
+}

@@ -1,0 +1,3102 @@
+<nav aria-label="breadcrumb d-flex">
+
+    <h3 class="float-left">
+        <small class="text-muted">{{ 'GENERIC.LABELS.ORDER' | translate }}</small>
+        {{ order?.order_number || [ 'GENERIC.LABELS.N_A' | translate ]}}
+    </h3>
+
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/dashboard']">
+                <i class="fas fa-home"></i>
+            </a>
+        </li>
+
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/dashboard/orders']">
+                {{ 'GENERIC.LABELS.ORDERS' | translate }}
+            </a>
+        </li>
+
+        <li class="breadcrumb-item active">{{ order?.order_number || [ 'GENERIC.LABELS.N_A' | translate] }}</li>
+    </ol>
+</nav>
+
+
+
+
+
+<form #editCurrentOrderForm="ngForm" autocomplete="off" *ngIf="order">
+
+
+
+
+    <!-- preview mode -->
+    <div class="mt-5" *ngIf="mode === 'preview'">
+
+
+        <ul class="nav pills mb-3" id="pills-orders-options-cats" role="tablist">
+            <li class="nav-item">
+                <a href="#overview-order-data" class="nav-link active" aria-current="page" data-toggle="pill" role="tab" aria-controls="overview-order-data"
+                    aria-selected="true" (click)="toggleFirstClickTransactions();">
+                    {{ 'GENERIC.LABELS.OVERVIEW' | translate }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#products-order-data" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="products-order-data"
+                    aria-selected="false" (click)="toggleFirstClickTransactions();">
+                    {{ 'GENERIC.LABELS.PRODUCTS' | translate }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#order-documents" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="products-order-data"
+                    aria-selected="false" (click)="toggleFirstClickTransactions();">
+                    {{ 'GENERIC.LABELS.DOCUMENTS' | translate }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#order-notes" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="order-notes" aria-selected="false"
+                    (click)="toggleFirstClickTransactions();">
+                    {{ 'GENERIC.LABELS.NOTES' | translate }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#order-transactions" class="nav-link" aria-current="page" data-toggle="pill" role="tab" id="order-transactions-tab-btn"
+                    aria-controls="order-transactions" aria-selected="false" (click)="loadOrderTransactions('new', 'order-transactions-tab-btn')">
+                    {{ 'GENERIC.LABELS.TRANSACTIONS' | translate }}
+                </a>
+            </li>
+        </ul>
+
+
+
+
+
+        <div class="tab-content">
+
+
+            <!-- order's information -->
+            <div class="tab-pane fade show active" id="overview-order-data" role="tabpanel" aria-labelledby="overviewOrderData">
+
+
+                <div class="card mt-4">
+
+                    <div class="card-header">
+                        <h5>{{ 'VIEWS.ORDER_PAGE.ORDER_GENERAL_INFORMATION' | translate }}</h5>
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="orderId" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.ORDER_ID' | translate }}
+                                    </label>
+                                    <p id="orderId">
+                                        {{ order?.order_id || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label for="orderNumber" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.ORDER_NUMBER' | translate }}
+                                    </label>
+                                    <p id="orderNumber">
+                                        {{ order?.order_number || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label for="orderStatus" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.STATUS' | translate }}
+                                    </label>
+                                    <p id="orderStatus">
+                                        <ng-container [ngTemplateOutlet]="orderStatusChangePreview"></ng-container>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="transferCourierName" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.DELIVERY_COMPANY' | translate }}
+                                    </label>
+                                    <p id="transferCourierName">
+                                        {{ order?.transfer_courier_details?.name || [ 'GENERIC.LABELS.N_A' | translate ]
+                                        }}
+                                        <span class="text-muted" *ngIf="order?.transfer_courier_details?.type_details?.type_description">
+                                            ({{ order?.transfer_courier_details?.type_details?.type_description || ''
+                                            }})
+                                        </span>
+
+                                        <span class="ml-2" *ngIf="order?.tracking_number && order?.tracking_url">
+                                            |&nbsp;
+                                            <a href="{{ order.tracking_url }}">{{ order.tracking_number }}</a>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row">
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="fullname" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.CUSTOMER_FULLNAME' | translate }}
+                                    </label>
+                                    <p id="fullname" *ngIf="order?.first_name && order?.last_name">
+                                        {{ order.first_name }} {{ order?.last_name }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="customerEmail" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.CUSTOMER_EMAIL' | translate }}
+                                    </label>
+                                    <p id="customerEmail" *ngIf="order?.email">
+                                        <a href="mailto:{{ order.email }}">{{ order.email }}</a>
+                                    </p>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                <div class="row" *ngIf="order">
+
+                                    <div class="col-12 col-sm-12" [ngClass]="{ 'col-md-6': order?.cell_phone }">
+                                        <div class="form-group">
+                                            <label for="phoneNumber" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PHONE_NUMBER' | translate }}
+                                            </label>
+                                            <p id="phoneNumber">
+                                                <a href="tel:{{ order?.phone || '' }}">
+                                                    {{ order?.phone || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12 col-sm-12 col-md-6" *ngIf="order?.cell_phone">
+                                        <div class="form-group">
+                                            <label for="cellPhone" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.SECOND_PHONE_NUMBER' | translate }}
+                                            </label>
+                                            <p id="cellPhone">
+                                                <a href="tel:{{ order.cell_phone }}">{{ order.cell_phone }}</a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="card mt-4">
+
+                    <div class="card-header">
+                        <h5>{{ 'VIEWS.ORDER_PAGE.ADDRESS_DETAILS' | translate }}</h5>
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-4" *ngIf="order">
+                                <div class="form-group">
+                                    <label for="fullAddress" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.FULL_ADDRESS' | translate }}
+                                    </label>
+                                    <p id="fullAddress">
+                                        {{ order?.address }}, {{ order?.city }} {{ order?.postal_code }},
+                                        {{ order?.country }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-group">
+                                    <label for="simpleAddress" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.SIMPLE_ADDRESS' | translate }}
+                                    </label>
+                                    <p id="simpleAddress">
+                                        {{ order?.address || [ 'GENERIC.LABELS.N_A' | translate ] }},
+                                        {{ order?. postal_code || '' }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                <div class="form-group">
+                                    <label for="addressCity" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.CITY' | translate }}
+                                    </label>
+                                    <p id="addressCity">
+                                        {{ order?.city || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                <div class="form-group">
+                                    <label for="addressCountry" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.COUNTRY' | translate }}
+                                    </label>
+                                    <p id="addressCountry">
+                                        {{ order?.country || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row mt-4">
+
+                            <div class="col-12">
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        <h6>{{ 'VIEWS.ORDER_PAGE.CONTACT_INFORMATION' | translate }}</h6>
+                                    </div>
+
+
+                                    <div class="card-body">
+
+                                        <div class="row">
+
+
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="fullnameContactInformation" class="mb-1">
+                                                        {{ 'VIEWS.ORDER_PAGE.CUSTOMER_FULLNAME' | translate }}
+                                                    </label>
+                                                    <p id="fullnameContactInformation">
+                                                        {{ order?.first_name || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                                        {{ order?.last_name || '' }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="customerEmail" class="mb-1">
+                                                        {{ 'VIEWS.ORDER_PAGE.CUSTOMER_EMAIL' | translate }}
+                                                    </label>
+                                                    <p id="customerEmail" *ngIf="order?.email">
+                                                        <a href="mailto:{{ order?.email || '' }}">{{ order.email }}</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                                <div class="row">
+
+                                                    <div class="col-12 col-sm-12" [ngClass]="{ 'col-md-6': order?.cell_phone }">
+                                                        <div class="form-group">
+                                                            <label for="phoneNumber" class="mb-1">
+                                                                {{ 'VIEWS.ORDER_PAGE.PHONE_NUMBER' | translate }}
+                                                            </label>
+                                                            <p id="phoneNumber">
+                                                                <a href="tel:{{ order?.phone || '' }}">{{ order?.phone
+                                                                    || [
+                                                                    'GENERIC.LABELS.N_A' |
+                                                                    translate ] }}</a>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-12 col-sm-12 col-md-6" *ngIf="order?.cell_phone">
+                                                        <div class="form-group">
+                                                            <label for="cellPhone" class="mb-1">
+                                                                {{ 'VIEWS.ORDER_PAGE.SECOND_PHONE_NUMBER' | translate }}
+                                                            </label>
+                                                            <p id="cellPhone">
+                                                                <a href="tel:{{ order?.cell_phone || '' }}">
+                                                                    {{ order.cell_phone }}
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="card mt-4">
+
+                    <div class="card-header">
+                        <h5>{{ 'VIEWS.ORDER_PAGE.ORDER_HISTORY' | translate }}</h5>
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="orderConfirmationDate" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.DATE_OF_CONFIRMATION' | translate }}
+                                    </label>
+                                    <p id="orderConfirmationDate" *ngIf="order?.confirm_date">
+                                        {{ order.confirm_date | date: 'short' }}
+                                    </p>
+                                    <p id="orderConfirmationDate" *ngIf="!order?.confirm_date">
+                                        {{ 'GENERIC.LABELS.N_A' | translate }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="orderSentDate" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.SHIPPING_DATE' | translate }}
+                                    </label>
+                                    <p id="orderSentDate" *ngIf="order?.sent_date">
+                                        {{ order.sent_date | date: 'short' }}
+                                    </p>
+                                    <p id="orderSentDate" *ngIf="!order?.sent_date">
+                                        {{ 'GENERIC.LABELS.N_A' | translate }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="orderCompletedDate" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.DATE_OF_COMPLETION' | translate }}
+                                    </label>
+                                    <p id="orderCompletedDate" *ngIf="order?.completed_date">
+                                        {{ order.completed_date | date: 'short' }}
+                                    </p>
+                                    <p id="orderCompletedDate" *ngIf="!order?.completed_date">
+                                        {{ 'GENERIC.LABELS.N_A' | translate }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row" *ngIf="order?.archived_date || order?.returned_date">
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4" *ngIf="order?.returned_date">
+                                <div class="form-group">
+                                    <label for="orderReturnedDate" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.DATE_OF_RETURN' | translate }}
+                                    </label>
+                                    <p id="orderReturnDate">
+                                        {{ order.returned_date | date: 'short' }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4" *ngIf="order?.archived_date">
+                                <div class="form-group">
+                                    <label for="orderArchivedDate" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.DATE_OF_CANCELLATION' | translate }}
+                                    </label>
+                                    <p id="orderArchivedDate">
+                                        {{ order.archived_date | date: 'short' }}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+                <div class="card mt-4" *ngIf="order?.proof">
+
+                    <div class="card-header">
+                        <h5>
+                            {{ 'VIEWS.ORDER_PAGE.ORDER_PRICING' | translate }}
+                            <small class="text-muted">
+                                ({{ order.proof === 'receipt' ? [ 'VIEWS.ORDER_PAGE.RECEIPT' | translate ] : [
+                                'VIEWS.ORDER_PAGE.INVOICE' | translate ] }})
+
+                                <span *ngIf="order.proof === 'invoice'">
+                                    <i class="fas fa-circle" style="color: #229D18" *ngIf="order?.invoice_data__is_valid"></i>
+                                    <i class="fas fa-circle" style="color: #cc0000" *ngIf="!order?.invoice_data__is_valid"></i>
+                                </span>
+                            </small>
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="row">
+
+
+                            <div class="col-12" *ngIf="order.proof === 'receipt'">
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceFirstName" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.FIRST_NAME' | translate }}
+                                            </label>
+                                            <p id="invoiceFirstName">
+                                                {{ order.first_name }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceLastName" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.LAST_NAME' | translate }}
+                                            </label>
+                                            <p id="invoiceLastName">
+                                                {{ order.last_name }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceAddressStreet" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_STREET' | translate }}
+                                            </label>
+                                            <p id="invoiceAddressStreet">
+                                                {{ order.address }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceAddressCity" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_CITY' | translate }}
+                                            </label>
+                                            <p id="invoiceAddressCity">
+                                                {{ order.city }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceAddressPostalCode" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_POSTAL_CODE' | translate }}
+                                            </label>
+                                            <p id="invoiceAddressPostalCode">
+                                                {{ order.postal_code }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceAddressCountry" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_COUNTRY' | translate }}
+                                            </label>
+                                            <p id="invoiceAddressCountry">
+                                                {{ order.country }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- order pricing -->
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="cashOnDeliveryPaymentType" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.CASH_ON_DELIVERY' | translate }}
+                                            </label>
+                                            <p id="cashOnDeliveryPaymentType">
+                                                {{ !order?.cash_on_delivery_payment ? [ 'GENERIC.LABELS.NO' | translate
+                                                ] :
+                                                [ 'GENERIC.LABELS.YES' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeLabel" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_TYPE' | translate }}
+                                            </label>
+                                            <p id="paymentTypeLabel">
+                                                {{ order?.payment_type_details?.label || [ 'GENERIC.LABELS.N_A' |
+                                                translate
+                                                ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeDescription" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_TYPE_DESCRIPTION' | translate }}
+                                            </label>
+                                            <p id="paymentTypeDescription" class="text-truncate">
+                                                {{ order?.payment_type_details?.description || [ 'GENERIC.LABELS.N_A' |
+                                                translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-mf-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeServiceName" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_SERVICE' | translate }}
+                                            </label>
+                                            <p id="paymentTypeServiceName">
+                                                {{ order?.payment_type_details?.service || [ 'GENERIC.LABELS.N_A' |
+                                                translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <hr class="mt-4 mb-3" />
+
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="productsCounter" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.MULTITUDE_OF_PRODUCTS' | translate }}
+                                            </label>
+                                            <p id="productsCounter" class="text-center">
+                                                {{ multitude_of_products || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderClearValue" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.SUBTOTAL' | translate }}
+                                            </label>
+                                            <p id="orderClearValue">
+                                                {{ order?.clear_value || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2" *ngIf="order?.cash_on_delivery_payment">
+                                        <div class="form-group">
+                                            <label for="orderCashOnDeliveryCost" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.CASH_ON_DELIVERY_COST' | translate }}
+                                            </label>
+                                            <P id="orderCashOnDeliveryCost">
+                                                {{ order.cash_on_delivery }} {{ user?.company_data?.coin_symbol || '€'
+                                                }}
+                                            </P>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderTransportationCost" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.TRANSPORTATION_COST' | translate }}
+                                            </label>
+                                            <p id="orderTransportationCost">
+                                                {{ order?.transportation || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2" *ngIf="order?.extra_fees">
+                                        <div class="form-group">
+                                            <label for="orderExtraFees" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDITIONAL_TAXES_AND_CHARGES' | translate }}
+                                            </label>
+                                            <p id="orderExtraFees">
+                                                {{ order.extra_fees_costs }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderFees" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.SALES_TAX' | translate }}
+                                            </label>
+                                            <p id="orderFees" *ngIf="order?.fee_percent">
+                                                {{ order.fees }} {{ user?.company_data?.coin_symbol || '€' }} ({{
+                                                order.fee_percent }}%)
+                                            </p>
+                                            <p id="orderFees" *ngIf="!order?.fee_percent">
+                                                {{ order?.fees || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                                (0%)
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderTotalLabel" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ORDER_TOTAL' | translate }}
+                                            </label>
+                                            <p id="orderTotalLabel">
+                                                {{ order?.order_total || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+
+
+                            <div class="col-12" *ngIf="order.proof === 'invoice'">
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                        <div class="fomr-group">
+                                            <label for="invoiceNumber" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.INVOICE_NUMBER' | translate }}
+                                            </label>
+                                            <p id="invoiceNumber">
+                                                {{ order?.invoice_data__invoice_number || [ 'GENERIC.LABELS.N_A' |
+                                                translate
+                                                ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceFirstName" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.FIRST_NAME' | translate }}
+                                            </label>
+                                            <p id="invoiceFirstName">
+                                                {{ order?.invoice_data__first_name || [ 'GENERIC.LABELS.N_A' | translate
+                                                ]
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceLastName" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.LAST_NAME' | translate }}
+                                            </label>
+                                            <p id="invoiceLastName">
+                                                {{ order?.invoice_data__last_name || [ 'GENERIC.LABELS.N_A' | translate
+                                                ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceCompany" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.COMPANY_NAME' | translate }}
+                                            </label>
+                                            <p id="invoiceCompany">
+                                                {{ order?.invoice_data__company || [ 'GENERIC.LABELS.N_A' | translate ]
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceTaxNumber" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.COMPANY_TAX_ID' | translate }}
+                                            </label>
+                                            <p id="invoiceTaxNumber">
+                                                {{ order?.invoice_data__tax_number || [ 'GENERIC.LABELS.N_A' | translate
+                                                ]
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceDOY" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.TAX_ADMINISTRATION' | translate }}
+                                            </label>
+                                            <p id="invoiceDOY">
+                                                {{ order?.invoice_data__doy || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceAddress" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_STREET' | translate }}
+                                            </label>
+                                            <p id="invoiceAddress">
+                                                {{ order?.invoice_data__address || [ 'GENERIC.LABELS.N_A' | translate ]
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoicePostalCode" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_POSTAL_CODE' | translate }}
+                                            </label>
+                                            <p id="invoicePostalCode">
+                                                {{ order?.invoice_data__postal_code || [ 'GENERIC.LABELS.N_A' |
+                                                translate ]
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceCity" class="mb-1">
+                                                {{ 'GENERIC.ORDER_PAGE.ADDRESS_CITY' | translate }}
+                                            </label>
+                                            <p id="invoiceCity">
+                                                {{ order?.invoice_data__city || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceCountry" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_COUNTRY' | translate }}
+                                            </label>
+                                            <p id="invoiceCountry">
+                                                {{ order?.invoice_data__country || [ 'GENERIC.LABELS.N_A' | translate ]
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoicePhone" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PHONE' | translate }}
+                                            </label>
+                                            <p id="invoicePhone">
+                                                {{ order?.invoice_data__phone || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceCellPhone" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.MOBILE_PHONE' | translate }}
+                                            </label>
+                                            <p id="invoiceCellPhone">
+                                                {{ order?.invoice_data__cell_phone || [ 'GENERIC.LABELS.N_A' | translate
+                                                ]
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <!-- order pricing -->
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="cashOnDeliveryPaymentType" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.CASH_ON_DELIVERY' | translate }}
+                                            </label>
+                                            <p id="cashOnDeliveryPaymentType">
+                                                {{ !order?.cash_on_delivery_payment ? [ 'GENERIC.LABELS.NO' | translate
+                                                ] :
+                                                [ 'GENERIC.LABELS.YES' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeLabel" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_TYPE' | translate }}
+                                            </label>
+                                            <p id="paymentTypeLabel">
+                                                {{ order?.payment_type_details?.label || [ 'GENERIC.LABELS.N_A' |
+                                                translate
+                                                ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeDescription" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_TYPE_DESCRIPTION' | translate }}
+                                            </label>
+                                            <p id="paymentTypeDescription" class="text-truncate">
+                                                {{ order?.payment_type_details?.description || [ 'GENERIC.LABELS.N_A' |
+                                                translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-mf-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeServiceName" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_SERVICE' | translate }}
+                                            </label>
+                                            <p id="paymentTypeServiceName">
+                                                {{ order?.payment_type_details?.service || [ 'GENERIC.LABELS.N_A' |
+                                                translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <hr class="mt-4 mb-3" />
+
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="productsCounter" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.MULTITUDE_OF_PRODUCTS' | translate }}
+                                            </label>
+                                            <p id="productsCounter" class="text-center">
+                                                {{ multitude_of_products || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderClearValue" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.SUBTOTAL' | translate }}
+                                            </label>
+                                            <p id="orderClearValue">
+                                                {{ order?.clear_value || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2" *ngIf="order?.cash_on_delivery_payment">
+                                        <div class="form-group">
+                                            <label for="orderCashOnDeliveryCost" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.CASH_ON_DELIVERY_COST' | translate }}
+                                            </label>
+                                            <P id="orderCashOnDeliveryCost">
+                                                {{ order.cash_on_delivery }} {{ user?.company_data?.coin_symbol || '€'
+                                                }}
+                                            </P>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderTransportationCost" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.TRANSPORTATION_COST' | translate }}
+                                            </label>
+                                            <p id="orderTransportationCost">
+                                                {{ order?.transportation || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2" *ngIf="order?.extra_fees">
+                                        <div class="form-group">
+                                            <label for="orderExtraFees" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDITIONAL_TAXES_AND_CHARGES' | translate }}
+                                            </label>
+                                            <p id="orderExtraFees">
+                                                {{ order.extra_fees_costs }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderFees" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.SALES_TAX' | translate }}
+                                            </label>
+                                            <p id="orderFees" *ngIf="order?.fee_percent">
+                                                {{ order.fees }} {{ user?.company_data?.coin_symbol || '€' }} ({{
+                                                order.fee_percent }}%)
+                                            </p>
+                                            <p id="orderFees" *ngIf="!order?.fee_percent">
+                                                {{ order?.fees || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                                (0%)
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderTotalLabel" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ORDER_TOTAL' | translate }}
+                                            </label>
+                                            <p id="orderTotalLabel">
+                                                {{ order?.order_total || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class=" mt-3 col-12 text-right">
+
+                                <a href="javascript:void(0)" class="text-decoration-none" style="font-size: 1rem;" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                                order: order,
+                                type: 'single',
+                                single_document_title: 'invoice_receipt'
+                            })">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span *ngIf="order.proof === 'receipt'">
+                                        {{ 'GENERIC.ACTIONS.PRINT_RECEIPT' | translate }}
+                                    </span>
+                                    <span *ngIf="order.proof === 'invoice'">
+                                        {{ 'GENERIC.ACTIONS.PRINT_INVOICE' | translate }}
+                                    </span>
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <!-- products list here -->
+            <div class="tab-pane fade" id="products-order-data" role="tabpanel" aria-labelledby="productsOrderData">
+
+                <ng-container [ngTemplateOutlet]="orderProductsList"></ng-container>
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <!-- order documents here -->
+            <div class="tab-pane fade" id="order-documents" role="tabpanel" aria-labelledby="orderDocumentsData">
+
+                <ng-container [ngTemplateOutlet]="printOptionsForOrderDocumentsCard"></ng-container>
+
+            </div>
+
+
+
+
+
+            <!-- order notes here -->
+            <div class="tab-pane fade" id="order-notes" role="tabpanel" aria-labelledby="orderNotesData">
+
+                <ng-container [ngTemplateOutlet]="orderNotesContainer"></ng-container>
+
+            </div>
+
+
+
+
+            <!-- order's transactions -->
+            <div class="tab-pane fade" id="order-transactions" role="tabpanel" aria-labelledby="orderTransactionsData">
+                <ng-container [ngTemplateOutlet]="orderTransactionsArea"></ng-container>
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- edit the order -->
+    <div class="mt-5" *ngIf="mode === 'edit' && order">
+
+
+        <ul class="nav pills mb-3" id="pills-orders-options-cats" role="tablist">
+            <li class="nav-item">
+                <a href="#overview-order-data-edit" class="nav-link active" aria-current="page" data-toggle="pill" role="tab"
+                    aria-controls="overview-order-data" aria-selected="true" (click)="toggleFirstClickTransactions();">
+                    {{ 'GENERIC.LABELS.OVERVIEW' | translate }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#products-order-data-edit" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="products-order-data"
+                    aria-selected="false" (click)="toggleFirstClickTransactions();">
+                    {{ 'GENERIC.LABELS.PRODUCTS' | translate }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#order-documents-edit" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="products-order-data"
+                    aria-selected="false" (click)="toggleFirstClickTransactions();">
+                    {{ 'GENERIC.LABELS.DOCUMENTS' | translate }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#order-notes-edit" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="order-notes" aria-selected="false"
+                    (click)="toggleFirstClickTransactions();">
+                    {{ 'GENERIC.LABELS.NOTES' | translate }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#order-transactions" class="nav-link" aria-current="page" data-toggle="pill" role="tab" id="order-transactions-tab-btn"
+                    aria-controls="order-transactions" aria-selected="false" (click)="loadOrderTransactions('new', 'order-transactions-tab-btn')">
+                    {{ 'GENERIC.LABELS.TRANSACTIONS' | translate }}
+                </a>
+        </ul>
+
+
+
+
+
+
+        <div class="tab-content">
+
+            <!-- overview edit-->
+            <div class="tab-pane fade show active" id="overview-order-data-edit" role="tabpanel" aria-labelledby="overviewOrderDataEdit">
+
+
+
+                <div class="card mt-4">
+
+                    <div class="card-header">
+                        <h5>{{ 'VIEWS.ORDER_PAGE.ORDER_GENERAL_INFORMATION' | translate }}</h5>
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="orderId" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.ORDER_ID' | translate }}
+                                    </label>
+                                    <p id="orderId">
+                                        {{ order?.order_id || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label for="orderNumber" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.ORDER_NUMBER' | translate }}
+                                    </label>
+                                    <p id="orderNumber">
+                                        {{ order?.order_number || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label for="orderStatus" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.STATUS' | translate }}
+                                    </label>
+                                    <p id="orderStatus">
+                                        <ng-container [ngTemplateOutlet]="orderStatusChangePreview"></ng-container>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="transferCourierName" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.DELIVERY_COMPANY' | translate }}
+                                    </label>
+                                    <p id="transferCourierName">
+                                        {{ order?.transfer_courier_details?.name || [ 'GENERIC.LABELS.N_A' | translate ]
+                                        }}
+                                        <span class="text-muted" *ngIf="order?.transfer_courier_details?.type_details?.type_description">
+                                            ({{ order?.transfer_courier_details?.type_details?.type_description || ''
+                                            }})
+                                        </span>
+
+                                        <span class="ml-2" *ngIf="order?.tracking_number && order?.tracking_url">
+                                            |&nbsp;
+                                            <a href="{{ order.tracking_url }}">{{ order.tracking_number }}</a>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="card mt-4">
+
+                    <div class="card-header">
+                        <h5>{{ 'VIEWS.ORDER_PAGE.ADDRESS_DETAILS' | translate }}</h5>
+                    </div>
+
+
+                    <div class="card-body">
+
+
+                        <div class="row">
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6" *ngIf="order?.current_status">
+
+                                <div class="form-group" *ngIf="order.current_status === 'confirmed'">
+
+                                    <label for="simpleAddressChangeEditor" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.SIMPLE_ADDRESS' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+
+                                        <small class="d-block text-muted">
+                                            <i class="fas fa-info-circle"></i>
+                                            {{ 'VIEWS.ORDER_PAGE.MESSAGES.CAN_ONLY_CHANGE_THE_ADDRESS_NOT_OTHER_DATA' |
+                                            translate }}
+                                        </small>
+                                    </label>
+                                    <input type="text" name="simpleAddressChangeEditor" id="simpleAddressChangeEditor" class="form-control"
+                                        placeholder="{{ 'VIEWS.ORDER_PAGE.PLACEHOLDERS.SIMPLE_DELIVERY_ADDRESS' | translate }}"
+                                        [(ngModel)]="order_editable.address" #simpleAddressChangeEditor="ngModel"
+                                        aria-describedby="simpleAddressChangeEditorHelp" required />
+
+                                    <small id="simpleAddressChangeEditorHelp" class="form-text text-danger" *ngIf="simpleAddressChangeEditor.invalid">
+
+                                        <span
+                                            *ngIf="simpleAddressChangeEditor.errors.required && (simpleAddressChangeEditor.dirty || simpleAddressChangeEditor.touched)">
+                                            <app-required-field [type]="'input_invalid'"></app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-12 col-sm-4 col-md-2 col-lg-2">
+                                <div class="form-group">
+                                    <label for="simpleAddress" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.POSTAL_CODE' | translate }}
+                                    </label>
+                                    <p id="simpleAddress">
+                                        {{ order?. postal_code || '' }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-4 col-md-2 col-lg-2">
+                                <div class="form-group">
+                                    <label for="addressCity" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.CITY' | translate }}
+                                    </label>
+                                    <p id="addressCity">
+                                        {{ order?.city || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-4 col-md-2 col-lg-2">
+                                <div class="form-group">
+                                    <label for="addressCountry" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.COUNTRY' | translate }}
+                                    </label>
+                                    <p id="addressCountry">
+                                        {{ order?.country || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row mt-4">
+
+                            <div class="col-12">
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        <h6>{{ 'VIEWS.ORDER_PAGE.CONTACT_INFORMATION' | translate }}</h6>
+                                    </div>
+
+
+                                    <div class="card-body">
+
+                                        <div class="row">
+
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                                <div class="form-group">
+
+                                                    <label for="firstNameContactInformationChangeEditor" class="mb-1">
+                                                        {{ 'VIEWS.ORDER_PAGE.FIRST_NAME' | translate }}
+                                                        <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                                                    </label>
+
+                                                    <input type="text" name="firstNameContactInformationChangeEditor"
+                                                        id="firstNameContactInformationChangeEditor" class="form-control"
+                                                        placeholder="{{ 'VIEWS.ORDER_PAGE.PLACEHOLDERS.DELIVERY_FIRST_NAME' | translate }}"
+                                                        [(ngModel)]="order_editable.first_name" #firstNameContactInformationChangeEditor="ngModel"
+                                                        aria-describedby="firstNameContactInformationChangeEditorHelp" required />
+
+                                                    <small id="firstNameContactInformationChangeEditorHelp" class="form-text text-danger"
+                                                        *ngIf="firstNameContactInformationChangeEditor.invalid">
+
+                                                        <span *ngIf="firstNameContactInformationChangeEditor.errors.required
+                                                            && (firstNameContactInformationChangeEditor.dirty
+                                                            || firstNameContactInformationChangeEditor.touched)">
+                                                            <app-required-field [type]="'input_invalid'">
+                                                            </app-required-field>
+                                                        </span>
+
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                                <div class="form-group">
+
+                                                    <label for="lastNameContactInformationChangeEditor" class="mb-1">
+                                                        {{ 'VIEWS.ORDER_PAGE.LAST_NAME' | translate }}
+                                                        <app-required-field [type]="'asterisk_tooltip'">
+                                                        </app-required-field>
+                                                    </label>
+
+                                                    <input type="text" name="lastNameContactInformationChangeEditor" id="lastNameContactInformationChangeEditor"
+                                                        class="form-control" placeholder="{{ 'VIEWS.ORDER_PAGE.PLACEHOLDERS.DELIVERY_LAST_NAME' | translate }}"
+                                                        [(ngModel)]="order_editable.last_name" #lastNameContactInformationChangeEditor="ngModel"
+                                                        aria-describedby="lastNameContactInformationChangeEditorHelp" required />
+
+                                                    <small id="lastNameContactInformationChangeEditorHelp" class="form-text text-danger"
+                                                        *ngIf="lastNameContactInformationChangeEditor.invalid">
+
+                                                        <span *ngIf="lastNameContactInformationChangeEditor.errors.required
+                                                            && (lastNameContactInformationChangeEditor.dirty
+                                                            || lastNameContactInformationChangeEditor.touched)">
+                                                            <app-required-field [type]="'input_invalid'">
+                                                            </app-required-field>
+                                                        </span>
+
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                                <div class="form-group">
+
+                                                    <label for="phoneNumberContactInformationChangeEditor" class="mb-1">
+                                                        {{ 'VIEWS.ORDER_PAGE.PHONE_NUMBER' | translate }}
+                                                        <app-required-field [type]="'asterisk_tooltip'">
+                                                        </app-required-field>
+                                                    </label>
+
+                                                    <input type="text" name="phoneNumberContactInformationChangeEditor"
+                                                        id="phoneNumberContactInformationChangeEditor" class="form-control"
+                                                        placeholder="{{ 'VIEWS.ORDER_PAGE.PLACEHOLDERS.PHONE_NUMBER' | translate }}"
+                                                        [(ngModel)]="order_editable.phone" #phoneNumberContactInformationChangeEditor="ngModel"
+                                                        aria-describedby="phoneNumberContactInformationChangeEditorHelp" required />
+
+                                                    <small id="phoneNumberContactInformationChangeEditorHelp" class="form-text text-danger"
+                                                        *ngIf="phoneNumberContactInformationChangeEditor.invalid">
+
+                                                        <span *ngIf="phoneNumberContactInformationChangeEditor.errors.required
+                                                            && (phoneNumberContactInformationChangeEditor.dirty
+                                                            || phoneNumberContactInformationChangeEditor.touched)">
+                                                            <app-required-field [type]="'input_invalid'">
+                                                            </app-required-field>
+                                                        </span>
+
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                                <div class="form-group">
+
+                                                    <label for="emailContactInformationChangeEditor" class="mb-1">
+                                                        {{ 'VIEWS.ORDER_PAGE.CUSTOMER_EMAIL' | translate }}
+                                                        <app-required-field [type]="'asterisk_tooltip'">
+                                                        </app-required-field>
+                                                    </label>
+
+                                                    <input type="text" name="emailContactInformationChangeEditor" id="emailContactInformationChangeEditor"
+                                                        class="form-control" placeholder="{{ 'VIEWS.ORDER_PAGE.PLACEHOLDERS.EMAIL_ADDRESS' | translate }}"
+                                                        [(ngModel)]="order_editable.email" #emailContactInformationChangeEditor="ngModel"
+                                                        aria-describedby="emailContactInformationChangeEditorHelp" required />
+
+                                                    <small id="emailContactInformationChangeEditorHelp" class="form-text text-danger"
+                                                        *ngIf="emailContactInformationChangeEditor.invalid">
+
+                                                        <span *ngIf="emailContactInformationChangeEditor.errors.required
+                                                            && (emailContactInformationChangeEditor.dirty
+                                                            || emailContactInformationChangeEditor.touched)">
+                                                            <app-required-field [type]="'input_invalid'">
+                                                            </app-required-field>
+                                                        </span>
+
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="card mt-4">
+
+                    <div class="card-header">
+                        <h5>{{ 'VIEWS.ORDER_PAGE.ORDER_HISTORY' | translate }}</h5>
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="orderConfirmationDate" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.DATE_OF_CONFIRMATION' | translate }}
+                                    </label>
+                                    <p id="orderConfirmationDate" *ngIf="order?.confirm_date">
+                                        {{ order.confirm_date | date: 'short' }}
+                                    </p>
+                                    <p id="orderConfirmationDate" *ngIf="!order?.confirm_date">
+                                        {{ 'GENERIC.LABELS.N_A' | translate }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="orderSentDate" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.SHIPPING_DATE' | translate }}
+                                    </label>
+                                    <p id="orderSentDate" *ngIf="order?.sent_date">
+                                        {{ order.sent_date | date: 'short' }}
+                                    </p>
+                                    <p id="orderSentDate" *ngIf="!order?.sent_date">
+                                        {{ 'GENERIC.LABELS.N_A' | translate }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="orderCompletedDate" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.DATE_OF_COMPLETION' | translate }}
+                                    </label>
+                                    <p id="orderCompletedDate" *ngIf="order?.completed_date">
+                                        {{ order.completed_date | date: 'short' }}
+                                    </p>
+                                    <p id="orderCompletedDate" *ngIf="!order?.completed_date">
+                                        {{ 'GENERIC.LABELS.N_A' | translate }}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row" *ngIf="order?.archived_date || order?.returned_date">
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4" *ngIf="order?.returned_date">
+                                <div class="form-group">
+                                    <label for="orderReturnedDate" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.DATE_OF_RETURN' | translate }}
+                                    </label>
+                                    <p id="orderReturnDate">
+                                        {{ order.returned_date | date: 'short' }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4" *ngIf="order?.archived_date">
+                                <div class="form-group">
+                                    <label for="orderArchivedDate" class="mb-1">
+                                        {{ 'VIEWS.ORDER_PAGE.DATE_OF_CANCELLATION' | translate }}
+                                    </label>
+                                    <p id="orderArchivedDate">
+                                        {{ order.archived_date | date: 'short' }}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+
+                <!-- order pricing -->
+                <div class="card mt-4" *ngIf="order_editable?.proof">
+
+                    <div class="card-header">
+                        <h5>
+                            {{ 'VIEWS.ORDER_PAGE.ORDER_PRICING' | translate }}
+                            <small class="text-muted">
+                                ({{ order_editable.proof === 'receipt' ? [ 'VIEWS.ORDER_PAGE.RECEIPT' | translate ] : [
+                                'VIEWS.ORDER_PAGE.INVOICE' | translate ] }})
+
+                                <span *ngIf="order_editable.proof === 'invoice'">
+                                    <i class="fas fa-circle" style="color: #229D18" *ngIf="order_editable?.invoice_data__is_valid"></i>
+                                    <i class="fas fa-circle" style="color: #cc0000" *ngIf="!order_editable?.invoice_data__is_valid"></i>
+                                </span>
+                            </small>
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+
+
+                            <div class="col-12" *ngIf="order_editable?.proof === 'receipt'">
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceFirstName" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.FIRST_NAME' | translate }}
+                                            </label>
+                                            <p id="invoiceFirstName">
+                                                {{ order_editable.first_name }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceLastName" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.LAST_NAME' | translate }}
+                                            </label>
+                                            <p id="invoiceLastName">
+                                                {{ order_editable.last_name }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceAddressStreet" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_STREET' | translate }}
+                                            </label>
+                                            <p id="invoiceAddressStreet">
+                                                {{ order_editable.address }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceAddressCity" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_CITY' | translate }}
+                                            </label>
+                                            <p id="invoiceAddressCity">
+                                                {{ order.city }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceAddressPostalCode" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_POSTAL_CODE' | translate }}
+                                            </label>
+                                            <p id="invoiceAddressPostalCode">
+                                                {{ order.postal_code }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="invoiceAddressCountry" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_COUNTRY' | translate }}
+                                            </label>
+                                            <p id="invoiceAddressCountry">
+                                                {{ order.country }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <!-- order pricing -->
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="cashOnDeliveryPaymentType" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.CASH_ON_DELIVERY' | translate }}
+                                            </label>
+                                            <p id="cashOnDeliveryPaymentType">
+                                                {{ !order?.cash_on_delivery_payment ? [ 'GENERIC.LABELS.NO' | translate
+                                                ] :
+                                                [ 'GENERIC.LABELS.YES' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeLabel" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_TYPE' | translate }}
+                                            </label>
+                                            <p id="paymentTypeLabel">
+                                                {{ order?.payment_type_details?.label || [ 'GENERIC.LABELS.N_A' |
+                                                translate
+                                                ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeDescription" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_TYPE_DESCRIPTION' | translate }}
+                                            </label>
+                                            <p id="paymentTypeDescription" class="text-truncate">
+                                                {{ order?.payment_type_details?.description || [ 'GENERIC.LABELS.N_A' |
+                                                translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-mf-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeServiceName" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_SERVICE' | translate }}
+                                            </label>
+                                            <p id="paymentTypeServiceName">
+                                                {{ order?.payment_type_details?.service || [ 'GENERIC.LABELS.N_A' |
+                                                translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <hr class="mt-4 mb-3" />
+
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="productsCounter" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.MULTITUDE_OF_PRODUCTS' | translate }}
+                                            </label>
+                                            <p id="productsCounter" class="text-center">
+                                                {{ multitude_of_products || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderClearValue" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.SUBTOTAL' | translate }}
+                                            </label>
+                                            <p id="orderClearValue">
+                                                {{ order?.clear_value || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2" *ngIf="order?.cash_on_delivery_payment">
+                                        <div class="form-group">
+                                            <label for="orderCashOnDeliveryCost" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.CASH_ON_DELIVERY_COST' | translate }}
+                                            </label>
+                                            <P id="orderCashOnDeliveryCost">
+                                                {{ order.cash_on_delivery }} {{ user?.company_data?.coin_symbol || '€'
+                                                }}
+                                            </P>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderTransportationCost" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.TRANSPORTATION_COST' | translate }}
+                                            </label>
+                                            <p id="orderTransportationCost">
+                                                {{ order?.transportation || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2" *ngIf="order?.extra_fees">
+                                        <div class="form-group">
+                                            <label for="orderExtraFees" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDITIONAL_TAXES_AND_CHARGES' | translate }}
+                                            </label>
+                                            <p id="orderExtraFees">
+                                                {{ order.extra_fees_costs }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderFees" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.SALES_TAX' | translate }}
+                                            </label>
+                                            <p id="orderFees" *ngIf="order?.fee_percent">
+                                                {{ order.fees }} {{ user?.company_data?.coin_symbol || '€' }} ({{
+                                                order.fee_percent }}%)
+                                            </p>
+                                            <p id="orderFees" *ngIf="!order?.fee_percent">
+                                                {{ order?.fees || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                                (0%)
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderTotalLabel" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ORDER_TOTAL' | translate }}
+                                            </label>
+                                            <p id="orderTotalLabel">
+                                                {{ order?.order_total || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+
+
+                            <!-- invoice data pricing -->
+                            <div class="col-12" *ngIf="order_editable?.proof === 'invoice'">
+
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                                        <div class="fomr-group">
+                                            <label for="invoiceNumber" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.INVOICE_NUMBER' | translate }}
+                                            </label>
+                                            <p id="invoiceNumber">
+                                                {{ order?.invoice_data__invoice_number || [ 'GENERIC.LABELS.N_A' |
+                                                translate
+                                                ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- TAX ID -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                        <div class="form-group">
+
+                                            <div class="form-group">
+
+                                                <label for="taxIDInvoiceInformationChangeEditor" class="mb-1">
+                                                    {{ 'GENERIC.LABELS.TAX_ID' | translate }}
+                                                    <app-required-field [type]="'asterisk_tooltip'">
+                                                    </app-required-field>
+                                                </label>
+
+                                                <input type="text" name="taxIDInvoiceInformationChangeEditor" id="taxIDInvoiceInformationChangeEditor"
+                                                    class="form-control" placeholder="{{ 'GENERIC.LABELS.TAX_ID' | translate }}"
+                                                    [(ngModel)]="order_editable.invoice_data__tax_number" #taxIDInvoiceInformationChangeEditor="ngModel"
+                                                    aria-describedby="taxIDInvoiceInformationChangeEditorHelp" required />
+
+                                                <small id="taxIDInvoiceInformationChangeEditorHelp" class="form-text text-danger"
+                                                    *ngIf="taxIDInvoiceInformationChangeEditor.invalid">
+
+                                                    <span *ngIf="taxIDInvoiceInformationChangeEditor.errors.required
+                                                        && (taxIDInvoiceInformationChangeEditor.dirty
+                                                        || taxIDInvoiceInformationChangeEditor.touched)">
+                                                        <app-required-field [type]="'input_invalid'">
+                                                        </app-required-field>
+                                                    </span>
+
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- FIRST NAME -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                        <div class="form-group">
+
+                                            <label for="firstNameInvoiceInfoChangeEditor" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.FIRST_NAME' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <input type="text" name="firstNameInvoiceInfoChangeEditor" id="firstNameInvoiceInfoChangeEditor"
+                                                class="form-control" placeholder="{{ 'VIEWS.ORDER_PAGE.PLACEHOLDERS.BILLING_FIRST_NAME' | translate }}"
+                                                [(ngModel)]="order_editable.invoice_data__first_name" #firstNameInvoiceInfoChangeEditor="ngModel"
+                                                aria-describedby="firstNameInvoiceInfoChangeEditorHelp" required />
+
+                                            <small id="firstNameInvoiceInfoChangeEditorHelp" class="form-text text-danger"
+                                                *ngIf="firstNameInvoiceInfoChangeEditor.invalid">
+
+                                                <span *ngIf="firstNameInvoiceInfoChangeEditor.errors.required
+                                                                && (firstNameInvoiceInfoChangeEditor.dirty
+                                                                || firstNameInvoiceInfoChangeEditor.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- LAST NAME -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                        <div class="form-group">
+
+                                            <label for="lastNameInvoiceInformationChangeEditor" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.LAST_NAME' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <input type="text" name="lastNameInvoiceInformationChangeEditor" id="lastNameInvoiceInformationChangeEditor"
+                                                class="form-control" placeholder="{{ 'VIEWS.ORDER_PAGE.PLACEHOLDERS.BILLING_LAST_NAME' | translate }}"
+                                                [(ngModel)]="order_editable.invoice_data__last_name" #lastNameInvoiceInformationChangeEditor="ngModel"
+                                                aria-describedby="lastNameInvoiceInformationChangeEditorHelp" required />
+
+                                            <small id="lastNameInvoiceInformationChangeEditorHelp" class="form-text text-danger"
+                                                *ngIf="lastNameInvoiceInformationChangeEditor.invalid">
+
+                                                <span *ngIf="lastNameInvoiceInformationChangeEditor.errors.required
+                                                        && (lastNameInvoiceInformationChangeEditor.dirty
+                                                        || lastNameInvoiceInformationChangeEditor.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="row">
+
+                                    <!-- COMPANY -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                        <div class="form-group">
+
+                                            <label for="companyInvoiceInformationChangeEditor" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.COMPANY_NAME' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <input type="text" name="companyInvoiceInformationChangeEditor" id="companyInvoiceInformationChangeEditor"
+                                                class="form-control" placeholder="{{ 'VIEWS.ORDER_PAGE.COMPANY_NAME' | translate }}"
+                                                [(ngModel)]="order_editable.invoice_data__company" #companyInvoiceInformationChangeEditor="ngModel"
+                                                aria-describedby="companyInvoiceInformationChangeEditorHelp" required />
+
+                                            <small id="companyInvoiceInformationChangeEditorHelp" class="form-text text-danger"
+                                                *ngIf="companyInvoiceInformationChangeEditor.invalid">
+
+                                                <span *ngIf="companyInvoiceInformationChangeEditor.errors.required
+                                                    && (companyInvoiceInformationChangeEditor.dirty
+                                                    || companyInvoiceInformationChangeEditor.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <!-- TAX ADMINISTRATION -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                        <div class="form-group">
+
+                                            <label for="taxAuthorizationInvoiceInformationChangeEditor" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.TAX_ADMINISTRATION' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <input type="text" name="taxAuthorizationInvoiceInformationChangeEditor"
+                                                id="taxAuthorizationInvoiceInformationChangeEditor" class="form-control"
+                                                placeholder="{{ 'VIEWS.ORDER_PAGE.TAX_ADMINISTRATION' | translate }}"
+                                                [(ngModel)]="order_editable.invoice_data__doy" #taxAuthorizationInvoiceInformationChangeEditor="ngModel"
+                                                aria-describedby="taxAuthorizationInvoiceInformationChangeEditorHelp" required />
+
+                                            <small id="taxAuthorizationInvoiceInformationChangeEditorHelp" class="form-text text-danger"
+                                                *ngIf="taxAuthorizationInvoiceInformationChangeEditor.invalid">
+
+                                                <span *ngIf="taxAuthorizationInvoiceInformationChangeEditor.errors.required
+                                                    && (taxAuthorizationInvoiceInformationChangeEditor.dirty
+                                                    || taxAuthorizationInvoiceInformationChangeEditor.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- ADDRESS (street) -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                        <div class="form-group">
+
+                                            <label for="addressStreetInvoiceInformationChangeEditor" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_STREET' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <input type="text" name="addressStreetInvoiceInformationChangeEditor"
+                                                id="addressStreetInvoiceInformationChangeEditor" class="form-control"
+                                                placeholder="{{ 'VIEWS.ORDER_PAGE.ADDRESS_STREET' | translate }}"
+                                                [(ngModel)]="order_editable.invoice_data__address" #addressStreetInvoiceInformationChangeEditor="ngModel"
+                                                aria-describedby="addressStreetInvoiceInformationChangeEditorHelp" required />
+
+                                            <small id="addressStreetInvoiceInformationChangeEditorHelp" class="form-text text-danger"
+                                                *ngIf="addressStreetInvoiceInformationChangeEditor.invalid">
+
+                                                <span *ngIf="addressStreetInvoiceInformationChangeEditor.errors.required
+                                                    && (addressStreetInvoiceInformationChangeEditor.dirty
+                                                    || addressStreetInvoiceInformationChangeEditor.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <!-- ADDRESS (postal code )-->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                        <div class="form-group">
+
+                                            <label for="addressPostalCodeInvoiceInformationChangeEditor" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_POSTAL_CODE' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <input type="text" name="addressPostalCodeInvoiceInformationChangeEditor"
+                                                id="addressPostalCodeInvoiceInformationChangeEditor" class="form-control"
+                                                placeholder="{{ 'VIEWS.ORDER_PAGE.ADDRESS_POSTAL_CODE' | translate }}"
+                                                [(ngModel)]="order_editable.invoice_data__postal_code"
+                                                #addressPostalCodeInvoiceInformationChangeEditor="ngModel"
+                                                aria-describedby="addressPostalCodeInvoiceInformationChangeEditorHelp" required />
+
+                                            <small id="addressPostalCodeInvoiceInformationChangeEditorHelp" class="form-text text-danger"
+                                                *ngIf="addressPostalCodeInvoiceInformationChangeEditor.invalid">
+
+                                                <span *ngIf="addressPostalCodeInvoiceInformationChangeEditor.errors.required
+                                                    && (addressPostalCodeInvoiceInformationChangeEditor.dirty
+                                                    || addressPostalCodeInvoiceInformationChangeEditor.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <!-- ADDRESS (city) -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                        <div class="form-group">
+
+                                            <label for="addressCityInvoiceInformationChangeEditor" class="mb-1">
+                                                {{ 'GENERIC.ORDER_PAGE.ADDRESS_CITY' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <input type="text" name="addressCityInvoiceInformationChangeEditor" id="addressCityInvoiceInformationChangeEditor"
+                                                class="form-control" placeholder="{{ 'GENERIC.ORDER_PAGE.ADDRESS_CITY' | translate }}"
+                                                [(ngModel)]="order_editable.invoice_data__city" #addressCityInvoiceInformationChangeEditor="ngModel"
+                                                aria-describedby="addressCityInvoiceInformationChangeEditorHelp" required />
+
+
+                                            <small id="addressCityInvoiceInformationChangeEditorHelp" class="form-text text-danger"
+                                                *ngIf="addressCityInvoiceInformationChangeEditor.invalid">
+
+                                                <span *ngIf="addressCityInvoiceInformationChangeEditor.errors.required
+                                                    && (addressCityInvoiceInformationChangeEditor.dirty
+                                                    || addressCityInvoiceInformationChangeEditor.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <!-- ADDRESS (country) -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                        <div class="form-group">
+
+                                            <label for="addressCountryInvoiceInformationChangeEditor" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDRESS_COUNTRY' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="addressCountryInvoiceInformationChangeEditor" name="addressCountryInvoiceInformationChangeEditor"
+                                                #addressCountryInvoiceInformationChangeEditor="ngModel" placeholder="{{ 'GENERIC.LABELS.COUNTRY' | translate }}"
+                                                [items]="countries" [multiple]="false" bindLabel="name" bindValue="name" [closeOnSelect]="true"
+                                                [dropdownPosition]="'bottom'" [(ngModel)]="order_editable.invoice_data__country" [minTermLength]="3"
+                                                [disabled]="false" ng-required="true" [searchable]="true"
+                                                aria-describedby="addressCountryInvoiceInformationChangeEditorHelp">
+
+                                                <ng-template ng-option-tmp let-item="item">
+                                                    {{ item.name }}
+                                                </ng-template>
+
+                                            </ng-select>
+
+                                            <small id="addressCountryInvoiceInformationChangeEditorHelp" class="form-text text-danger"
+                                                *ngIf="addressCountryInvoiceInformationChangeEditor.invalid">
+
+                                                <span *ngIf="addressCountryInvoiceInformationChangeEditor.errors.required
+                                                    && (addressCountryInvoiceInformationChangeEditor.dirty
+                                                    || addressCountryInvoiceInformationChangeEditor.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- PHONE -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                        <div class="form-group">
+
+                                            <label for="phoneInvoiceInformationChangeEditor" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PHONE' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+                                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="true"
+                                                [selectedCountryISO]="selectedCountryISO" [maxLength]="24" [phoneValidation]="true" [separateDialCode]="true"
+                                                id="phoneInvoiceInformationChangeEditor" name="phoneInvoiceInformationChangeEditor"
+                                                #phoneInvoiceInformationChangeEditor="ngModel" [(ngModel)]="invoice_data__phone_number"
+                                                aria-describedby="phoneInvoiceInformationChangeEditorHelp"
+                                                (ngModelChange)="formatTelephone('order_editable', 'invoice_data__phone', invoice_data__cell_phone)"
+                                                required></ngx-intl-tel-input>
+
+                                            <small id="phoneInvoiceInformationChangeEditorHelp" class="form-text text-danger"
+                                                *ngIf="phoneInvoiceInformationChangeEditor.invalid">
+
+                                                <span *ngIf="phoneInvoiceInformationChangeEditor.errors.required
+                                                    && (phoneInvoiceInformationChangeEditor.dirty
+                                                    || phoneInvoiceInformationChangeEditor.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- CELL PHONE -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                        <div class="form-group">
+
+                                            <label for="cellPhoneInvoiceInformationChangeEditor" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.MOBILE_PHONE' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+                                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="true"
+                                                [selectedCountryISO]="selectedCountryISO" [maxLength]="24" [phoneValidation]="true" [separateDialCode]="true"
+                                                id="cellPhoneInvoiceInformationChangeEditor" name="cellPhoneInvoiceInformationChangeEditor"
+                                                #cellPhoneInvoiceInformationChangeEditor="ngModel" [(ngModel)]="invoice_data__cell_phone"
+                                                aria-describedby="cellPhoneInvoiceInformationChangeEditorHelp"
+                                                (ngModelChange)="formatTelephone('order_editable', 'invoice_data__phone', invoice_data__cell_phone)"
+                                                required></ngx-intl-tel-input>
+
+                                            <small id="cellPhoneInvoiceInformationChangeEditorHelp" class="form-text text-danger"
+                                                *ngIf="cellPhoneInvoiceInformationChangeEditor.invalid">
+
+                                                <span *ngIf="cellPhoneInvoiceInformationChangeEditor.errors.required
+                                                && (cellPhoneInvoiceInformationChangeEditor.dirty
+                                                || cellPhoneInvoiceInformationChangeEditor.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                </div>
+
+
+
+                                <!-- order pricing -->
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="cashOnDeliveryPaymentType" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.CASH_ON_DELIVERY' | translate }}
+                                            </label>
+                                            <p id="cashOnDeliveryPaymentType">
+                                                {{ !order?.cash_on_delivery_payment ? [ 'GENERIC.LABELS.NO' | translate
+                                                ] :
+                                                [ 'GENERIC.LABELS.YES' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeLabel" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_TYPE' | translate }}
+                                            </label>
+                                            <p id="paymentTypeLabel">
+                                                {{ order?.payment_type_details?.label || [ 'GENERIC.LABELS.N_A' |
+                                                translate
+                                                ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeDescription" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_TYPE_DESCRIPTION' | translate }}
+                                            </label>
+                                            <p id="paymentTypeDescription" class="text-truncate">
+                                                {{ order?.payment_type_details?.description || [ 'GENERIC.LABELS.N_A' |
+                                                translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-mf-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="paymentTypeServiceName" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.PAYMENT_SERVICE' | translate }}
+                                            </label>
+                                            <p id="paymentTypeServiceName">
+                                                {{ order?.payment_type_details?.service || [ 'GENERIC.LABELS.N_A' |
+                                                translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <hr class="mt-4 mb-3" />
+
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="productsCounter" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.MULTITUDE_OF_PRODUCTS' | translate }}
+                                            </label>
+                                            <p id="productsCounter" class="text-center">
+                                                {{ multitude_of_products || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderClearValue" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.SUBTOTAL' | translate }}
+                                            </label>
+                                            <p id="orderClearValue">
+                                                {{ order?.clear_value || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2" *ngIf="order?.cash_on_delivery_payment">
+                                        <div class="form-group">
+                                            <label for="orderCashOnDeliveryCost" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.CASH_ON_DELIVERY_COST' | translate }}
+                                            </label>
+                                            <P id="orderCashOnDeliveryCost">
+                                                {{ order.cash_on_delivery }} {{ user?.company_data?.coin_symbol || '€'
+                                                }}
+                                            </P>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderTransportationCost" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.TRANSPORTATION_COST' | translate }}
+                                            </label>
+                                            <p id="orderTransportationCost">
+                                                {{ order?.transportation || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2" *ngIf="order?.extra_fees">
+                                        <div class="form-group">
+                                            <label for="orderExtraFees" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ADDITIONAL_TAXES_AND_CHARGES' | translate }}
+                                            </label>
+                                            <p id="orderExtraFees">
+                                                {{ order.extra_fees_costs }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderFees" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.SALES_TAX' | translate }}
+                                            </label>
+                                            <p id="orderFees" *ngIf="order?.fee_percent">
+                                                {{ order.fees }} {{ user?.company_data?.coin_symbol || '€' }} ({{
+                                                order.fee_percent }}%)
+                                            </p>
+                                            <p id="orderFees" *ngIf="!order?.fee_percent">
+                                                {{ order?.fees || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                                (0%)
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label for="orderTotalLabel" class="mb-1">
+                                                {{ 'VIEWS.ORDER_PAGE.ORDER_TOTAL' | translate }}
+                                            </label>
+                                            <p id="orderTotalLabel">
+                                                {{ order?.order_total || [ 'GENERIC.LABELS.N_A' | translate ] }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class=" mt-3 col-12 text-right">
+
+                                <a href="javascript:void(0)" class="text-decoration-none" style="font-size: 1rem;" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                                        order: order,
+                                        type: 'single',
+                                        single_document_title: 'invoice_receipt'
+                                    })">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span *ngIf="order.proof === 'receipt'">
+                                        {{ 'GENERIC.ACTIONS.PRINT_RECEIPT' | translate }}
+                                    </span>
+                                    <span *ngIf="order.proof === 'invoice'">
+                                        {{ 'GENERIC.ACTIONS.PRINT_INVOICE' | translate }}
+                                    </span>
+                                </a>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+            <!-- products data -->
+            <div class="tab-pane fade" id="products-order-data-edit" role="tabpanel" aria-labelledby="productsOrderDataEdit">
+
+                <small class="text-muted d-block">
+                    <i class="fas fa-info-circle"></i>
+                    {{ 'VIEWS.ORDER_PAGE.MESSAGES.CANNOT_CHANGE_ORDER_PRODUCTS' | translate }}
+                </small>
+
+                <ng-container [ngTemplateOutlet]="orderProductsList"></ng-container>
+            </div>
+
+
+
+
+
+            <div class="tab-pane fade" id="order-documents-edit" role="tabpanel" aria-labelledby="orderDocumentsEdit">
+                <ng-container [ngTemplateOutlet]="printOptionsForOrderDocumentsCard"></ng-container>
+            </div>
+
+
+
+
+            <div class="tab-pane fade" id="order-notes-edit" role="tabpanel" aria-labelledby="orderNotesDataEdit">
+                <ng-container [ngTemplateOutlet]="orderNotesContainer"></ng-container>
+            </div>
+
+
+            <!-- order's transactions -->
+            <div class="tab-pane fade" id="order-transactions" role="tabpanel" aria-labelledby="orderTransactionsData">
+                <ng-container [ngTemplateOutlet]="orderTransactionsArea"></ng-container>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row mt-5 mb-4">
+        <div class="col-12">
+
+            <div class="btn-group dropup float-right">
+
+
+                <button type="button" class="btn btn-primary" *ngIf="mode === 'preview' && user_privileges?.orders_edit"
+                    (click)="changeToggleEditPreview('edit')" [disabled]="order.current_status !== 'confirmed'">
+                    <i class="fas fa-edit"></i>
+                    {{ 'GENERIC.ACTIONS.EDIT' | translate }}
+                </button>
+
+                <button type="button" class="btn btn-primary" *ngIf="mode === 'edit'" (click)="changeToggleEditPreview('preview')">
+                    <i class="fas fa-eye"></i>
+                    {{ 'GENERIC.ACTIONS.PREVIEW' | translate }}
+                </button>
+
+
+                <button class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-left-border-1px-grey" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <span class="sr-only">
+                        {{ 'GENERIC.ACTIONS.TOGGLE_DROPDOWN' | translate }}
+                    </span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" *ngIf="order">
+
+
+
+                    <a href="javascript:void(0)" class="text-danger" *ngIf="order.current_status !== 'archived'" (click)="onOrderStatusChange('archived')">
+                        <i class="fas fa-trash"></i>
+                        {{ 'VIEWS.ORDER_PREVIEW.CANCEL_ORDER' | translate }}
+                    </a>
+
+                    <a href="javascript:void(0)" *ngIf="order.current_status === 'confirmed' || order.current_status === 'sent'"
+                        (click)="onOrderStatusChange('completed')">
+                        <i class="fas fa-check-circle"></i>
+                        {{ 'GENERIC.ACTIONS.COMPLETE' | translate }}
+                    </a>
+
+                    <a href="javascript:void(0)" *ngIf="order.current_status === 'confirmed'" (click)="onOrderStatusChange('sent')">
+                        <i class="fas fa-truck"></i>
+                        {{ 'VIEWS.ORDER_PREVIEW.SEND_ORDER' | translate }}
+                    </a>
+
+                    <a href="javascript:void(0)" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                        order: order,
+                        type: 'all'
+                    })">
+                        <i class="fas fa-print"></i>
+                        {{ 'GENERIC.ACTIONS.PRINT' | translate }}
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+
+            <button type="button" class="btn btn-secondary-primary float-right mr-3" *ngIf="mode === 'edit'" [disabled]="editCurrentOrderForm.invalid"
+                [ladda]="orderIsUpdating" (click)="updateCurrentOrder();">
+                <i class="fas fa-sync-alt"></i> <!-- spinner-icon-circle -->
+                {{ 'GENERIC.ACTIONS.UPDATE' | translate }}
+            </button>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+</form>
+
+
+
+
+
+<ngx-spinner size="medium" type="square-jelly-box" [fullScreen]="true" color="#E6AF00" bdColor="rgba(0, 0, 0, 0.9)">
+    <p style="color: #fff"> {{ 'GENERIC.LABELS.LOADING' | translate }}... </p>
+</ngx-spinner>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- print order documents card -->
+<ng-template #printOptionsForOrderDocumentsCard>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>
+                {{ 'VIEWS.ORDER_PAGE.ORDERS_AVAILABLE_DOCUMENTS' | translate }}
+            </h5>
+        </div>
+
+
+        <div class="card-body pt-4">
+
+            <div class="row">
+                <div class="col-12">
+
+
+                    <div class="row">
+
+                        <div class="col-12 col-sm-12 col-md-7 col-lg-8">
+                            <h6 style="font-weight: normal" class="pl-4">
+                                <i class="fas fa-file-alt mr-3"></i>
+                                {{ 'VIEWS.ORDER_PAGE.PROOF_OF_ORDER' | translate }}
+                            </h6>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-5 col-lg-4 text-center">
+                            <button type="button" class="btn btn-primary" id="printProofOfOrder" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                                order: order,
+                                type: 'single',
+                                single_document_title: 'proof_of_order'
+                            })">
+                                <i class="fas fa-print"></i>
+                                {{ 'GENERIC.ACTIONS.PRINT' | translate }}
+                            </button>
+
+                            <button type="button" class="btn btn-secondary-primary ml-3" id="previewProofOfOrder"
+                                (click)="orderPaperDownloadPDF('orderPaperProofOfOrder')" [ladda]="!hidden_papers.orderPaperProofOfOrder">
+                                <i class="fas fa-download"></i>
+                                {{ 'GENERIC.ACTIONS.DOWNLOAD' | translate }}
+                            </button>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row mt-3" *ngIf="order?.proof">
+
+                        <div class="col-12 col-sm-12 col-md-7 col-lg-8">
+                            <h6 class="pl-4" style="font-weight: normal;">
+                                <i class="fas fa-file-alt mr-4"></i>
+                                <span *ngIf="order.proof === 'receipt'" [innerHTML]="'VIEWS.ORDER_PAGE.ORDER_DOCUMENT_RECEIPT' | translate"></span>
+                                <span *ngIf="order.proof === 'invoice'" [innerHTML]="'VIEWS.ORDER_PAGE.ORDER_DOCUMENT_INVOICE' | translate"></span>
+                            </h6>
+                            <small class="text-muted ml-4" *ngIf="order.proof === 'invoice'">
+                                ({{ 'VIEWS.ORDER_PAGE.INVOICE_NUMBER' | translate }}:
+                                {{ order?.invoice_data__invoice_number || [ 'GENERIC.LABELS.N_A' | translate ]
+                                }})
+                            </small>
+                        </div>
+
+
+                        <div class="col-12 col-sm-12 col-md-5 col-lg-4 text-center">
+                            <button type="button" class="btn btn-primary" id="printOrderDocument" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                                order: order,
+                                type: 'single',
+                                single_document_title: 'invoice_receipt'
+                            })">
+                                <i class="fas fa-print"></i>
+                                {{ 'GENERIC.ACTIONS.PRINT' | translate }}
+                            </button>
+
+                            <button type="button" class="btn btn-secondary-primary ml-3" id="previewOrderDocument"
+                                (click)="orderPaperDownloadPDF('orderPaperInvoiceReceipt')" [ladda]="!hidden_papers.orderPaperInvoiceReceipt">
+                                <i class="fas fa-download"></i>
+                                {{ 'GENERIC.ACTIONS.DOWNLOAD' | translate }}
+                            </button>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row mt-3">
+
+                        <div class="col-12 col-sm-12 col-md-7 col-lg-8">
+                            <h6 class="pl-4" style="font-weight: normal;">
+                                <i class="fas fa-file-alt mr-3"></i>
+                                {{ 'VIEWS.ORDER_PAGE.ORDER_DISPATCH_FORM' | translate }}
+                                <small class="text-danger" *ngIf="!order?.tracking_number">
+                                    ({{ 'VIEWS.ORDER_PAGE.NOT_YET_ISSUED' | translate }})
+                                </small>
+                            </h6>
+                        </div>
+
+
+                        <div class="col-12 col-sm-12 col-md-5 col-lg-4 text-center">
+                            <button type="button" class="btn btn-primary" id="printOrderFormDispatch" [disabled]="!order?.tracking_number" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                                    order: order,
+                                    type: 'single',
+                                    single_document_title: 'dispatch_form'
+                                })">
+                                <i class="fas fa-print"></i>
+                                {{ 'GENERIC.ACTIONS.PRINT' | translate }}
+                            </button>
+
+                            <button type="button" class="btn btn-secondary-primary ml-3" id="previewOrderDispatchForm" [disabled]="!order?.tracking_number"
+                                (click)="orderPaperDownloadPDF('orderPaperDispatchForm')" [ladda]="!hidden_papers.orderPaperDispatchForm">
+                                <i class="fas fa-download"></i>
+                                {{ 'GENERIC.ACTIONS.DOWNLOAD' | translate }}
+                            </button>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row mt-3">
+
+                        <div class="col-12 col-sm-12 col-md-7 col-lg-8">
+                            <h6 class="pl-4" style="font-weight: normal;">
+                                <i class="fas fa-file-alt mr-3"></i>
+                                {{ 'VIEWS.ORDER_PAGE.TRACKING_NUMBER' | translate }}
+                                <small class="text-danger" *ngIf="!order?.tracking_number">
+                                    ({{ 'VIEWS.ORDER_PAGE.NOT_YET_ISSUED' | translate }})
+                                </small>
+                            </h6>
+                        </div>
+
+
+                        <div class="col-12 col-sm-12 col-md-5 col-lg-4 text-center">
+                            <button type="button" class="btn btn-primary" id="printOrderTrackingNumber" [disabled]="!order?.tracking_number" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                                    order: order,
+                                    type: 'single',
+                                    single_document_title: 'tracking_number'
+                                })">
+                                <i class="fas fa-print"></i>
+                                {{ 'GENERIC.ACTIONS.PRINT' | translate }}
+                            </button>
+
+                            <button type="button" class="btn btn-secondary-primary ml-3" id="previewOrderTrackingNumber" [disabled]="!order?.tracking_number"
+                                (click)="orderPaperDownloadPDF('orderPaperTrackingNumber')" [ladda]="!hidden_papers.orderPaperTrackingNumber">
+                                <i class="fas fa-download"></i>
+                                {{ 'GENERIC.ACTIONS.DOWNLOAD' | translate }}
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+            <div class="row mt-5">
+
+                <div class="col-12 text-right">
+
+                    <button type="button" class="btn btn-primary" id="printAllFromOrderAvailable" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                        order: order,
+                        type: 'all'
+                    })">
+                        <i class="fas fa-print"></i>
+                        <span *ngIf="!order?.tracking_number">
+                            {{ 'VIEWS.ORDER_PAGE.PRINT_ALL_AVAILABLE_DOCUMENTS' | translate }}
+                        </span>
+                        <span *ngIf="order?.tracking_number">
+                            {{ 'VIEWS.ORDER_PAGE.PRINT_ALL_DOCUMENTS' | translate }}
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</ng-template>
+
+
+
+
+
+<!-- notes container -->
+<ng-template #orderNotesContainer>
+
+
+    <div class="card mt-4" *ngIf="order">
+
+        <div class="card-header">
+            <h5>
+                {{ 'GENERIC.LABELS.ORDER_NOTES' | translate }}
+                <span class="text-muted" *ngIf="notes_updating_procedure_description !== 'nothing'">
+                    &nbsp;
+                    <i class="fas fa-sync-alt spinner-icon-circle" *ngIf="notes_updating_procedure_description === 'updating'"></i>
+                    <i class="fas fa-save" *ngIf="notes_updating_procedure_description === 'saved'"></i>
+                    <i class="fas fa-times" *ngIf="notes_updating_procedure_description === 'error'"></i>
+                </span>
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row mb-4">
+                <div class="col-12">
+                    <small class="d-block text-muted">
+                        <i class="fas fa-info-circle"></i>
+                        {{ 'VIEWS.ORDER_PAGE.MESSAGES.NOTES_AUTO_UPDATED' | translate }}
+                    </small>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <ckeditor [editor]="notesFieldEditorTextEditor.editor" name="orderNotes" id="orderNotes" [config]="notesFieldEditorTextEditor.config"
+                        #orderNotes="ngModel" [(ngModel)]="order.notes" (ready)="onOrderNotesEditorReady($event);" (change)="onOrderNotesEditorChange($event)">
+                    </ckeditor>
+                </div>
+                <div class="col-12 text-right mt-2">
+                    <small class="text-muted" [ngClass]="{ 'text-danger': notesFieldCharactersCount > 8000 }">
+                        {{ notesFieldCharactersCount }} / 8000
+                    </small>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</ng-template>
+
+
+
+
+
+
+
+<!-- order status dropdown -->
+<ng-template #orderStatusChangePreview>
+
+    <app-status-dropdown-custom-module [statuses]="statuses" [current_status_value]="order?.current_status || 'confirmed'" [options]="status_dropdown_options"
+        (statusChange)="onOrderStatusChange($event);">
+    </app-status-dropdown-custom-module>
+
+</ng-template>
+
+
+
+
+
+
+
+
+
+<!-- order products -->
+<ng-template #orderProductsList>
+
+    <div class="row mt-4" *ngIf="order">
+
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2" *ngFor="let product of order?.order_products; let i = index">
+
+            <div class="card">
+                <div class="w-100 h-285px">
+                    <img src="{{ product?.main_image?.url || default_products_image_url }}" alt="{{ product.product_details.headline }} - Main image"
+                        class="card-img-top object-fit-cover w-100 h-100 d-block mx-auto" />
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title w-100 d-inline-block text-truncate">
+                        {{ product.product_details.headline }}
+                    </h5>
+                    <div class="card-text">
+
+                        <div class="row">
+                            <div class="col-12">{{ product.product_details.product_code }}</div>
+                            <div class="col-12 text-muted">{{ product.product_id }}</div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                {{ product.product_details.product_brand }}, {{
+                                product.product_details.product_model }}
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                {{ product.quantity }}
+                                <small class="text-muted" *ngIf="product.quantity !== 1">
+                                    {{ 'GENERIC.LABELS.PIECES' | translate | lowercase }}
+                                </small>
+                                <small class="text-muted" *ngIf="product.quantity === 1">
+                                    {{ 'GENERIC.LABELS.PIECE' | translate | lowercase }}
+                                </small>
+                            </div>
+
+                            <div class="col-6 text-right">
+                                {{ product.supplied_customer_price }} {{ user?.company_data?.coin_symbol || '€'
+                                }} <br />
+                                {{ product?.discount_percent || 0 }} % ({{ 'GENERIC.LABELS.DISCOUNT_MIN' |
+                                translate |
+                                lowercase }}) <br />
+                                {{ product?.fee_percent || 0 }} % ({{ 'GENERIC.LABELS.FEES' | translate |
+                                lowercase
+                                }}) <br />
+                                {{ product.supplied_customer_price + product.discount + product.fees }} {{
+                                user?.company_data?.coin_symbol || '€' }}
+                                ({{ 'GENERIC.LABELS.TOTAL' | translate | lowercase }})
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-6 font-weight-bold">
+                            {{ (product.supplied_customer_price + product.discount + product.fees) *
+                            product.quantity }} {{ user?.company_data?.coin_symbol || '€' }}
+                        </div>
+
+                        <div class="col-6">
+                            <a [routerLink]="['/dashboard/products', product.product_id]" target="_blank" class="text-decoration-none float-right">
+                                {{ 'GENERIC.ACTIONS.SEE_MORE' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-template>
+
+
+
+
+
+
+
+<!-- order's transactions -->
+<ng-template #orderTransactionsArea>
+
+    <div class="card mt-4" *ngFor="let orderTransaction of order_transactions">
+        <div class="card-body">
+
+            <!-- {{ orderTransaction | json }} -->
+
+
+            <span *ngIf="orderTransaction?.order_created_at" [innerHTML]="'VIEWS.ORDER_PAGE.TRANSACTION_MESSAGE.ORDER_CREATED_AT' | translate: 
+            {
+                date: utilsService.moment(orderTransaction.order_created_at / 1).format('MM/DD/YYYY HH:mm:ss')
+            }">
+            </span>
+
+
+            <span *ngIf="orderTransaction?.order_seen" [innerHTML]="'VIEWS.ORDER_PAGE.TRANSACTION_MESSAGE.ORDER_VIEWED' | translate:
+            {
+                created_at: utilsService.moment(orderTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                user_id: orderTransaction.updated_by
+            }">
+            </span>
+
+
+            <span *ngIf="orderTransaction?.whole_order_updated" [innerHTML]="'VIEWS.ORDER_PAGE.TRANSACTION_MESSAGE.WHOLE_ORDER_UPDATED' | translate:
+            {
+                date: utilsService.moment(orderTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                user_id: orderTransaction.updated_by
+            }">
+            </span>
+
+            <span *ngIf="orderTransaction?.status_updated" [innerHTML]="'VIEWS.ORDER_PAGE.TRANSACTION_MESSAGE.STATUS_UPDATED' | translate: 
+            {
+                date: utilsService.moment(orderTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                status_before: orderTransaction.status_before,
+                status_after: orderTransaction.status_after,
+                user_id: orderTransaction.updated_by
+            }">
+            </span>
+
+            <span *ngIf="orderTransaction?.field_changed" [innerHTML]="'VIEWS.ORDER_PAGE.TRANSACTION_MESSAGE.FIELD_CHANGED' | translate:
+            {
+                field_changed: orderTransaction.field_changed,
+                value_before: orderTransaction.value_before,
+                value_after: orderTransaction.value_after,
+                user_id: orderTransaction.updated_by,
+                created_at: utilsService.moment(orderTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss')
+            }">
+            </span>
+
+        </div>
+    </div>
+
+
+    <div class="w-100 text-center text-muted mt-5" *ngIf="order_transactions_loading">
+        <i class="fas fa-sync-alt spinner-icon-circle mx-auto" style="font-size: 2rem"></i>
+    </div>
+
+    <h1 class="text-muted mt-5 text-center" *ngIf="order_transactions.length <= 0 && !order_transactions_loading">
+        {{ 'VIEWS.ORDER_PAGE.NO_TRANSACTIONS_FOUND' | translate }}
+    </h1>
+
+
+
+    <!-- load more button -->
+    <div class="row mt-5 mb-5" *ngIf="!order_transactions_loading && order_transactions.length % 30 === 0 && order_transactions.length > 0">
+        <div class="col-12 text-center">
+
+
+            <button type="button" class="btn btn-secondary" id="loadMoreOrderTransaactions" (click)="loadOrderTransactions('extend')">
+                <i class="fas fa-sync-alt"></i>
+                {{ 'GENERIC.ACTIONS.LOAD_MORE' | translate }}
+            </button>
+
+
+        </div>
+    </div>
+
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- order papers -->
+<div #orderPaperDispatchForm id="orderPaperDispatchForm" *ngIf="!hidden_papers.orderPaperDispatchForm">
+    <app-order-document-dispatch-form [order]="order"></app-order-document-dispatch-form>
+</div>
+
+<div #orderPaperProofOfOrder id="orderPaperProofOfOrder" *ngIf="!hidden_papers.orderPaperProofOfOrder">
+    <app-order-document-proof-of-order [order]="order"></app-order-document-proof-of-order>
+</div>
+
+<div #orderPaperInvoiceReceipt id="orderPaperInvoiceReceipt" *ngIf="!hidden_papers.orderPaperInvoiceReceipt">
+    <app-order-document-receipt-invoice [order]="order"></app-order-document-receipt-invoice>
+</div>
+
+<div #orderPaperTrackingNumber id="orderPaperTrackingNumber" *ngIf="!hidden_papers.orderPaperTrackingNumber">
+    <app-order-document-tracking-number [order]="order"></app-order-document-tracking-number>
+</div>

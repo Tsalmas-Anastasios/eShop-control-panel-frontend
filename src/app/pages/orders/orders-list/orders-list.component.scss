@@ -1,0 +1,32 @@
+@import '../../../../assets/scss/colors';
+
+
+
+
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+
+
+
+.orders-preview-actions-menu {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    a {
+        display: block;
+        padding: 12px 15px;
+        text-decoration: none;
+        transition: 0.4s;
+        color: $sidebar-blue;
+
+        &:hover {
+            background-color: #ccc;
+        }
+    }
+
+}

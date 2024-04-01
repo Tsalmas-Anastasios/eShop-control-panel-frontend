@@ -1,0 +1,13 @@
+nb-alert {
+
+    &.status-warning {
+        background: url('../images/alerts/alerts-warning.svg') no-repeat right;
+        background-size: auto 100%;
+    }
+
+    &.status-danger {
+        background: url('../images/alerts/alerts-times.svg') no-repeat right;
+        background-size: auto 100%;
+    }
+
+}

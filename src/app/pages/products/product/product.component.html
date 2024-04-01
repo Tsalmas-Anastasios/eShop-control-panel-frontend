@@ -1,0 +1,169 @@
+<nav aria-label="breadcrumb d-flex">
+
+    <h3 class="float-left">
+        <small class="text-muted">{{ 'GENERIC.LABELS.PRODUCT' | translate }}</small>
+        {{ mode === 'new' ? [ 'GENERIC.LABELS.NEW' | translate ] : product?.product_code || [ 'GENERIC.LABELS.N_A' |
+        translate ] }}
+    </h3>
+
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/dashboard']">
+                <i class="fas fa-home"></i>
+            </a>
+        </li>
+
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/dashboard/products']">
+                {{ 'GENERIC.LABELS.PRODUCTS' | translate }}
+            </a>
+        </li>
+
+        <li class="breadcrumb-item active">
+            {{ mode === 'new' ? [ 'GENERIC.LABELS.NEW' | translate ] : product?.product_code || [ 'GENERIC.LABELS.N_A' |
+            translate ] }}
+        </li>
+    </ol>
+</nav>
+
+
+
+
+
+
+
+
+<form #productAddUpdateForm="ngForm" autocomplete="off" *ngIf="product">
+
+    <div class="row mt-4">
+        <div class="col-12">
+
+
+            <!-- create a product -->
+            <app-product-create *ngIf="mode === 'new'" [product]="product" [user]="user" [product_categories_list]="product_categories_list"
+                [product_statuses]="product_statuses" [formatted_product_statuses]="formatted_product_statuses"
+                [status_dropdown_options]="status_dropdown_options" [productImages]="productImagesFiles" [imageMaxFileSize]="imageMaxFileSize"
+                [product_main_image_index]="product_main_image_index" [warehouses]="warehouses" (updateProductData)="onUpdateProductData($event);"
+                (updateProductImages)="onUpdateProductImages($event);" (updateProductMainImage)="onUpdateProductMainImage($event);"
+                (updateProductCategories)="onUpdateProductCategories($event);">
+            </app-product-create>
+
+
+
+            <app-product-details *ngIf="mode === 'edit' || mode === 'preview'" [product]="product" [user]="user"
+                [product_categories_list]="product_categories_list" [product_statuses]="product_statuses"
+                [formatted_product_statuses]="formatted_product_statuses" [status_dropdown_options]="status_dropdown_options"
+                [productImages]="productImagesFiles" [imageMaxFileSize]="imageMaxFileSize" [product_main_image_index]="product_main_image_index" [mode]="mode"
+                [deleted_images]="deleted_images_from_edit" [notes_updating_procedure_description]="notes_updating_procedure_description"
+                [warehouses]="warehouses" (product_status_change)="onProductStatusChange($event);" (product_notes_update)="onProductNotesChange($event)"
+                (product_categories_update)="onProductCategoriesUpdate($event)" (updateProductData)="onUpdateProductData($event);"
+                (updateProductImages)="onUpdateProductImages($event);" (updateProductMainImage)="onUpdateProductMainImage($event);">
+            </app-product-details>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- actions buttons -->
+    <div class="row mt-4">
+
+        <div class="col-12 text-right">
+
+
+            <button type="button" class="btn btn-primary" [disabled]="productAddUpdateForm.invalid" (click)="saveNewProduct();" [ladda]="isSavingProductData"
+                *ngIf="mode === 'new' && user_privileges?.products_new">
+                <i class="fas fa-save"></i>
+                {{ 'GENERIC.ACTIONS.SAVE' | translate }}
+            </button>
+
+
+
+            <button type="button" class="btn btn-secondary-primary mr-3" *ngIf="mode !== 'new'" data-toggle="modal" data-target="#productInspirationModal">
+                <i class="fas fa-magic"></i>
+                {{ 'GENERIC.ACTIONS.INSPIRATION' | translate }}
+            </button>
+
+
+            <div class="btn-group dropup" *ngIf="(mode === 'preview' || mode === 'edit') && user_privileges?.products_edit">
+
+                <button type="button" class="btn btn-primary" *ngIf="mode === 'preview' && user_privileges?.products_edit"
+                    (click)="onToggleProductPageMode('edit')">
+                    <i class="fas fa-edit"></i>
+                    {{ 'GENERIC.ACTIONS.EDIT' | translate }}
+                </button>
+
+                <button type="button" class="btn btn-primary" *ngIf="mode === 'edit' && user_privileges?.products_edit"
+                    [disabled]="productAddUpdateForm.invalid" [ladda]="isUpdating" (click)="updateProduct();">
+                    <i class="fas fa-sync-alt"></i>
+                    {{ 'GENERIC.ACTIONS.UPDATE' | translate }}
+                </button>
+
+                <!-- <button class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-left-border-1px-grey" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <span class="sr-only">
+                        {{ 'GENERIC.ACTIONS.TOGGLE_DROPDOWN' | translate }}
+                    </span>
+                </button>
+
+
+                <div class="dropdown-menu dropdown-menu-right">
+
+
+                    <a href="javascript:void(0)" class="text-success">
+                        <i class="fas fa-share-alt"></i>
+                        {{ 'GENERIC.ACTIONS.SHARE' | translate }}
+                    </a>
+
+
+                </div> -->
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+<!-- inspiration modal -->
+<div class="modal fade" id="productInspirationModal" role="dialog" aria-labelledby="productInspirationModalTitle" aria-hidden="true" *ngIf="product">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5>{{ 'VIEWS.PRODUCT_PAGE.SOME_INSPIRATION' | translate }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div class="modal-body">
+
+                <!-- 1st template -->
+                <app-products-inspiration-template1 [product]="product" [user]="user" [product_categories]="product_categories">
+                </app-products-inspiration-template1>
+
+            </div>
+
+        </div>
+    </div>
+</div>

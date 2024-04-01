@@ -1,0 +1,336 @@
+<!-- error exclamation  -->
+[ngClass]="{'is-invalid': billingPostalCode.invalid && (billingPostalCode.dirty || billingPostalCode.touched)}"
+
+<!-- error aria-describedby -->
+<span *ngIf="persons.errors.required">Required field</span>
+
+<!-- required field asterisk -->
+<small class="text-danger ml-1" tooltip="Required field" container="body">*</small>
+{{ 'GENERIC.LABELS.REQUIRED_FIELD' | translate }}
+
+<!-- CARD -->
+<div class="card card-tourmie-blue card-outline">
+    <div class="card-header">
+        Customer Details
+    </div>
+    <div class="card-body">
+
+    </div>
+</div>
+
+
+<!-- INPUT FIELD -->
+<div class="form-group">
+
+    <label class="mb-1" for="fieldTitle">
+        Label
+        <app-required-field-label [type]="'asterisk_tooltip'"></app-required-field-label>
+    </label>
+
+    <input class="form-control" id="fieldTitle" name="fieldTitle" type="text" placeholder="" #fieldTitle="ngModel"
+        [(ngModel)]="" aria-describedby="fieldTitleHelp" required />
+
+    <small id="fieldTitleHelp" class="form-text text-danger"
+        *ngIf="fieldTitle.invalid && (fieldTitle.dirty || fieldTitle.touched)">
+        <app-required-field-label [type]="'input_invalid'"></app-required-field-label>
+    </small>
+
+</div>
+
+<!-- INPUT HELPER (Required field) -->
+<!-- <input aria-describedby="titleHelp" /> -->
+<small id="titleHelp" class="form-text text-danger" *ngIf="title.invalid && (title.dirty || title.touched)">Required
+    field</small>
+
+<!-- INPUT LABEL TOOLTIP -->
+<small class="ml-1" tooltip="description"><i class="fas fa-question-circle"></i></small>
+
+<!-- INPUT DETAILS (detail view) -->
+<div class="col-sm-12 col-md-3 col-lg-3">
+    <label class="mb-0" for="vehicleSeats">Seats</label>
+    <p id="vehicleSeats">{{service.seats}}</p>
+</div>
+
+<!-- NG-SELECT FIELD -->
+<div class="form-group">
+    <label class="mb-1" for="selectField">Type</label>
+    <ng-select id="selectField" placeholder="" [items]="items" [multiple]="false" bindLabel="label" bindValue="value"
+        [closeOnSelect]="true" [(ngModel)]="" name="selectField" #selectField="ngModel"
+        aria-describedby="selectFieldHelp" required>
+    </ng-select>
+
+    <small id="selectFieldHelp" class="form-text text-danger"
+        *ngIf="selectField.invalid && (selectField.dirty || selectField.touched)">
+        Required field
+    </small>
+</div>
+
+
+<!-- BLOCKQUOTE INFORMATION -->
+<blockquote class="quote-orange mt-0 mx-0">
+    <h5>Reminder!</h5>
+    <p>You haven't sent invitation emails to the visitors of bookings:</p>
+    <ul>
+        <li><a href="https://tourmie.com" target="_blank">Booking X</a></li>
+        <li><a href="https://tourmie.com" target="_blank">Booking Y</a></li>
+    </ul>
+</blockquote>
+
+
+<!-- CARD -->
+
+<div class="card card-tourmie-blue card-outline">
+
+    <div class="card-header">
+        <h3 class="card-title">Bookings Calendar</h3>
+
+        <!-- <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                            class="fas fa-chevron-up"></i></button>
+                </div> -->
+
+    </div>
+
+    <div class="card-body">
+
+
+
+    </div>
+
+</div>
+
+
+
+<!-- Card custom header (in body) -->
+<div class="card">
+
+    <div class="card-body px-4">
+
+        <div class="row mb-2">
+
+            <div class="col-sm-12">
+
+                <h5 class="font-size-18">
+
+                    <span class="font-weight-600">Video</span>
+
+                </h5>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Card custom header with chevron -->
+<div class="card">
+
+    <div class="card-header border-bottom-0">
+        <h3 class="card-title">Drivers</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                    class="fas fa-chevron-up"></i></button>
+        </div>
+    </div>
+
+    <div class="card-body py-0">
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- class "d-flex align-items-stretch" for cards in columns with same height -->
+
+
+
+
+
+<!-- Modal snippet -->
+<div class="modal-header bg-tourmie-blue">
+    <h5 class="modal-title pull-left">MODAL_TITLE_HERE</h5>
+    <span class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true"><i class="fas fa-times fa-xs"></i></span>
+    </span>
+</div>
+
+<div class="modal-body">
+
+
+</div>
+
+<div class="modal-footer">
+
+
+
+</div>
+
+
+
+<!-- International Mobile Number -->
+<div class="form-group mb-3 mobile-phone-container">
+    <label for="businessTelephone">Business Telephone</label>
+
+    <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+        [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="true"
+        [selectedCountryISO]="selectedCountryISO" [maxLength]="24" [tooltipField]="TooltipLabel.Name"
+        [phoneValidation]="true" [separateDialCode]="true" id="businessTelephone" name="businessTelephone"
+        #businessTelephone="ngModel" [(ngModel)]="hostBusinessTelephoneNumber"
+        (ngModelChange)="onHostBusinessTelephoneNumberChange();" aria-describedby="businessTelephoneHelp" required>
+    </ngx-intl-tel-input>
+
+
+    <small id="businessTelephoneHelp" class="form-text text-danger" *ngIf="businessTelephone.errors">
+        <span *ngIf="businessTelephone.errors.required && businessTelephone.touched">Required
+            field</span>
+
+        <span
+            *ngIf="businessTelephone.errors.validatePhoneNumber?.valid === false && !businessTelephone.errors.required">
+            Please enter a valid phone number
+        </span>
+    </small>
+
+</div>
+
+
+<!-- Youtube & Vimeo Players -->
+<!--
+    import Player from '@vimeo/player';
+    @ViewChild('player_container') playerContainer;
+    private player: Player;
+
+    ngAfterViewInit(): void {
+        this.player = new Player(this.playerContainer.nativeElement, {
+            id: 19231868,
+            width: 640
+        });
+    }
+-->
+
+<div class="row">
+    <div class="col-12">
+        <div class="vimeo-player" #player_container></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <youtube-player [videoId]="'tgbNymZ7vqY'"></youtube-player>
+    </div>
+</div>
+
+<!-- TRANSLATIONS -->
+<p>{{ 'hello' | translate }}</p>
+<p>{{ 'hello' | translate:{name: name} }}</p>
+<div translate [translateParams]="{name: name}">hello</div>
+<p [innerHTML]="'XXX.XXX' | translate:{ varialbeName: variableValue }"></p>
+
+<!-- Translate in TS -->
+await this.translate.get('general.labels.PleaseWait').toPromise()
+
+<!-- Translate in TS with params -->
+"HELLO": "hello {{value}}"
+await this.translate.get('general.labels.PleaseWait', {value: 'test'}).toPromise()
+
+
+
+<!-- Textarea autosize -->
+<!-- if (typeof (window as any).autosize !== 'undefined')
+        document.querySelectorAll('textarea[autosize]').forEach((window as any).autosize); -->
+
+
+
+<!-- Datatables: Input/select in column header -->
+<!-- // table.columns().every((index) => {
+
+    //   const column = table.column(index);
+
+    //   const dtOptionsColumn = this.dtOptionsRequests.columns.find((value, idx) => {
+    //     return idx === index;
+    //   });
+
+    //   // INPUT in column's header
+
+    //   // const input = $('<input class="form-control">')
+    //   //   .appendTo($(column.header()))
+    //   //   .on('keyup change', (e) => {
+    //   //     const value = (e as any).target.value;
+
+    //   //     if (column.search() !== value) {
+    //   //       column
+    //   //         .search(value)
+    //   //         .draw();
+    //   //     }
+
+    //   //   });
+
+
+    //   // SELECT in column's header
+    //   // const select = $('<select class="form-control"><option value=""></option></select>')
+    //   //   .appendTo($(column.header()))
+    //   //   .on('change', (e) => {
+    //   //     // const val = $.fn.dataTable.util.escapeRegex($(this).val());
+    //   //     const value = (e as any).target.value;
+    //   //     column.search(value ? '^' + value + '$' : '', true, false).draw();
+    //   //   });
+
+    //   // column
+    //   //   .data()
+    //   //   .unique()
+    //   //   .sort()
+    //   //   .each((d, j) => {
+
+    //   //     const strippedHtml = d.replace(/<[^>]+>/g, '');
+    //   //     select.append(`<option value="${strippedHtml}">${strippedHtml}</option>`);
+
+    //   //   });
+
+    // }); -->
+
+
+
+
+
+
+<!-- ngx-spinner -->
+<ngx-spinner size="medium" type="square-jelly-box" [fullScreen]="true" color="#E6AF00" bdColor="rgba(0, 0, 0, 0.9)">
+    <p style="color: #fff"> {{ 'GENERIC.LABELS.LOADING' | translate }}... </p>
+</ngx-spinner>
+
+
+
+
+<!-- charts -->
+https://www.ngdevelop.tech/how-to-use-ngx-charts-in-angular/
+https://github.com/swimlane/ngx-charts/issues/615
+https://stackoverflow.com/questions/52552815/how-can-i-make-my-ngx-line-chart-responsive
+https://plnkr.co/edit/7SqwjBi1hGcN2q6Ox1GU?preview
+https://swimlane.gitbook.io/ngx-charts/v/docs-test/

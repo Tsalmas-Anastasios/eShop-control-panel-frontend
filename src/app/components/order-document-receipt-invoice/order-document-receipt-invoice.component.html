@@ -1,0 +1,412 @@
+<div id="receiptInvoiceTemplate-eCommerceControlPanelBizyhive" class="p-5" *ngIf="order" style="color: #000">
+
+    <div class="row mb-5 text-center" *ngIf="order?.proof">
+        <div class="col-12">
+            <h2 style="border: 2px solid #ccc; display: inline-block; width: auto;border-radius: 10px;" class="p-4">
+                {{ order.proof === 'receipt' ? [ 'GENERIC.LABELS.ORDER_RECEIPT' | translate ] :
+                order.proof === 'invoice' ? [ 'GENERIC.LABELS.ORDER_INVOICE' | translate ] :
+                '' }}
+            </h2>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-4">
+            <img src="{{ order?.company_data?.shop_logo || '../../../../../assets/logo/logo-icon.png' }}"
+                alt="{{ 'PRINT.ORDER_RECEIPT_INVOICE.SHOP_LOGO' | translate }}" class="w-50 mx-auto d-block" />
+        </div>
+
+        <div class="col-4">
+
+            <div class="row">
+
+                <div class="col-12">
+                    <h4><strong>{{ order?.company_data?.shop_name || ['GENERIC.LABELS.N_A' | translate ] }}</strong>
+                    </h4>
+                </div>
+                <div class="col-12">
+                    {{ order?.company_data?.business_name }},
+                    <span *ngIf="order?.company_data?.contact_person__middle_name">
+                        {{ order?.company_data?.contact_person__first_name || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                        {{ order?.company_data?.contact_person__middle_name || '' }}
+                        {{ order?.company_data?.contact_person__last_name || '' }}
+                    </span>
+                    <span *ngIf="!order?.company_data?.contact_person__middle_name">
+                        {{ order?.company_data?.contact_person__first_name || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                        {{ order?.company_data?.contact_person__last_name || '' }}
+                    </span>
+                </div>
+                <div class="col-12">
+                    <strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.TAX_ID' | translate }}</strong>
+                    {{ order?.company_data?.tax_id || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                </div>
+                <div class="col-12">
+                    <strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.TAX_AUTHORITY' | translate }}</strong>
+                    {{ order?.company_data?.tax_authority || [ 'GENERIC.LABELS.N_A'| translate ] }}
+                </div>
+                <div class="col-12">
+                    {{ order?.company_data?.headquarters_address__street || [ 'GENERIC.LABELS.N_A' | translate ] }},
+                    {{ order?.company_data?.headquarters_address__city || '' }}
+                    {{ order?.company_data?.headquarters_address__postal_code || '' }}
+                </div>
+                <div class="col-12">
+                    {{ order?.company_data?.headquarters_address__state || [ 'GENERIC.LABELS.N_A' | translate] }},
+                    {{ order?.company_data?.headquarters_address__country || '' }}
+                </div>
+
+            </div>
+
+            <div class="row mt-3">
+
+                <div class="col-12">
+                    {{ order?.company_data?.contact_phone || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                </div>
+                <div class="col-12">
+
+                    {{ order?.company_data?.company_email || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                </div>
+                <div class="col-12 text-decoration-underline">
+                    {{ order?.company_data?.shop_url || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-4 text-right">
+
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="invoiceType" class="mb-1">
+                            <strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.INVOICE_TYPE' | translate }}</strong>
+                        </label>
+                        <p id="invoiceType" *ngIf="order?.proof">
+                            <span *ngIf="order.proof === 'receipt'">
+                                {{ 'PRINT.ORDER_RECEIPT_INVOICE.RECEIPT' | translate }}
+                            </span>
+                            <span *ngIf="order.proof === 'invoice'">
+                                {{ 'PRINT.ORDER_RECEIPT_INVOICE.INVOICE' | translate }}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="invoiceNumber" class="mb-1">
+                            <strong>
+                                {{ 'PRINT.ORDER_RECEIPT_INVOICE.INVOICE_NUMBER' | translate }}
+                            </strong>
+                        </label>
+                        <p id="invoiceNumber" *ngIf="order?.proof">
+                            <span *ngIf="order.proof === 'receipt'">---</span>
+                            <span *ngIf="order.proof === 'invoice'">
+                                {{ order.invoice_data__invoice_number }}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="dateIssued">
+                            <strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.DATE_ISSUED' | translate }}</strong>
+                        </label>
+                        <p id="dateIssued">
+                            {{ date_issued | date: 'short' }}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div class="row mt-5 pr-5 pl-5 pt-5 border-top" *ngIf="order?.proof">
+
+        <div class="col-6" *ngIf="order.proof === 'receipt'">
+            <h4><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.BILL_TO' | translate }}</strong></h4>
+
+            <div class="row mt-4">
+
+                <div class="col-12">
+                    <h5>{{ order.first_name }} {{ order.last_name }}</h5>
+                </div>
+                <div class="col-12">
+                    {{ order.address }}, {{ order.city }} {{ order.postal_code }}
+                </div>
+                <div class="col-12">
+                    {{ order.country }}
+                </div>
+
+            </div>
+
+
+            <div class="row mt-3">
+
+                <div class="col-12">
+                    <strong><i class="fas fa-phone"></i></strong>&nbsp;
+                    {{ order.phone }}
+                </div>
+                <div class="col-12" *ngIf="order?.cell_phone">
+                    <strong><i class="fas fa-mobile-alt"></i></strong> &nbsp;
+                    {{ order.cell_phone }}
+                </div>
+                <div class="col-12">
+                    <strong><i class="fas fa-envelope"></i></strong>&nbsp;
+                    {{ order.email }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-6" *ngIf="order.proof === 'invoice'">
+            <h4><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.BILL_TO' | translate }}</strong></h4>
+
+            <div class="row mt-4">
+
+                <div class="col-12">
+                    <h5>{{ order.invoice_data__first_name }} {{ order.invoice_data__last_name }}</h5>
+                </div>
+                <div class="col-12">
+                    <strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.COMPANY' | translate }}</strong>
+                    {{ order.invoice_data__company }}
+                </div>
+                <div class="col-12">
+                    <strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.TAX_ID' | translate }}</strong>
+                    {{ order.invoice_data__tax_number }}
+                </div>
+                <div class="col-12">
+                    <strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.TAX_AUTHORITY' | translate }}</strong>
+                    {{ order.invoice_data__doy }}
+                </div>
+                <div class="col-12">
+                    {{ order.invoice_data__address }}, {{ order.invoice_data__city }} {{ order.invoice_data__postal_code
+                    }}
+                </div>
+                <div class="col-12">
+                    {{ order.invoice_data__country }}
+                </div>
+
+            </div>
+
+
+            <div class="row mt-3">
+
+                <div class="col-12">
+                    <strong><i class="fas fa-phone"></i></strong>&nbsp;
+                    {{ order.invoice_data__phone }}
+                </div>
+                <div class="col-12" *ngIf="order?.invoice_data__cell_phone">
+                    <strong><i class="fas fa-mobile-alt"></i></strong> &nbsp;
+                    {{ order.invoice_data__cell_phone }}
+                </div>
+                <div class="col-12">
+                    <strong><i class="fas fa-envelope"></i></strong>&nbsp;
+                    {{ order.email }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="col-6 border-left pl-4">
+            <h4><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.SEND_TO' | translate }}</strong></h4>
+
+            <div class="row mt-4">
+
+                <div class="col-12">
+                    <h5>{{ order.first_name }} {{ order.last_name }}</h5>
+                </div>
+                <div class="col-12">
+                    {{ order.address }}, {{ order.city }} {{ order.postal_code }}
+                </div>
+                <div class="col-12">
+                    {{ order.country }}
+                </div>
+
+            </div>
+
+
+            <div class="row mt-3">
+
+                <div class="col-12">
+                    <strong><i class="fas fa-phone"></i></strong>&nbsp;
+                    {{ order.phone }}
+                </div>
+                <div class="col-12" *ngIf="order?.cell_phone">
+                    <strong><i class="fas fa-mobile-alt"></i></strong> &nbsp;
+                    {{ order.cell_phone }}
+                </div>
+                <div class="col-12">
+                    <strong><i class="fas fa-envelope"></i></strong>&nbsp;
+                    {{ order.email }}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- products list -->
+    <div class="row mt-5" id="prodocuts-list">
+        <div class="col-12">
+
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <th style="width: 35%;">{{ 'PRINT.ORDER_RECEIPT_INVOICE.PRODUCT' | translate }}</th>
+                        <th class="text-center">{{ 'PRINT.ORDER_RECEIPT_INVOICE.PRICE' | translate }}</th>
+                        <th class="text-center">{{ 'PRINT.ORDER_RECEIPT_INVOICE.FEES' | translate }}</th>
+                        <th class="text-center">{{ 'PRINT.ORDER_RECEIPT_INVOICE.DISCOUNT' | translate }}</th>
+                        <th class="text-center">{{ 'PRINT.ORDER_RECEIPT_INVOICE.QUANTITY_MIN' | translate }}</th>
+                        <th class="text-center">{{ 'PRINT.ORDER_RECEIPT_INVOICE.AMOUNT' | translate }}</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    <tr *ngFor="let product of order.order_products">
+                        <td>
+                            <strong class="text-break">{{ product.product_details.headline }}</strong>
+                            <small class="d-block text-muted">
+                                {{ product.product_details.product_code }}
+                            </small>
+                        </td>
+                        <td class="text-center">
+                            {{ product.supplied_customer_price - product.fees }} {{ user?.company_data?.coin_symbol ||
+                            '€' }}
+                        </td>
+                        <td class="text-center">
+                            {{ product.fees }} {{ user?.company_data?.coin_symbol || '€' }}
+                            ({{ product.fee_percent }}%)
+                        </td>
+                        <td class="text-center">
+                            {{ product.discount }} {{ user?.company_data?.coin_symbol || '€' }}
+                            ({{ product.discount_percent }}%)
+                        </td>
+                        <td class="text-center">
+                            {{ product.quantity }}
+                        </td>
+                        <td class="text-center">
+                            {{ product.supplied_customer_price }} {{ user?.company_data?.coin_symbol || '€' }}
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+
+
+
+
+    <!-- total pricing for order -->
+    <div class="row mt-5 pt-3" id="order-pricing">
+
+        <!-- blank field -->
+        <div class="col-7"></div>
+
+
+        <!-- pricing -->
+        <div class="col-5">
+
+            <div class="row">
+                <div class="col-7"><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.SUBTOTAL' | translate }}</strong></div>
+                <div class="col-5 text-right">{{ order.clear_value }} {{ user?.company_data?.coin_symbol || '€' }}</div>
+            </div>
+            <div class="row">
+                <div class="col-7"><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.TAXABLE' | translate }}</strong></div>
+                <div class="col-5 text-right">{{ order.fees }} {{ user?.company_data?.coin_symbol || '€' }}</div>
+            </div>
+            <div class="row">
+                <div class="col-7"><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.DISCOUNT' | translate }}</strong></div>
+                <div class="col-5 text-right">{{ discount }} {{ user?.company_data?.coin_symbol || '€' }}</div>
+            </div>
+            <div class="row">
+                <div class="col-7"><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.FEES' | translate }}</strong></div>
+                <div class="col-5 text-right">{{ order.fees }} {{ user?.company_data?.coin_symbol || '€' }}</div>
+            </div>
+            <div class="row" *ngIf="order.extra_fees">
+                <div class="col-7"><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.EXTRA_FEES' | translate }}</strong></div>
+                <div class="col-5 text-right">{{ order.extra_fees_costs }} {{ user?.company_data?.coin_symbol || '€' }}
+                </div>
+            </div>
+            <div class="row" *ngIf="order.cash_on_delivery_payment">
+                <div class="col-7"><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.CASH_ON_DELIVERY' | translate }}</strong>
+                </div>
+                <div class="col-5 text-right">{{ order.cash_on_delivery }} {{ user?.company_data?.coin_symbol || '€' }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-7"><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.TRANSPORTATION' | translate }}</strong></div>
+                <div class="col-5 text-right">{{ order.transportation }} {{ user?.company_data?.coin_symbol || '€' }}
+                </div>
+            </div>
+            <hr class="mt-3 mb-3" />
+            <div class="row">
+                <div class="col-7">
+                    <h5><strong>{{ 'PRINT.ORDER_RECEIPT_INVOICE.TOTAL' | translate }}</strong></h5>
+                </div>
+                <div class="col-5 text-right">
+                    <h5><strong>{{ order.order_total }} {{ user?.company_data?.coin_symbol || '€' }}</strong></h5>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- signed -->
+    <div class="row mt-5 pt-5 mb-5 pb-5" id="signed">
+
+        <div class="col-6 pl-5">
+            <label for="recipientSignature" class="mb-1">
+                {{ 'PRINT.ORDER_RECEIPT_INVOICE.RECIPIENT_SIGNATURE' | translate }}
+            </label>
+        </div>
+
+
+        <div class="col-6 text-right pr-5">
+            <label for="senderSignature" class="mb-1">
+                {{ 'PRINT.ORDER_RECEIPT_INVOICE.SENDER_SIGNATURE' | translate }}
+            </label>
+        </div>
+
+    </div>
+
+
+
+
+    <app-printable-documents-footer></app-printable-documents-footer>
+
+</div>

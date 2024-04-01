@@ -1,0 +1,46 @@
+::ng-deep nb-layout-footer nav {
+    display: block !important;
+}
+
+
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%
+}
+
+
+.footer-item.version-label {
+    opacity: 0.7;
+}
+
+
+.footer-item.app-name-label {
+
+    img {
+        width: 40px;
+    }
+
+}
+
+
+
+.footer-item.powered-by-label {
+
+    .text {
+        font-style: italic;
+        font-size: 0.75rem;
+        display: inline-block;
+        padding-top: 20px;
+        vertical-align: bottom;
+        opacity: 0.7;
+    }
+
+    img {
+        height: 30px;
+        margin-left: 10px;
+    }
+
+}

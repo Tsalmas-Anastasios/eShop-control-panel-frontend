@@ -1,0 +1,174 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group" id="adv-search">
+
+
+
+                <div class="dropdown dropdown-lg order-appearance-dropdown">
+                    <input type="text" name="order-number-search" id="order-number-search" class="form-control"
+                        placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.SEARCH_ORDER_BY_NUMBER' | translate }}"
+                        data-toggle="dropdown" aria-expanded="false" [(ngModel)]="searchers.order_number.value"
+                        (change)="searchOrdersList('simple_search');" (keyup)="searchOrdersList('simple_search');" />
+
+                    <div class="dropdown-menu dropdown-menu-lef" role="menu" style="padding: 0px;"
+                        data-loader="searchOrdersMenuLoader">
+
+
+                        <div class="overlay-component-loader-here-loader-circle-field" *ngIf="searchOrdersMenuLoader">
+                        </div>
+
+
+
+                        <div class="no-orders-found text-muted" *ngIf="orders.length <= 0">
+                            {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.NO_ORDERS_FOUND' | translate }}
+                        </div>
+
+
+
+
+                        <div *ngIf="orders.length > 0">
+
+                            <div class="order-row-card" *ngFor="let order of orders"
+                                [routerLink]="['/dashboard/orders', order.order_id]">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <strong>{{ order.order_number }}</strong>
+                                    </div>
+                                    <div class="col-12 text-muted">
+                                        <small>{{ order.order_id }}</small>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        {{ order.first_name }} {{ order.last_name }}
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                        <a href="tel:{{ order.phone }}">
+                                            <i class="fas fa-phone"></i>
+                                            {{ order.phone }}
+                                        </a>
+                                    </div>
+
+                                    <div class="col-6 d-inline-block text-truncate">
+                                        <a href="email:{{ order.email }}">
+                                            <i class="fas fa-envelope"></i>
+                                            {{ order.email }}
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-6 text-muted">
+                                        <small>{{ order.confirm_date | date: 'short' }}</small>
+                                    </div>
+
+                                    <div class="col-6 text-right">
+                                        {{ order.order_total }} {{ user?.company_data?.coin_symbol || '€' }}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div class="input-group-btn">
+
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+
+
+                            <button type="button" class="btn btn-secondary" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fas fa-caret-down"></i>
+                            </button>
+
+
+
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+
+                                <div class="form-group">
+                                    <label for="phoneNumber" class="mb-1">
+                                        {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.PHONE_NUMBER' | translate }}
+                                    </label>
+                                    <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control"
+                                        placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.PHONE_NUMBER' | translate }}"
+                                        [(ngModel)]="searchers.phone_number.value" />
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="emailAddress" class="mb-1">
+                                        {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.EMAIL_ADDRESS' | translate }}
+                                    </label>
+                                    <input type="email" name="emailAddress" id="emailAddress" class="form-control"
+                                        placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.EMAIL_ADDRESS' | translate }}"
+                                        [(ngModel)]="searchers.email_address.value" />
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="firstName" class="mb-1">
+                                                {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.FIRST_NAME' | translate }}
+                                            </label>
+                                            <input type="text" name="firstName" id="firstName" class="form-control"
+                                                placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.FIRST_NAME' | translate }}"
+                                                [(ngModel)]="searchers.first_name.value" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="lastName" class="mb-1">
+                                            {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.LAST_NAME' | translate }}
+                                        </label>
+                                        <input type="text" name="lastName" id="lastName" class="form-control"
+                                            placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.LAST_NAME' | translate }}"
+                                            [(ngModel)]="searchers.last_name.value" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="orderID" class="mb-1">
+                                        {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.ORDER_ID' | translate }}
+                                    </label>
+                                    <input type="text" name="orderID" id="orderID" class="form-control"
+                                        placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.ORDER_ID' | translate }}"
+                                        [(ngModel)]="searchers.order_id.value" />
+                                </div>
+
+
+                                <button type="button" class="btn btn-primary float-right mt-2 mb-3"
+                                    id="advanced-search-submit" style="border-radius: 4px"
+                                    [disabled]="!checkAdvancedSearchFields()"
+                                    (click)="advancedSearchRedirectPageSearchGlobal()">
+                                    {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.SEARCH' | translate }}
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+
+
+                        </div>
+
+                        <button type="button" class="btn btn-primary" id="simple-search-submit"
+                            [disabled]="searchers.order_number.value === null || searchers.order_number.value === '' || searchers.order_number.value.length < 2"
+                            (click)="simpleSearchRedirectPageSearchGlobal()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

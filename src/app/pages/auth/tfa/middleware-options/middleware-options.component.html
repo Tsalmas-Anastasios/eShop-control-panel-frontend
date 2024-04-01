@@ -1,0 +1,66 @@
+<div class="full-height d-flex align-items-center justify-content-center">
+
+    <img src="../../../../../assets/logo/logo.png" alt="e-Commerce Bizyhive Control Panel Logo" class="logo" />
+
+
+
+    <div class="row box-options">
+        <div class="col-12">
+
+
+            <div class="row">
+                <div class="col-12">
+                    <h6>{{ 'VIEWS.TWO_FACTOR_AUTHENTICATION.MIDDLEWARE.SELECT_SERVICE_MESSAGE' | translate }}:</h6>
+                </div>
+            </div>
+
+
+
+            <div class="card mt-3">
+                <div class="card-body">
+
+                    <a href="javascript:void(0)" class="service-link d-block"
+                        [routerLink]="['/login/tfa/authenticator-app']" (click)="createStorageObjects();">
+                        <div class="row service-link-wrapper">
+                            <div class="col-9 p-3 pl-4">
+                                <strong class="d-block">
+                                    {{ 'VIEWS.TWO_FACTOR_AUTHENTICATION.MIDDLEWARE.AUTHENTICATOR_APP' | translate }}
+                                </strong>
+                                {{ 'VIEWS.TWO_FACTOR_AUTHENTICATION.MIDDLEWARE.USE_PROVIDED_APP_CODE' | translate }}
+                            </div>
+                            <div class="col-3 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-angle-right" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </a>
+
+
+                    <hr class="d-block mt-3 mb-3 ml-5 mr-5" />
+
+
+                    <a href="javascript:void(0)" class="service-link d-block"
+                        [routerLink]="['/login/tfa/email-authentication']" (click)="sendEmailCode();">
+                        <div class="row service-link-wrapper">
+                            <div class="col-9 p-3 pl-4">
+                                <strong class="d-block">
+                                    {{ 'VIEWS.TWO_FACTOR_AUTHENTICATION.MIDDLEWARE.ONE_TIME_EMAIL_CODE' | translate }}
+                                </strong>
+                                {{ 'VIEWS.TWO_FACTOR_AUTHENTICATION.MIDDLEWARE.ONE_TIME_EMAIL_CODE_EXPLAIN' | translate
+                                }}
+                            </div>
+                            <div class="col-3 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-angle-right" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+</div>

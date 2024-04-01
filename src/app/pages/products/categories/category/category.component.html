@@ -1,0 +1,72 @@
+<form #productCategoryHandleForm="ngForm" *ngIf="product_category" (ngSubmit)="onSubmitForm()" autocomplete="off">
+
+
+
+    <div class="row">
+
+        <div class="col-12">
+
+            <div class="form-group">
+
+
+                <label for="categoryLabel" class="mb-1">
+                    {{ 'VIEWS.PRODUCT_CATEGORIES_LIST.CATEGORY_LABEL' | translate }}
+                    <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                </label>
+
+
+                <input type="text" name="categoryLabel" id="categoryLabel" class="form-control"
+                    placeholder="{{ 'VIEWS.PRODUCT_CATEGORIES_LIST.CATEGORY_LABEL' | translate }}"
+                    [(ngModel)]="product_category.label" #categoryLabel="ngModel" aria-describedby="categoryLabelHelp"
+                    required
+                    [readonly]="(mode === 'edit' && !user_privileges?.product_categories_edit) || (mode === 'new' && !user_privileges?.product_categories_new)" />
+
+                <small id="categoryLabelHelp" class="form-text text-danger" *ngIf="categoryLabel.invalid">
+
+                    <span *ngIf="categoryLabel.errors.required && (categoryLabel.dirty || categoryLabel.touched)">
+                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                    </span>
+
+                </small>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div class="row">
+
+        <div class="col-12 text-right">
+
+
+            <button type="submit" class="btn btn-primary" id="submitForm"
+                [disabled]="productCategoryHandleForm.invalid">
+
+                <span *ngIf="mode === 'edit' && user_privileges?.product_categories_edit">
+                    <i class=" fas fa-sync-alt"></i>
+                    {{ 'GENERIC.ACTIONS.UPDATE' | translate }}
+                </span>
+
+                <span *ngIf="mode === 'new' && user_privileges?.product_categories_new">
+                    <i class="fas fa-save"></i>
+                    {{ 'GENERIC.ACTIONS.SAVE' | translate }}
+                </span>
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+
+</form>

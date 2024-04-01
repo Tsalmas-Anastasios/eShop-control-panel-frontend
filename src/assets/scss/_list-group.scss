@@ -1,0 +1,19 @@
+@import './colors';
+
+
+
+ul.list-group {
+
+    li.list-group-item {
+        background-color: transparent;
+        color: $label-color;
+        cursor: pointer;
+
+        &.active {
+            border-color: $menu-active-color;
+            background-color: $menu-active-color;
+            color: $menu-active-background-color;
+        }
+    }
+
+}

@@ -1,0 +1,90 @@
+@import '~@nebular/theme/styles/theming';
+@import '~@nebular/theme/styles/themes/default';
+
+@import './assets/scss/colors';
+
+$nb-themes: nb-register-theme(( // add your variables here like:
+
+      divider-width: 0px,
+
+
+      header-shadow: none,
+
+      sidebar-background-color: $main-background-header-sidebar,
+      sidebar-text-color: $white,
+      sidebar-shadow: none,
+      sidebar-menu-item-highlight-color: $main-background-header-sidebar,
+      sidebar-padding: 2rem,
+
+      footer-background-color: $main-background-header-sidebar,
+      footer-text-color: $footer-text-color,
+      footer-text-font-weight: 600,
+      footer-shadow: none,
+      footer-divider-color: $footer-text-color,
+      footer-divider-width: 0px,
+
+      menu-item-icon-color: $white,
+      menu-item-icon-active-color: $menu-active-color,
+      menu-item-active-text-color: $menu-active-color,
+      menu-item-active-background-color: $menu-active-background-color,
+      menu-text-color: $white,
+      menu-item-hover-text-color: $menu-hover-background-color,
+      menu-item-icon-hover-color: $menu-hover-background-color,
+
+
+      context-menu-background-color: $context-menu-background-color,
+
+      layout-background-color: $main-background-header-sidebar,
+
+      header-background-color: $main-background-header-sidebar,
+
+      actions-icon-color: $white,
+      actions-text-color: $white,
+
+      search-background-color: $global-search-area-components-background,
+      search-placeholder-text-color: $white,
+      search-info-text-color: $white,
+      search-text-color: $sidebar-blue,
+      search-divider-width: 1px,
+      search-divider-color: $sidebar-blue,
+
+
+      // alerts
+      alert-success-background-color: #229D18,
+      alert-warning-background-color: #E6AF00,
+      alert-warning-text-color: #1E1E1E,
+      alert-danger-background-color: #cc0000,
+
+
+      // accordion (handle in like cards)
+      accordion-shadow: 'none',
+      accordion-item-background-color: $card-background-color,
+      accordion-header-text-color: $accordion-header-text-color,
+      accordion-border-radius: 10px,
+      accordion-header-disabled-text-color: $accordion-header-disabled-text-color,
+      accordion-header-border-width: 0px,
+
+
+
+      // nb-tag
+      tag-filled-basic-background-color: $tag-filled-basic-background-color,
+      tag-filled-basic-border-color: $tag-filled-basic-border-color,
+      tag-filled-basic-text-color: $tag-filled-basic-text-color,
+      tag-filled-basic-active-background-color: $tag-filled-basic-active-background-color,
+      tag-filled-basic-active-border-color: $tag-filled-basic-active-border-color,
+      tag-filled-basic-hover-background-color: $tag-filled-basic-hover-background-color,
+      tag-filled-basic-hover-border-color: $tag-filled-basic-hover-border-color,
+
+
+      // tooltips
+      tooltip-background-color: $tooltip-background-color,
+      tooltip-text-color: $tooltip-letters-color,
+
+
+
+      // datepicker
+      datepicker-background-color: $datepicker-background-color,
+      datepicker-shadow: 0px 0px 22px -10px rgba(0, 0, 0, 0.75),
+
+
+    ), default, default);

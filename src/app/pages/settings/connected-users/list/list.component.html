@@ -1,0 +1,174 @@
+<nb-accordion *ngIf="primary_account">
+
+    <nb-accordion-item [collapsed]="false" [expanded]="false">
+
+
+        <nb-accordion-item-header>
+            <h5>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.LIST.PRIMARY_ACCOUNT' | translate }}</h5>
+        </nb-accordion-item-header>
+
+
+
+        <nb-accordion-item-body>
+
+
+            <div class="row">
+
+
+                <!-- info -->
+                <div class="col-12 col-sm-12 col-md-8">
+
+                    <div class="row">
+
+                        <!-- Account ID -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+
+                                <label for="primaryAccountId" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.CONNECTED_USERS.LIST.ACCOUNT_ID' | translate }}
+                                </label>
+                                <p id="primaryAccountId">
+                                    {{ primary_account.user_id }}
+                                </p>
+
+                            </div>
+                        </div>
+
+
+                        <!-- Username -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+
+                                <label for="primaryAccountUsername" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.CONNECTED_USERS.LIST.USERNAME' | translate }}
+                                </label>
+                                <p id="primaryAccountUsername">
+                                    {{ primary_account.username }}
+                                </p>
+
+                            </div>
+                        </div>
+
+
+
+                        <!-- fullname -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+
+                                <label for="primaryAccountFullname" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.CONNECTED_USERS.LIST.FULLNAME' | translate }}
+                                </label>
+                                <p id="primaryAccountFullname">
+                                    {{ primary_account.first_name }} {{ primary_account.last_name }}
+                                </p>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row">
+
+
+                        <!-- email -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+
+                                <label for="primaryAccountEmail" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.CONNECTED_USERS.LIST.EMAIL' | translate }}
+                                </label>
+                                <p id="primaryAccountEmail">
+                                    {{ primary_account.email }}
+                                </p>
+
+                            </div>
+                        </div>
+
+
+                        <!-- phone -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+
+                                <label for="primaryAccountPhone" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.CONNECTED_USERS.LIST.PHONE' | translate }}
+                                </label>
+                                <p id="primaryAccountPhone">
+                                    {{ primary_account.phone }}
+                                </p>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                    <!-- account using bizyhive cloud -->
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+
+                            <!-- using bizyhive cloud -->
+                            <app-using-bizyhive-cloud-collapse
+                                [using_bizyhive_cloud]="primary_account?.using_bizyhive_cloud">
+                            </app-using-bizyhive-cloud-collapse>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <!-- profile picture -->
+                <div class="col-12 col-sm-12 col-md-4 text-center">
+                    <img [src]="primary_account?.profile_picture_url || ''"
+                        alt="{{ 'VIEWS.SETTINGS.CONNECTED_USERS.LIST.PRIMARY_ACCOUNT_PROFILE_PICTURE_ALT' | translate }}"
+                        class="w-100 rounded" />
+                </div>
+
+
+            </div>
+
+
+        </nb-accordion-item-body>
+
+
+    </nb-accordion-item>
+
+</nb-accordion>
+
+
+
+
+
+
+<!-- extra connected users -->
+<nb-accordion class="mt-4">
+
+    <nb-accordion-item [collapsed]="false" [expanded]="true">
+
+
+        <nb-accordion-item-header>
+            <h5>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.LIST.CONNECTED_USERS' | translate }}</h5>
+        </nb-accordion-item-header>
+
+
+
+        <nb-accordion-item-body>
+
+            <app-data-table-custom-module [columnHeaders]="columnHeaders" [data]="connected_users"
+                [options]="connectedUsersDataTableOptions">
+            </app-data-table-custom-module>
+
+        </nb-accordion-item-body>
+
+
+    </nb-accordion-item>
+
+</nb-accordion>

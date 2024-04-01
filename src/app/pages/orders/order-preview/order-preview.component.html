@@ -1,0 +1,357 @@
+<div class="row">
+
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <label for="orderID" class="mb-1">
+            {{ 'VIEWS.ORDER_PREVIEW.ORDER_ID' | translate }}
+        </label>
+        <p id="orderID">
+            {{ order?.order_id || 'N/A' }}
+        </p>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <label for="orderID" class="mb-1">
+            {{ 'VIEWS.ORDER_PREVIEW.ORDER_NUMBER' | translate }}
+        </label>
+        <p id="orderID">
+            {{ order?.order_number || 'N/A' }}
+        </p>
+    </div>
+
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12 d-flex align-items-center">
+
+        <label for="orderStatus" class="mb-1">
+            {{ 'VIEWS.ORDER_PREVIEW.STATUS' | translate }}
+        </label>
+        <!-- TODO: handle the event to change the status -->
+        <app-status-dropdown-custom-module class="ml-3" [options]="status_dropdown_options" [statuses]="statuses"
+            [current_status_value]="order?.current_status || null">
+        </app-status-dropdown-custom-module>
+
+    </div>
+</div>
+
+
+
+<div class="row">
+
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <label for="orderID" class="mb-1">
+            {{ 'VIEWS.ORDER_PREVIEW.FULLNAME' | translate }}
+        </label>
+        <p id="orderID">
+            {{ order?.first_name || '---' }} {{ order?.last_name || '---' }}
+        </p>
+    </div>
+
+
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <label for="orderID" class="mb-1">
+            {{ 'VIEWS.ORDER_PREVIEW.DELIVERY_ADDRESS' | translate }}
+        </label>
+        <p id="orderID">
+            {{ order?.address || '---' }}, {{ order?.city || '---' }}, {{ order?.postal_code || '---' }}, {{
+            order?.country || '---' }}
+        </p>
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+        <label for="phone" class="mb-1">
+            {{ 'VIEWS.ORDER_PREVIEW.PHONE' | translate }}
+        </label>
+        <p id="phone">
+            {{ order?.phone || '---' }}
+        </p>
+    </div>
+
+    <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+        <label for="phone" class="mb-1">
+            {{ 'VIEWS.ORDER_PREVIEW.MOBILE_PHONE' | translate }}
+        </label>
+        <p id="phone">
+            {{ order?.cell_phone || '---' }}
+        </p>
+    </div>
+
+
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <label for="phone" class="mb-1">
+            {{ 'VIEWS.ORDER_PREVIEW.EMAIL' | translate }}
+        </label>
+        <p id="phone">
+            {{ order?.email || '---' }}
+        </p>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<div class="row mt-3">
+    <div class="col-12">
+        <h6>{{ 'VIEWS.ORDER_PREVIEW.ORDER_HISTORY' | translate }}</h6>
+    </div>
+
+    <div class="col-12">
+
+        <div class="row">
+
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4">
+                <label for="confirmDate" class="mb-1">
+                    {{ 'VIEWS.ORDER_PREVIEW.CONFIRMED_DATE' | translate }}
+                </label>
+                <p id="confirmDate">
+                    {{ order?.confirm_date ? [ order.confirm_date | date: 'short' ] : [ 'GENERIC.LABELS.N_A' |
+                    translate ] }}
+                </p>
+            </div>
+
+
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4">
+                <label for="confirmDate" class="mb-1">
+                    {{ 'VIEWS.ORDER_PREVIEW.SENT_DATE' | translate }}
+                </label>
+                <p id="confirmDate">
+                    {{ order?.sent_date ? [ order.sent_date | date: 'short' ] : [ 'GENERIC.LABELS.N_A' |
+                    translate ] }}
+                </p>
+            </div>
+
+
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4">
+                <label for="confirmDate" class="mb-1">
+                    {{ 'VIEWS.ORDER_PREVIEW.COMPLETED_DATE' | translate }}
+                </label>
+                <p id="confirmDate">
+                    {{ order?.completed_date ? [ order.completed_date | date: 'short' ] : [ 'GENERIC.LABELS.N_A' |
+                    translate ] }}
+                </p>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="row">
+
+            <div class="col-6" *ngIf="order?.returned_date">
+                <label for="returnedDate" class="mb-1">
+                    {{ 'VIEWS.ORDER_PREVIEW.DATE_OF_RETURN' | translate }}
+                </label>
+                <p id="returnedDate">
+                    {{ order?.returned_date ? [ order.returned_date | date: 'short' ] : [ 'GENERIC.LABELS.N_A' |
+                    translate ] }}
+                </p>
+            </div>
+
+            <div class="col-6" *ngIf="order?.archived_date">
+                <label for="archivedDate" class="mb-1">
+                    {{ 'VIEWS.ORDER_PREVIEW.DATE_OF_DELETION' | translate }}
+                </label>
+                <p id="archivedDate">
+                    {{ order?.archived_date ? [ order.archived_date | date: 'short' ] : [ 'GENERIC.LABELS.N_A' |
+                    translate ] }}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="row mt-3">
+
+    <div class="col-12">
+        <h6>{{ 'VIEWS.ORDER_PREVIEW.ORDERS_PRODUCTS' | translate }}</h6>
+    </div>
+
+
+    <div class="row mt-3">
+
+        <div class="col-12">
+
+            <table class="table d-block w-100" *ngIf="order?.order_products && order?.order_products.length > 0">
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'VIEWS.ORDER_PREVIEW.PRODUCT_CODE' | translate }}</th>
+                        <th>{{ 'GENERIC.LABELS.HEADLINE' | translate }}</th>
+                        <th>{{ 'VIEWS.ORDER_PREVIEW.QUANTITY' | translate }}</th>
+                        <th>{{ 'VIEWS.ORDER_PREVIEW.SUPPLIED_PRICE' | translate }}</th>
+                        <th>{{ 'VIEWS.ORDER_PREVIEW.DISCOUNT' | translate }}</th>
+                        <th>{{ 'VIEWS.ORDER_PREVIEW.FEES' | translate }}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let product of order.order_products; let i = index">
+                        <td class="text-center">{{ i }}</td>
+                        <td>{{ product.product_details.product_code }}</td>
+                        <td>{{ product.product_details.headline }}</td>
+                        <td class="text-center">{{ product.quantity }}</td>
+                        <td class="text-center">{{ product.supplied_customer_price }} {{ user?.company_data?.coin_symbol
+                            || '€' }}</td>
+                        <td class="text-center">{{ product.discount }} {{ user?.company_data?.coin_symbol || '€' }}</td>
+                        <td class="text-center">{{ product.fees }} {{ user?.company_data?.coin_symbol || '€' }}</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
+            <div class="text-muted ml-4" *ngIf="!order?.order_products || order?.order_products.length <= 0"
+                style="text-align: center;">
+                {{ 'VIEWS.ORDER_PREVIEW.NO_PRODUCTS_FOR_THIS_ORDER' | translate }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="col-12">
+
+        <div class="row">
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <label for="paymentMethod" class="mb-1">
+                    {{ 'VIEWS.ORDER_PREVIEW.PAYMENT_METHOD' | translate }}
+                </label>
+
+                <p id="paymentMethod">
+                    {{ order?.payment_type_details?.label || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                </p>
+                <div class="text-muted">
+                    {{ order?.payment_type_details?.description || '' }}
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+
+                <div class="row d-flex align-items-center">
+
+                    <div class="col-9 col-sm-9 col-md-7 col-lg-7">
+                        <label for="#clearValue" class="mb-1">
+                            {{ 'VIEWS.ORDER_PREVIEW.CLEAR_VALUE' | translate }}
+                        </label>
+                    </div>
+
+                    <div class="col-3 col-sm-3 col-md-5 col-lg-5" id="clearValue">
+                        {{ order?.clear_value || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                    </div>
+
+                </div>
+
+
+                <div class="row d-flex  align-items-center">
+
+                    <div class="col-9 col-sm-9 col-md-7 col-lg-7">
+                        <label for="#transportationCost" class="mb-1">
+                            {{ 'VIEWS.ORDER_PREVIEW.TRANSPORTATION' | translate }}
+                        </label>
+                    </div>
+
+                    <div class="col-3 col-sm-3 col-md-5 col-lg-5" id="transportationCost">
+                        {{ order?.transportation || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                    </div>
+
+                </div>
+
+
+                <div class="row d-flex  align-items-center" *ngIf="order?.cash_on_delivery_payment">
+
+                    <div class="col-9 col-sm-9 col-md-7 col-lg-7">
+                        <label for="#cashOnDelivery" class="mb-1">
+                            {{ 'VIEWS.ORDER_PREVIEW.CASH_ON_DELIVERY_COST' | translate }}
+                        </label>
+                    </div>
+
+                    <div class="col-3 col-sm-3 col-md-5 col-lg-5" id="cashOnDelivery">
+                        {{ order?.cash_on_delivery || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                    </div>
+
+                </div>
+
+
+                <div class="row d-flex  align-items-center" *ngIf="order?.extra_fees">
+
+                    <div class="col-9 col-sm-9 col-md-7 col-lg-7">
+                        <label for="#extraFeesCost" class="mb-1">
+                            {{ 'VIEWS.ORDER_PREVIEW.EXTRA_FEES_COST' | translate }}
+                        </label>
+                    </div>
+
+                    <div class="col-3 col-sm-3 col-md-5 col-lg-5" id="extraFeesCost">
+                        {{ order?.extra_fees_costs || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                    </div>
+
+                </div>
+
+
+                <div class="row d-flex  align-items-center">
+
+                    <div class="col-9 col-sm-9 col-md-7 col-lg-7">
+                        <label for="#feesCost" class="mb-1">
+                            {{ 'VIEWS.ORDER_PREVIEW.FEES_COST' | translate }}
+                            ({{ order?.fee_percent || 0 }}%)
+                        </label>
+                    </div>
+
+                    <div class="col-3 col-sm-3 col-md-5 col-lg-5" id="feesCost">
+                        {{ order?.fees || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                    </div>
+
+                </div>
+
+
+                <div class="row d-flex  align-items-center">
+
+                    <div class="col-9 col-sm-9 col-md-7 col-lg-7">
+                        <label for="#orderTotal" class="mb-1">
+                            {{ 'VIEWS.ORDER_PREVIEW.TOTAL' | translate }}
+                        </label>
+                    </div>
+
+                    <div class="col-3 col-sm-3 col-md-5 col-lg-5" id="orderTotal">
+                        {{ order?.order_total || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

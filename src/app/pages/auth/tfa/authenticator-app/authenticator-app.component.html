@@ -1,0 +1,41 @@
+<div class="full-height d-flex align-items-center justify-content-center">
+
+    <img src="../../../../../assets/logo/logo.png" alt="e-Commerce Bizyhive Control Panel Logo" class="logo" />
+
+
+    <div class="box-options">
+
+
+
+
+        <div class="row">
+            <div class="col-12">
+                <h6>{{ 'VIEWS.TWO_FACTOR_AUTHENTICATION.AUTHENTICATOR.ENTER_HERE_6DIGIT_CODE' | translate }}</h6>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+
+                    <input type="text" name="code6digit" id="code6digit" class="form-control text-center"
+                        placeholder="XXXXXX" #code6digit="ngModel" [(ngModel)]="code" (change)="submit6DigitCode();"
+                        (keyup)="submit6DigitCode();" />
+
+
+                    <small class="form-text-text-success" id="loading-text"></small>
+                    <small class="form-text text-danger" id="error-message"></small>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+</div>

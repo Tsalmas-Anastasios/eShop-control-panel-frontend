@@ -1,0 +1,112 @@
+<nav aria-label="breadcrumb d-flex">
+
+    <h3 class="float-left">
+        <small class="text-muted">{{ 'VIEWS.CONTACT_PAGE.CONTACT' | translate }}</small>
+
+        <span *ngIf="mode === 'new'">
+            {{ 'GENERIC.LABELS.NEW' | translate }}
+        </span>
+        <span *ngIf="mode !== 'new'">
+            {{ contact?.name || '' }}
+            {{ contact?.surname || '' }}
+        </span>
+    </h3>
+
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/dashboard']">
+                <i class="fas fa-home"></i>
+            </a>
+        </li>
+
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/dashboard/contacts']">
+                {{ 'VIEWS.CONTACTS.CONTACTS' | translate }}
+            </a>
+        </li>
+
+        <li class="breadcrumb-item active">
+            <span *ngIf="mode === 'new'">
+                {{ 'GENERIC.LABELS.NEW' | translate }}
+            </span>
+            <span *ngIf="mode !== 'new'">
+                {{ contact?.name || '' }}
+                {{ contact?.surname || '' }}
+            </span>
+        </li>
+    </ol>
+</nav>
+
+
+
+
+
+<form #productAddUpdateForm="ngForm" autocomplete="off" *ngIf="contact">
+
+
+
+    <div class="row mt-4">
+        <div class="col-12">
+
+
+
+            <!-- handle product component -->
+            <app-contact-form [mode]="mode" [contact]="contact" [only_private_contact]="only_private_contacts" [user]="user" [user_privileges]="user_privileges"
+                [contact_labels]="contact_labels" (contactDataChange)="onContactDataChange($event);" (changeContactImage)="onChangeContactImage($event);"
+                (addNewContactLabel)="onAddNewContactLabel($event)" (toggleFavoriteStarExisting)="onToggleFavoriteStarExisting();">
+            </app-contact-form>
+
+
+
+        </div>
+    </div>
+
+
+
+
+    <div class="row mt-4">
+
+        <div class="col-12 text-right">
+
+            <!-- delete button -->
+            <button type="button" class="btn btn-danger mr-3" id="deleteExistingContact" *ngIf="mode !== 'preview'" [ladda]="isDeleting"
+                (click)="deleteExistingContact();">
+                <i class="fas fa-trash"></i>
+                {{ 'GENERIC.ACTIONS.DELETE' | translate }}
+            </button>
+
+
+            <!-- save button -->
+            <button type="button" class="btn btn-primary" id="saveNewContact" [disabled]="(!contact?.name || contact.name === null || contact.name === '')
+                && (!contact?.surname || contact.surname === null || contact.surname === '')" (click)="saveNewContact();" [ladda]="isSaving"
+                *ngIf="mode === 'new'">
+                <i class="fas fa-save"></i>
+                {{ 'GENERIC.ACTIONS.SAVE' | translate }}
+            </button>
+
+
+            <!-- update button -->
+            <button type="button" class="btn btn-primary" id="updateExistingContact" [disabled]="(!contact?.name || contact.name === null || contact.name === '')
+                && (!contact?.surname || contact.surname === null || contact.surname === '')" [ladda]="isUpdating" *ngIf="mode === 'edit'"
+                (click)="updateExistingContact();">
+                <i class="fas fa-sync-alt"></i>
+                {{ 'GENERIC.ACTIONS.UPDATE' | translate }}
+            </button>
+
+
+
+            <!-- edit button -->
+            <button type="button" class="btn btn-primary" id="toggleEditMode" *ngIf="mode === 'preview'" (click)="mode = 'edit'">
+                <i class="fas fa-edit"></i>
+                {{ 'GENERIC.ACTIONS.EDIT' | translate }}
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+</form>

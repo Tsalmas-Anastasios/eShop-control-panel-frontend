@@ -1,0 +1,114 @@
+.badge {
+    font-size: 12px;
+    padding: 7px 9px;
+}
+
+
+
+// @import './colors';
+
+
+// .badge:before {
+//     content: '\2022';
+//     font-size: 20px;
+//     line-height: 0px;
+//     padding-top: 0;
+//     vertical-align: middle;
+// }
+
+// .badge-pending {
+//     color: #409EC3;
+//     background-color: #D4F6F8;
+//     cursor: pointer;
+//     padding: 7px 15px;
+//     border-radius: 50px;
+// }
+
+// .badge-pending:hover,
+// .badge-pending:focus {
+//     color: #ffffff;
+//     background-color: #117a8b;
+// }
+
+// .badge-pending:focus,
+// .badge-pending.focus {
+//     outline: 0;
+//     box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5);
+// }
+
+// .badge-completed {
+//     color: #32a852;
+//     background-color: #a1e4b2;
+//     cursor: pointer;
+//     padding: 7px 15px;
+//     border-radius: 50px;
+// }
+
+// .badge-completed:focus,
+// .badge-completed:hover {
+//     color: #ffffff;
+//     background-color: #1a8436;
+// }
+
+// .badge-completed:focus,
+// .badge-completed:hover {
+//     outline: 0;
+//     box-shadow: 0 0 0 0.2rem rgba(18, 122, 46, 0.5);
+// }
+
+
+// .badge-cancelled {
+//     color: #cc0000;
+//     background-color: #df8f8f;
+//     cursor: pointer;
+//     padding: 7px 15px;
+//     border-radius: 50px;
+// }
+
+// .badge-cancelled:hover,
+// .badge-cancelled:focus {
+//     color: #ffffff;
+//     background-color: #920000;
+// }
+
+// .badge-cancelled:focus,
+// .badge-cancelled.focus {
+//     outline: 0;
+//     box-shadow: 0 0 0 0.2rem rgba(134, 0, 0, 0.5);
+// }
+
+// .badge-confirmed,
+// .badge-active {
+//     color: #cedd00;
+//     background-color: #f7ff82;
+//     cursor: pointer;
+//     padding: 7px 15px;
+//     border-radius: 50px;
+// }
+
+// .badge-confirmed:focus,
+// .badge-confirmed:hover,
+// .badge-active:focus,
+// .badge-active:hover {
+//     color: #ffffff;
+//     background-color: #b6c300;
+// }
+
+// .badge-confirmed:focus,
+// .badge-confirmed:hover,
+// .badge-active:focus,
+// .badge-active:hover {
+//     outline: 0;
+//     box-shadow: 0 0 0 0.2rem rgb(165, 177, 0);
+// }
+
+
+
+
+// .badge-none {
+//     color: $grey-light-2;
+//     background-color: $grey-light-1;
+//     cursor: pointer;
+//     padding: 7px 15px;
+//     border-radius: 50px;
+// }

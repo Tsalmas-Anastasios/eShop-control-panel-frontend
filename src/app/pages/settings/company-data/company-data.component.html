@@ -1,0 +1,2182 @@
+<!-- general company data -->
+<form #companyGeneralInformation="ngForm" *ngIf="company_data">
+    <nb-accordion>
+
+        <nb-accordion-item [collapsed]="false" [expanded]="true">
+
+
+            <nb-accordion-item-header>
+                <h5>{{ 'VIEWS.SETTINGS.COMPANY_DATA.HEADER_GENERAL_INFORMATION' | translate }}</h5>
+            </nb-accordion-item-header>
+
+            <nb-accordion-item-body>
+
+
+                <div class="row">
+
+                    <!--business name -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+
+                            <label for="businessName" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.BUSINESS_NAME' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="businessName" id="businessName" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.BUSINESS_NAME' | translate }}"
+                                [(ngModel)]="company_data.business_name" #businessName="ngModel"
+                                aria-describedby="businessNameHelp" required
+                                [readonly]="!user_privileges?.company_data_edit" />
+
+                            <small id="businessNameHelp" class="form-text text-danger" *ngIf="businessName.invalid">
+
+                                <span *ngIf="businessName.errors.required
+                                            && (businessName.dirty
+                                            || businessName.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- shop name -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                        <label for="shopName" class="mb-1">
+                            {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_NAME' | translate }}
+                            <app-required-field [type]="'asterisk_tooltip'">
+                            </app-required-field>
+                        </label>
+
+                        <input type="text" name="shopName" id="shopName" class="form-control"
+                            placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_NAME' | translate }}"
+                            [(ngModel)]="company_data.shop_name" #shopName="ngModel" aria-describedby="shopNameHelp"
+                            (change)="createCompanyShopSlug('auto_change')"
+                            (keyup)="createCompanyShopSlug('auto_change')" required
+                            [readonly]="!user_privileges?.company_data_edit" />
+
+                        <small id="shopNameHelp" class="form-text text-danger" *ngIf="shopName.invalid">
+
+                            <span *ngIf="shopName.errors.required
+                                        && (shopName.dirty
+                                        || shopName.touched)">
+                                <app-required-field [type]="'input_invalid'">
+                                </app-required-field>
+                            </span>
+
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- shop's slug -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                        <label for="shopSlug" class="mb-1">
+                            {{ 'VIEWS.SETTINGS.COMPANY_DATA.SLUG' | translate }}
+                            <app-required-field [type]="'asterisk_tooltip'">
+                            </app-required-field>
+                        </label>
+
+                        <input type="text" name="shopSlug" id="shopSlug" class="form-control"
+                            placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.SLUG' | translate }}"
+                            [(ngModel)]="company_data.slug" #shopSlug="ngModel" aria-describedby="shopSlugHelp"
+                            (keyup)="createCompanyShopSlug('manual')" (change)="createCompanyShopSlug('manual')"
+                            required [readonly]="!user_privileges?.company_data_edit" />
+
+                        <small id="shopSlugHelp" class="form-text text-danger" *ngIf="shopSlug.invalid || slug_exists">
+
+                            <span *ngIf="shopSlug.errors.required
+                                        && (shopSlug.dirty
+                                        || shopSlug.touched)
+                                        && !slug_exists">
+                                <app-required-field [type]="'input_invalid'">
+                                </app-required-field>
+                            </span>
+
+
+                            <span *ngIf="slug_exists">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.THIS_SLUG_IS_ALREADY_EXISTS' | translate }}
+                            </span>
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="row">
+
+                    <!-- tax number -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                        <label for="taxNumber" class="mb-1">
+                            {{ 'VIEWS.SETTINGS.COMPANY_DATA.TAX_NUMBER' | translate }}
+                            <app-required-field [type]="'asterisk_tooltip'">
+                            </app-required-field>
+                        </label>
+
+                        <input type="text" name="taxNumber" id="taxNumber" class="form-control"
+                            placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.TAX_NUMBER' | translate }}"
+                            [(ngModel)]="company_data.tax_id" #taxNumber="ngModel" aria-describedby="taxNumberHelp"
+                            required [readonly]="!user_privileges?.company_data_edit" />
+
+                        <small id="taxNumberHelp" class="form-text text-danger" *ngIf="taxNumber.invalid">
+
+                            <span *ngIf="taxNumber.errors.required
+                                        && (taxNumber.dirty
+                                        || taxNumber.touched)">
+                                <app-required-field [type]="'input_invalid'">
+                                </app-required-field>
+                            </span>
+
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- tax authorization -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                        <label for="taxAuthorization" class="mb-1">
+                            {{ 'VIEWS.SETTINGS.COMPANY_DATA.TAX_AUTHORIZATION' | translate }}
+                            <app-required-field [type]="'asterisk_tooltip'">
+                            </app-required-field>
+                        </label>
+
+                        <input type="text" name="taxAuthorization" id="taxAuthorization" class="form-control"
+                            placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.TAX_AUTHORIZATION' | translate }}"
+                            [(ngModel)]="company_data.tax_authority" #taxAuthorization="ngModel"
+                            aria-describedby="taxAuthorizationHelp" required
+                            [readonly]="!user_privileges?.company_data_edit" />
+
+                        <small id="taxAuthorizationHelp" class="form-text text-danger" *ngIf="taxAuthorization.invalid">
+
+                            <span *ngIf="taxAuthorization.errors.required
+                                        && (taxAuthorization.dirty
+                                        || taxAuthorization.touched)">
+                                <app-required-field [type]="'input_invalid'">
+                                </app-required-field>
+                            </span>
+
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- coin -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                        <label for="coinChoosing" class="mb-1">
+                            {{ 'VIEWS.SETTINGS.COMPANY_DATA.COSTING_CURRENCY' | translate }}
+                            <app-required-field [type]="'asterisk_tooltip'">
+                            </app-required-field>
+                        </label>
+
+                        <ng-select id="coinChoosing" name="coinChoosing" #coinChoosing="ngModel"
+                            placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.COSTING_CURRENCY' | translate }}"
+                            [items]="coins" [multiple]="false" bindLabel="coin_symbol" bindValue="value"
+                            [closeOnSelect]="true" [dropdownPosition]="'bottom'" [(ngModel)]="chosen_coin"
+                            [minTermLength]="3" [disabled]="false" ng-required="true" [searchable]="true"
+                            aria-describedby="coinChoosingHelp" (ngModelChange)="coinChoosingChange()" required
+                            [readonly]="!user_privileges?.company_data_edit">
+
+                            <ng-template ng-option-tmp let-item="item">
+                                {{ item.coin_symbol }} <small>&nbsp;({{ item.coin_label }} - {{ item.coin_description
+                                    }})</small>
+                            </ng-template>
+
+                            <ng-template ng-label-tmp let-item="item">
+                                {{ item.coin_symbol }} <small>&nbsp;({{ item.coin_label }} - {{ item.coin_description
+                                    }})</small>
+                            </ng-template>
+
+                        </ng-select>
+
+                        <small id="coinChoosingHelp" class="form-text text-danger" *ngIf="coinChoosing.invalid">
+
+                            <span *ngIf="coinChoosing.errors.required
+                                        && (coinChoosing.dirty
+                                        || coinChoosing.touched)">
+                                <app-required-field [type]="'input_invalid'">
+                                </app-required-field>
+                            </span>
+
+                        </small>
+
+                    </div>
+
+
+
+
+                    <!-- products fee -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                        <label for="feePercentProducts" class="mb-1">
+                            {{ 'VIEWS.SETTINGS.COMPANY_DATA.ADDED_VAT_ON_PRODUCTS' | translate }}
+                            (%)
+                            <app-required-field [type]="'asterisk_tooltip'">
+                            </app-required-field>
+                        </label>
+
+                        <input type="text" name="feePercentProducts" id="feePercentProducts" class="form-control"
+                            placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.ADDED_VAT_ON_PRODUCTS' | translate }} (%)"
+                            [(ngModel)]="company_data.fee_percent" #feePercentProducts="ngModel"
+                            aria-describedby="feePercentProductsHelp" required
+                            [readonly]="!user_privileges?.company_data_edit" />
+
+
+                        <small id="feePercentProductsHelp" class="form-text text-danger"
+                            *ngIf="feePercentProducts.invalid">
+
+                            <span *ngIf="feePercentProducts.errors.required
+                                        && (feePercentProducts.dirty
+                                        || feePercentProducts.touched)">
+                                <app-required-field [type]="'input_invalid'">
+                                </app-required-field>
+                            </span>
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="row mt-4">
+                    <div class="col-12">
+
+                        <fieldset class="border rounded p-3">
+                            <legend class="w-auto">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.CONTACT_PERSON' | translate }}
+                            </legend>
+
+
+
+                            <div class="row">
+
+                                <!-- contact person first name -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                    <div class="form-group">
+
+                                        <label for="contactPersonFirstName" class="mb-1">
+                                            {{ 'VIEWS.SETTINGS.COMPANY_DATA.FIRST_NAME' | translate }}
+                                            <app-required-field [type]="'asterisk_tooltip'">
+                                            </app-required-field>
+                                        </label>
+
+                                        <input type="text" name="contactPersonFirstName" id="contactPersonFirstName"
+                                            class="form-control"
+                                            placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.FIRST_NAME' | translate }}"
+                                            [(ngModel)]="company_data.contact_person__first_name"
+                                            #contactPersonFirstName="ngModel"
+                                            aria-describedby="contactPersonFirstNameHelp" required
+                                            [readonly]="!user_privileges?.company_data_edit" />
+
+                                        <small id="contactPersonFirstNameHelp" class="form-text text-danger"
+                                            *ngIf="contactPersonFirstName.invalid">
+
+                                            <span *ngIf="contactPersonFirstName.errors.required
+                                            && (contactPersonFirstName.dirty
+                                            || contactPersonFirstName.touched)">
+                                                <app-required-field [type]="'input_invalid'">
+                                                </app-required-field>
+                                            </span>
+
+                                        </small>
+
+                                    </div>
+                                </div>
+
+
+                                <!-- contact person middle name -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                    <div class="form-group">
+
+                                        <label for="contactPersonMiddleName" class="mb-1">
+                                            {{ 'VIEWS.SETTINGS.COMPANY_DATA.MIDDLE_NAME' | translate }}
+                                        </label>
+
+                                        <input type="text" name="contactPersonMiddleName" id="contactPersonMiddleName"
+                                            class="form-control"
+                                            placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.MIDDLE_NAME' | translate }}"
+                                            [(ngModel)]="company_data.contact_person__middle"
+                                            #contactPersonMiddleName="ngModel"
+                                            aria-describedby="contactPersonMiddleNameHelp"
+                                            [readonly]="!user_privileges?.company_data_edit" />
+
+                                    </div>
+                                </div>
+
+
+
+
+                                <!-- contact person last name -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                    <label for="contactPersonLastName" class="mb-1">
+                                        {{ 'VIEWS.SETTINGS.COMPANY_DATA.LAST_NAME' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </label>
+
+                                    <input type="text" name="contactPersonLastName" id="contactPersonLastName"
+                                        class="form-control"
+                                        placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.LAST_NAME' | translate }}"
+                                        [(ngModel)]="company_data.contact_person__last_name"
+                                        #contactPersonLastName="ngModel" aria-describedby="contactPersonLastNameHelp"
+                                        required [readonly]="!user_privileges?.company_data_edit" />
+
+                                    <small id="contactPersonLastNameHelp" class="form-text text-danger"
+                                        *ngIf="contactPersonLastName.invalid">
+
+                                        <span *ngIf="contactPersonLastName.errors.required
+                                                    && (contactPersonLastName.dirty
+                                                    || contactPersonLastName.touched)">
+                                            <app-required-field [type]="'input_invalid'">
+                                            </app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+
+
+                            </div>
+
+                        </fieldset>
+
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+
+
+                    <!-- contact phone -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="contactPhone" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.CONTACT_TELEPHONE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24"
+                                [phoneValidation]="true" [separateDialCode]="true" id="contactPhone" name="contactPhone"
+                                #contactPhone="ngModel" [(ngModel)]="contact_telephone"
+                                aria-describedby="contactPhoneHelp"
+                                (ngModelChange)="formatTelephone('company_data', 'contact_phone', contact_telephone)"
+                                required [readonly]="!user_privileges?.company_data_edit">
+                            </ngx-intl-tel-input>
+
+                            <small id="contactPhoneHelp" class="form-text text-danger" *ngIf="contactPhone.invalid">
+
+                                <span *ngIf="contactPhone.errors.required
+                                            && (contactPhone.dirty
+                                            || contactPhone.touched)">
+                                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.PLEASE_ENTER_A_VALID_PHONE_NUMBER' |
+                                    translate }}
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- contact email -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+                            <label for="contactEmail" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.CONTACT_EMAIL' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="email" name="contactEmail" id="contactEmail" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.CONTACT_EMAIL' | translate }}"
+                                pattern="[^@\s]+@[^@\s]+\.[^@\s]+" [(ngModel)]="company_data.contact_email"
+                                #contactEmail="ngModel" aria-describedby="contactEmailHelp" required
+                                [readonly]="!user_privileges?.company_data_edit" />
+
+                            <small id="contactEmailHelp" class="form-text text-danger" *ngIf="contactEmail.invalid">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS' |
+                                translate }}
+                            </small>
+                        </div>
+                    </div>
+
+
+
+                    <!-- company phone -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+                            <label for="companyTelephone" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.COMPANY_TELEPHONE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24"
+                                [phoneValidation]="true" [separateDialCode]="true" id="companyTelephone"
+                                name="companyTelephone" #companyTelephone="ngModel" [(ngModel)]="company_telephone"
+                                aria-describedby="companyTelephoneHelp"
+                                (ngModelChange)="formatTelephone('company_data', 'company_phone', company_telephone)"
+                                required [readonly]="!user_privileges?.company_data_edit">
+                            </ngx-intl-tel-input>
+
+                            <small id="companyTelephoneHelp" class="form-text text-danger"
+                                *ngIf="companyTelephone.invalid">
+
+                                <span *ngIf="companyTelephone.errors.required
+                                        && (companyTelephone.dirty
+                                        || companyTelephone.touched)">
+                                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.PLEASE_ENTER_A_VALID_PHONE_NUMBER' |
+                                    translate }}
+                                </span>
+
+                            </small>
+                        </div>
+                    </div>
+
+
+
+                    <!-- company email -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="companyEmail" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.COMPANY_EMAIL' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="email" name="companyEmail" id="companyEmail" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.COMPANY_EMAIL' | translate }}"
+                                pattern="[^@\s]+@[^@\s]+\.[^@\s]+" [(ngModel)]="company_data.company_email"
+                                #companyEmail="ngModel" aria-describedby="companyEmailHelp" required
+                                [readonly]="!user_privileges?.company_data_edit" />
+
+                            <small id="companyEmailHelp" class="form-text text-danger" *ngIf="companyEmail.invalid">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS' |
+                                translate }}
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- shop type & description -->
+                <div class="row">
+
+                    <!-- shop type -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+
+                            <label for="shopType" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_TYPE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <ng-select id="shopType" name="shopType" #shopType="ngModel"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_TYPE' | translate }}"
+                                [items]="shop_types" [multiple]="false" bindLabel="label" bindValue="value"
+                                [closeOnSelect]="true" [dropdownPosition]="'top'" [(ngModel)]="company_data.shop_type"
+                                [minTermLength]="3" [disabled]="false" ng-required="true" [searchable]="true"
+                                aria-describedby="shopTypeHelp" required
+                                [readonly]="!user_privileges?.company_data_edit">
+                            </ng-select>
+
+                            <small id="shopTypeHelp" class="form-text text-danger" *ngIf="shopType.invalid">
+
+                                <span *ngIf="shopType.errors.required
+                                            && (shopType.dirty
+                                            || shopType.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- description -->
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+
+                        <div class="form-group">
+
+                            <label for="companyDescription" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.COMPANY_DESCRIPTION' | translate }}
+                            </label>
+
+                            <textarea type="text" name="companyDescription" id="companyDescription"
+                                class="form-control vertical-size-adjustment-only"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.COMPANY_DESCRIPTION' | translate }}"
+                                [(ngModel)]="company_data.company_description" #companyDescription="ngModel"
+                                aria-describedby="companyDescriptionHelp" rows="4"
+                                [readonly]="!user_privileges?.company_data_edit"></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- shop logo -->
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="form-group">
+
+                            <label for="shopLogo" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_LOGO' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <div class="d-block mt-2 mb-3 text-muted">
+                                <i class="fas fa-info-circle"></i>&nbsp;
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.WHY_USE_LOGO' | translate }}
+                            </div>
+
+                            <ngx-dropzone [multiple]="false" accept="image/jpg, image/jpeg, image/png"
+                                [maxFileSize]="imageMaxFileSize" (change)="onShopLogoFileSelect($event)"
+                                [required]="true" *ngIf="user_privileges?.company_data_edit">
+                                <ngx-dropzone-label>
+                                    {{ 'GENERIC.ACTIONS.UPLOAD_SHOP_LOGO' | translate }}
+                                </ngx-dropzone-label>
+
+                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                    *ngFor="let file of shopLogoFile" [file]="file" [removable]="true"
+                                    (removed)="onShopLogoFileRemove()">
+
+                                    <ngx-dropzone-label>
+                                        <!-- {{ file.name }} -->
+                                    </ngx-dropzone-label>
+
+                                </ngx-dropzone-image-preview>
+                            </ngx-dropzone>
+
+
+
+                            <div>
+
+                                <img [src]="company_data?.shop_logo" alt="Logo" style="max-width: 250px;"
+                                    *ngIf="!user_privileges?.company_data_edit" />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- account using Bizyhive cloud -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+
+                        <!-- using bizyhive cloud -->
+                        <app-using-bizyhive-cloud-collapse [using_bizyhive_cloud]="user?.using_bizyhive_cloud">
+                        </app-using-bizyhive-cloud-collapse>
+
+                    </div>
+                </div>
+
+
+            </nb-accordion-item-body>
+
+
+        </nb-accordion-item>
+
+    </nb-accordion>
+
+
+
+    <!-- address information -->
+    <nb-accordion class="mt-4">
+
+        <nb-accordion-item>
+
+
+            <nb-accordion-item-header>
+                <h5>{{ 'VIEWS.SETTINGS.COMPANY_DATA.ADDRESS_INFORMATION' | translate }}</h5>
+            </nb-accordion-item-header>
+
+            <nb-accordion-item-body>
+
+                <div class="row">
+
+                    <div class="col-12">
+
+
+                        <div class="row">
+
+
+                            <!-- street -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+                                <div class="form-group">
+
+                                    <label for="headquartersAddressStreet" class="mb-1">
+                                        {{ 'VIEWS.SETTINGS.COMPANY_DATA.STREET' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </label>
+
+                                    <input type="text" name="headquartersAddressStreet" id="headquartersAddressStreet"
+                                        class="form-control"
+                                        placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.STREET' | translate }}"
+                                        [(ngModel)]="company_data.headquarters_address__street"
+                                        #headquartersAddressStreet="ngModel"
+                                        aria-describedby="headquartersAddressStreetHelp" required
+                                        [readonly]="!user_privileges?.company_data_edit" />
+
+                                    <small id="headquartersAddressStreetHelp" class="form-text text-danger"
+                                        *ngIf="headquartersAddressStreet.invalid">
+
+                                        <span *ngIf="headquartersAddressStreet.errors.required
+                                                        && (headquartersAddressStreet.dirty
+                                                        || headquartersAddressStreet.touched)">
+                                            <app-required-field [type]="'input_invalid'">
+                                            </app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- postal code -->
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                <div class="form-group">
+
+                                    <label for="headquartersAddressPostalCode" class="mb-1">
+                                        {{ 'VIEWS.SETTINGS.COMPANY_DATA.POSTAL_CODE' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </label>
+
+                                    <input type="text" name="headquartersAddressPostalCode"
+                                        id="headquartersAddressPostalCode" class="form-control"
+                                        placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.POSTAL_CODE' | translate }}"
+                                        [(ngModel)]="company_data.headquarters_address__postal_code"
+                                        #headquartersAddressPostalCode="ngModel"
+                                        aria-describedby="headquartersAddressPostalCodeHelp" required
+                                        [readonly]="!user_privileges?.company_data_edit" />
+
+                                    <small id="headquartersAddressPostalCodeHelp" class="form-text text-danger"
+                                        *ngIf="headquartersAddressPostalCode.invalid">
+
+                                        <span *ngIf="headquartersAddressPostalCode.errors.required
+                                                        && (headquartersAddressPostalCode.dirty
+                                                        || headquartersAddressPostalCode.touched)">
+                                            <app-required-field [type]="'input_invalid'">
+                                            </app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- country -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+                                <div class="form-group">
+
+                                    <label for="headquartersAddressCountry" class="mb-1">
+                                        {{ 'VIEWS.SETTINGS.COMPANY_DATA.COUNTRY' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </label>
+
+                                    <ng-select id="headquartersAddressCountry" name="headquartersAddressCountry"
+                                        #headquartersAddressCountry="ngModel"
+                                        placeholder="{{ 'GENERIC.LABELS.COUNTRY' | translate }}" [items]="countries"
+                                        [multiple]="false" bindLabel="name" bindValue="name" [closeOnSelect]="true"
+                                        [dropdownPosition]="'bottom'"
+                                        [(ngModel)]="company_data.headquarters_address__country" [minTermLength]="3"
+                                        [disabled]="false" ng-required="true" [searchable]="true"
+                                        aria-describedby="headquartersAddressCountryHelp"
+                                        [readonly]="!user_privileges?.company_data_edit">
+
+                                        <ng-template ng-option-tmp let-item="item">
+                                            {{ item.name }}
+                                        </ng-template>
+
+                                    </ng-select>
+
+                                    <small id="headquartersAddressCountryHelp" class="form-text text-danger"
+                                        *ngIf="headquartersAddressCountry.invalid">
+
+                                        <span *ngIf="headquartersAddressCountry.errors.required
+                                                        && (headquartersAddressCountry.dirty
+                                                        || headquartersAddressCountry.touched)">
+                                            <app-required-field [type]="'input_invalid'">
+                                            </app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row">
+
+
+                            <!-- city -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="headquartersAddressCity" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.CITY' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="headquartersAddressCity" id="headquartersAddressCity"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.CITY' | translate }}"
+                                    [(ngModel)]="company_data.headquarters_address__city"
+                                    #headquartersAddressCity="ngModel" aria-describedby="headquartersAddressCityHelp"
+                                    required [readonly]="!user_privileges?.company_data_edit" />
+
+                                <small id="headquartersAddressCityHelp" class="form-text text-danger"
+                                    *ngIf="headquartersAddressCity.invalid">
+
+                                    <span *ngIf="headquartersAddressCity.errors.required
+                                                        && (headquartersAddressCity.dirty
+                                                        || headquartersAddressCity.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- state -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="headquartersAddressState" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.STATE' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="headquartersAddressState" id="headquartersAddressState"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.STATE' | translate }}"
+                                    [(ngModel)]="company_data.headquarters_address__state"
+                                    #headquartersAddressState="ngModel" aria-describedby="headquartersAddressStateHelp"
+                                    required [readonly]="!user_privileges?.company_data_edit" />
+
+                                <small id="headquartersAddressStateHelp" class="form-text text-danger"
+                                    *ngIf="headquartersAddressState.invalid">
+
+                                    <span *ngIf="headquartersAddressState.errors.required
+                                                        && (headquartersAddressState.dirty
+                                                        || headquartersAddressState.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- latitude -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="headquartersAddressLatitude" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.LATITUDE' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="headquartersAddressLatitude" id="headquartersAddressLatitude"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.LATITUDE' | translate }}"
+                                    [(ngModel)]="company_data.headquarters_latitude"
+                                    #headquartersAddressLatitude="ngModel"
+                                    aria-describedby="headquartersAddressLatitudeHelp" required
+                                    [readonly]="!user_privileges?.company_data_edit" />
+
+                                <small id="headquartersAddressLatitudeHelp" class="form-text text-danger"
+                                    *ngIf="headquartersAddressLatitude.invalid">
+
+                                    <span *ngIf="headquartersAddressLatitude.errors.required
+                                                        && (headquartersAddressLatitude.dirty
+                                                        || headquartersAddressLatitude.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- longitude -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="headquartersAddressLongitude" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.LONGITUDE' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="headquartersAddressLongitude" id="headquartersAddressLongitude"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.LONGITUDE' | translate }}"
+                                    [(ngModel)]="company_data.headquarters_longitude"
+                                    #headquartersAddressLongitude="ngModel"
+                                    aria-describedby="headquartersAddressLongitudeHelp" required
+                                    [readonly]="!user_privileges?.company_data_edit" />
+
+                                <small id="headquartersAddressLongitudeHelp" class="form-text text-danger"
+                                    *ngIf="headquartersAddressLongitude.invalid">
+
+                                    <span *ngIf="headquartersAddressLongitude.errors.required
+                                                        && (headquartersAddressLongitude.dirty
+                                                        || headquartersAddressLongitude.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </nb-accordion-item-body>
+
+
+        </nb-accordion-item>
+
+    </nb-accordion>
+
+
+
+    <!-- social media and other shop's links -->
+    <nb-accordion class="mt-4">
+        <nb-accordion-item class="mt-4">
+
+
+            <nb-accordion-item-header>
+                <h5>{{ 'VIEWS.SETTINGS.COMPANY_DATA.SOCIAL_MEDIA_AND_LINKS' | translate }}</h5>
+            </nb-accordion-item-header>
+
+            <nb-accordion-item-body>
+
+
+                <!-- shop url -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-7">
+
+                        <div class="form-group">
+
+                            <label for="shopUrl" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_URL' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="shopUrl" id="shopUrl" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_URL' | translate }}"
+                                [(ngModel)]="company_data.shop_url" #shopUrl="ngModel" aria-describedby="shopUrlHelp"
+                                required [readonly]="!user_privileges?.company_data_edit" />
+
+                            <small id="shopUrlHelp" class="form-text text-danger" *ngIf="shopUrl.invalid">
+
+                                <span *ngIf="shopUrl.errors.required
+                                            && (shopUrl.dirty
+                                            || shopUrl.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- facebook -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-7">
+
+                        <div class="form-group">
+
+                            <label for="facebookUrl" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.FACEBOOK' | translate }}
+                            </label>
+
+                            <input type="text" name="facebookUrl" id="facebookUrl" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.FACEBOOK' | translate }}"
+                                [(ngModel)]="company_data.facebook_url" #facebookUrl="ngModel"
+                                aria-describedby="facebookUrlHelp" [readonly]="!user_privileges?.company_data_edit" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+                <!-- instagram -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-7">
+
+                        <div class="form-group">
+                            <label for="instagramUrl" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.INSTAGRAM' | translate }}
+                            </label>
+
+                            <input type="text" name="instagramUrl" id="instagramUrl" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.INSTAGRAM' | translate }}"
+                                [(ngModel)]="company_data.instagram_url" #instagramUrl="ngModel"
+                                aria-describedby="instagramUrlHelp" [readonly]="!user_privileges?.company_data_edit" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+                <!-- x-twitter -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-7">
+
+                        <div class="form-group">
+
+                            <label for="xtwitterUrl" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.X_TWITTER' | translate }}
+                            </label>
+
+                            <input type="text" name="xtwitterUrl" id="xtwitterUrl" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.X_TWITTER' | translate }}"
+                                [(ngModel)]="company_data.twitter_url" #xtwitterUrl="ngModel"
+                                aria-describedby="xtwitterUrlHelp" [readonly]="!user_privileges?.company_data_edit" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- linkedin -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-7">
+
+                        <div class="form-group">
+
+                            <label for="linkedinUrl" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.LINKEDIN' | translate }}
+                            </label>
+
+                            <input type="text" name="linkedinUrl" id="linkedinUrl" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.LINKEDIN' | translate }}"
+                                [(ngModel)]="company_data.linkedIn_url" #linkedinUrl="ngModel"
+                                aria-describedby="linkedinUrlHelp" [readonly]="!user_privileges?.company_data_edit" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- youtube -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-7">
+
+                        <div class="form-group">
+
+                            <label for="youtubeUrl" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.YOUTUBE' | translate }}
+                            </label>
+
+                            <input type="text" name="youtubeUrl" id="youtubeUrl" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.YOUTUBE' | translate }}"
+                                [(ngModel)]="company_data.youtube_url" #youtubeUrl="ngModel"
+                                aria-describedby="youtubeUrlHelp" [readonly]="!user_privileges?.company_data_edit" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- whatsapp -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-7">
+
+                        <div class="form-group">
+
+                            <label for="whatsappUrl" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.WHATSAPP' | translate }}
+                            </label>
+
+                            <input type="text" name="whatsappUrl" id="whatsappUrl" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.WHATSAPP' | translate }}"
+                                [(ngModel)]="company_data.youtube_url" #whatsappUrl="ngModel"
+                                aria-describedby="whatsappUrlHelp" [readonly]="!user_privileges?.company_data_edit" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- tiktok -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-7">
+
+                        <div class="form-group">
+
+                            <label for="tiktokUrl" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.TIKTOK' | translate }}
+                            </label>
+
+                            <input type="text" name="tiktokUrl" id="tiktokUrl" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.TIKTOK' | translate }}"
+                                [(ngModel)]="company_data.tiktok_url" #tiktokUrl="ngModel"
+                                aria-describedby="tiktokUrlHelp" [readonly]="!user_privileges?.company_data_edit" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- google business url -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-7">
+
+                        <div class="form-group">
+
+                            <label for="googleBusinessUrl" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.GOOGLE_BUSINESS_URL' | translate }}
+                            </label>
+
+                            <input type="text" name="googleBusinessUrl" id="googleBusinessUrl" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.GOOGLE_BUSINESS_URL' | translate }}"
+                                [(ngModel)]="company_data.google_business_url" #googleBusinessUrl="ngModel"
+                                aria-describedby="googleBusinessUrlHelp"
+                                [readonly]="!user_privileges?.company_data_edit" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- google rate url -->
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-7">
+
+                        <div class="form-group">
+
+                            <label for="googleShopRateUrl" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.GOOGLE_RATE_URL' | translate }}
+                            </label>
+
+                            <input type="text" name="googleShopRateUrl" id="googleShopRateUrl" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.GOOGLE_RATE_URL' | translate }}"
+                                [(ngModel)]="company_data.shop_google_rate_url" #googleShopRateUrl="ngModel"
+                                aria-describedby="googleShopRateUrlHelp"
+                                [readonly]="!user_privileges?.company_data_edit" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </nb-accordion-item-body>
+
+        </nb-accordion-item>
+    </nb-accordion>
+
+
+
+
+
+    <!-- operating hours -->
+    <nb-accordion class="mt-4">
+        <nb-accordion-item class="mt-4">
+
+
+            <nb-accordion-item-header>
+                <h5>{{ 'VIEWS.SETTINGS.COMPANY_DATA.OPERATING_HOURS' | translate }}</h5>
+            </nb-accordion-item-header>
+
+            <nb-accordion-item-body>
+
+
+                <div class="row">
+
+                    <!-- tab titles -->
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                        <div class="nav flex-column nav-pills" id="operating-hours-v-pills-tab" role="tablist"
+                            aria-orientation="vertical">
+
+
+                            <button type="button" class="nav-link active" id="operating-hours-v-pills-tab-monday"
+                                data-toggle="pill" data-target="#operating-hours-v-pills-tab-monday-content"
+                                aria-controls="operating-hours-v-pills-tab-monday" aria-selected="true">
+                                {{ 'GENERIC.LABELS.MONDAY' | translate }}
+                            </button>
+
+
+                            <button type="button" class="nav-link" id="operating-hours-v-pills-tab-tuesday"
+                                data-toggle="pill" data-target="#operating-hours-v-pills-tab-tuesday-content"
+                                aria-controls="operating-hours-v-pills-tab-tuesday" aria-selected="true">
+                                {{ 'GENERIC.LABELS.TUESDAY' | translate }}
+                            </button>
+
+
+
+                            <button type="button" class="nav-link" id="operating-hours-v-pills-tab-wednesday"
+                                data-toggle="pill" data-target="#operating-hours-v-pills-tab-wednesday-content"
+                                aria-controls="operating-hours-v-pills-tab-wednesday" aria-selected="true">
+                                {{ 'GENERIC.LABELS.WEDNESDAY' | translate }}
+                            </button>
+
+
+
+                            <button type="button" class="nav-link" id="operating-hours-v-pills-tab-thursday"
+                                data-toggle="pill" data-target="#operating-hours-v-pills-tab-thursday-content"
+                                aria-controls="operating-hours-v-pills-tab-thursday" aria-selected="true">
+                                {{ 'GENERIC.LABELS.THURSDAY' | translate }}
+                            </button>
+
+
+                            <button type="button" class="nav-link" id="operating-hours-v-pills-tab-friday"
+                                data-toggle="pill" data-target="#operating-hours-v-pills-tab-friday-content"
+                                aria-controls="operating-hours-v-pills-tab-friday" aria-selected="true">
+                                {{ 'GENERIC.LABELS.FRIDAY' | translate }}
+                            </button>
+
+
+
+                            <button type="button" class="nav-link" id="operating-hours-v-pills-tab-saturday"
+                                data-toggle="pill" data-target="#operating-hours-v-pills-tab-saturday-content"
+                                aria-controls="operating-hours-v-pills-tab-saturday" aria-selected="true">
+                                {{ 'GENERIC.LABELS.SATURDAY' | translate }}
+                            </button>
+
+
+
+                            <button type="button" class="nav-link" id="operating-hours-v-pills-tab-sunday"
+                                data-toggle="pill" data-target="#operating-hours-v-pills-tab-sunday-content"
+                                aria-controls="operating-hours-v-pills-tab-sunday" aria-selected="true">
+                                {{ 'GENERIC.LABELS.SUNDAY' | translate }}
+                            </button>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- tabs content here -->
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-9">
+                        <div class="tab-content">
+
+
+                            <!-- monday content -->
+                            <div class="tab-pane fade show active pl-3 pr-3"
+                                id="operating-hours-v-pills-tab-monday-content" role="tabpanel"
+                                aria-labelledby="operating-hours-v-pills-tab-monday-content">
+
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <h6 class="text-center">{{ 'GENERIC.LABELS.MONDAY' | translate }}</h6>
+                                    </div>
+                                </div>
+
+                                <hr class="mb-4" />
+
+                                <div class="row">
+
+                                    <!-- shop closed -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-6 text-center">
+
+                                        <div class="form-group">
+
+                                            <input type="checkbox" name="closeOnMonday" id="closeOnMonday"
+                                                class="form-check-input"
+                                                [(ngModel)]="company_data.operating_hours__monday_close"
+                                                #closeOnMonday="ngModel" aria-describedby="closeOnMondayHelp"
+                                                [readonly]="!user_privileges?.company_data_edit" />
+
+                                            <label for="closeOnMonday" class="form-check-label">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_CLOSED' | translate }}
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- start hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursMondayOpening" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursMondayOpening"
+                                                name="operatingHoursMondayOpening"
+                                                #operatingHoursMondayOpening="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__monday_start"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__monday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursMondayOpeningHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursMondayOpeningHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursMondayOpening.invalid">
+
+                                                <span *ngIf="operatingHoursMondayOpening.errors.required
+                                                            && (operatingHoursMondayOpening.dirty
+                                                            || operatingHoursMondayOpening.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- closing hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursMondayClosing" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursMondayClosing"
+                                                name="operatingHoursMondayClosing"
+                                                #operatingHoursMondayClosing="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__monday_end"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__monday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursMondayClosingHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursMondayClosingHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursMondayClosing.invalid">
+
+                                                <span *ngIf="operatingHoursMondayClosing.errors.required
+                                                            && (operatingHoursMondayClosing.dirty
+                                                            || operatingHoursMondayClosing.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- tuesday content -->
+                            <div class="tab-pane fade pl-3 pr-3" id="operating-hours-v-pills-tab-tuesday-content"
+                                role="tabpanel" aria-labelledby="operating-hours-v-pills-tab-tuesday-content">
+
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <h6 class="text-center">{{ 'GENERIC.LABELS.TUESDAY' | translate }}</h6>
+                                    </div>
+                                </div>
+
+                                <hr class="mb-4" />
+
+                                <div class="row">
+
+                                    <!-- shop closed -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-6 text-center">
+
+                                        <div class="form-group">
+
+                                            <input type="checkbox" name="closeOnTuesday" id="closeOnTuesday"
+                                                class="form-check-input"
+                                                [(ngModel)]="company_data.operating_hours__tuesday_close"
+                                                #closeOnTuesday="ngModel" aria-describedby="closeOnTuesdayHelp"
+                                                [readonly]="!user_privileges?.company_data_edit" />
+
+                                            <label for="closeOnTuesday" class="form-check-label">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_CLOSED' | translate }}
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- start hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursTuesdayOpening" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursTuesdayOpening"
+                                                name="operatingHoursTuesdayOpening"
+                                                #operatingHoursTuesdayOpening="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__tuesday_start"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__tuesday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursTuesdayOpeningHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursTuesdayOpeningHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursTuesdayOpening.invalid">
+
+                                                <span *ngIf="operatingHoursTuesdayOpening.errors.required
+                                                            && (operatingHoursTuesdayOpening.dirty
+                                                            || operatingHoursTuesdayOpening.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- closing hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursTuesdayClosing" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursTuesdayClosing"
+                                                name="operatingHoursTuesdayClosing"
+                                                #operatingHoursTuesdayClosing="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__tuesday_end"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__tuesday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursTuesdayClosingHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursTuesdayClosingHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursTuesdayClosing.invalid">
+
+                                                <span *ngIf="operatingHoursTuesdayClosing.errors.required
+                                                            && (operatingHoursTuesdayClosing.dirty
+                                                            || operatingHoursTuesdayClosing.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- wednesday content -->
+                            <div class="tab-pane fade pl-3 pr-3" id="operating-hours-v-pills-tab-wednesday-content"
+                                role="tabpanel" aria-labelledby="operating-hours-v-pills-tab-wednesday-content">
+
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <h6 class="text-center">{{ 'GENERIC.LABELS.WEDNESDAY' | translate }}</h6>
+                                    </div>
+                                </div>
+
+                                <hr class="mb-4" />
+
+                                <div class="row">
+
+                                    <!-- shop closed -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-6 text-center">
+
+                                        <div class="form-group">
+
+                                            <input type="checkbox" name="closeOnWednesday" id="closeOnWednesday"
+                                                class="form-check-input"
+                                                [(ngModel)]="company_data.operating_hours__wednesday_close"
+                                                #closeOnWednesday="ngModel" aria-describedby="closeOnWednesdayHelp"
+                                                [readonly]="!user_privileges?.company_data_edit" />
+
+                                            <label for="closeOnMonday" class="form-check-label">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_CLOSED' | translate }}
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- start hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursWednesdayOpening" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursWednesdayOpening"
+                                                name="operatingHoursWednesdayOpening"
+                                                #operatingHoursWednesdayOpening="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__wednesday_start"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__wednesday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursWednesdayOpeningHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursWednesdayOpeningHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursWednesdayOpening.invalid">
+
+                                                <span *ngIf="operatingHoursWednesdayOpening.errors.required
+                                                            && (operatingHoursWednesdayOpening.dirty
+                                                            || operatingHoursWednesdayOpening.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- closing hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursWednesdayClosing" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursWednesdayClosing"
+                                                name="operatingHoursWednesdayClosing"
+                                                #operatingHoursWednesdayClosing="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__wednesday_end"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__wednesday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursWednesdayClosingHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursWednesdayClosingHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursWednesdayClosing.invalid">
+
+                                                <span *ngIf="operatingHoursWednesdayClosing.errors.required
+                                                            && (operatingHoursWednesdayClosing.dirty
+                                                            || operatingHoursWednesdayClosing.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- thursday content -->
+                            <div class="tab-pane fade pl-3 pr-3" id="operating-hours-v-pills-tab-thursday-content"
+                                role="tabpanel" aria-labelledby="operating-hours-v-pills-tab-thursday-content">
+
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <h6 class="text-center">{{ 'GENERIC.LABELS.THURSDAY' | translate }}</h6>
+                                    </div>
+                                </div>
+
+                                <hr class="mb-4" />
+
+                                <div class="row">
+
+                                    <!-- shop closed -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-6 text-center">
+
+                                        <div class="form-group">
+
+                                            <input type="checkbox" name="closeOnThursday" id="closeOnThursday"
+                                                class="form-check-input"
+                                                [(ngModel)]="company_data.operating_hours__thursday_close"
+                                                #closeOnThursday="ngModel" aria-describedby="closeOnThursdayHelp"
+                                                [readonly]="!user_privileges?.company_data_edit" />
+
+                                            <label for="closeOnThursday" class="form-check-label">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_CLOSED' | translate }}
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- start hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursThursdayOpening" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursThursdayOpening"
+                                                name="operatingHoursThursdayOpening"
+                                                #operatingHoursThursdayOpening="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__thursday_start"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__thursday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursThursdayOpeningHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursThursdayOpeningHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursThursdayOpening.invalid">
+
+                                                <span *ngIf="operatingHoursThursdayOpening.errors.required
+                                                            && (operatingHoursThursdayOpening.dirty
+                                                            || operatingHoursThursdayOpening.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- closing hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursThursdayClosing" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursThursdayClosing"
+                                                name="operatingHoursThursdayClosing"
+                                                #operatingHoursThursdayClosing="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__thursday_end"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__thursday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursThursdayClosingHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursThursdayClosingHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursThursdayClosing.invalid">
+
+                                                <span *ngIf="operatingHoursThursdayClosing.errors.required
+                                                            && (operatingHoursThursdayClosing.dirty
+                                                            || operatingHoursThursdayClosing.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- friday content -->
+                            <div class="tab-pane fade pl-3 pr-3" id="operating-hours-v-pills-tab-friday-content"
+                                role="tabpanel" aria-labelledby="operating-hours-v-pills-tab-friday-content">
+
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <h6 class="text-center">{{ 'GENERIC.LABELS.FRIDAY' | translate }}</h6>
+                                    </div>
+                                </div>
+
+                                <hr class="mb-4" />
+
+                                <div class="row">
+
+                                    <!-- shop closed -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-6 text-center">
+
+                                        <div class="form-group">
+
+                                            <input type="checkbox" name="closeOnFriday" id="closeOnFriday"
+                                                class="form-check-input"
+                                                [(ngModel)]="company_data.operating_hours__friday_close"
+                                                #closeOnFriday="ngModel" aria-describedby="closeOnFridayHelp"
+                                                [readonly]="!user_privileges?.company_data_edit" />
+
+                                            <label for="closeOnFriday" class="form-check-label">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_CLOSED' | translate }}
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- start hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursFridayOpening" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursFridayOpening"
+                                                name="operatingHoursFridayOpening"
+                                                #operatingHoursFridayOpening="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__friday_start"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__friday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursFridayOpeningHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursFridayOpeningHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursFridayOpening.invalid">
+
+                                                <span *ngIf="operatingHoursFridayOpening.errors.required
+                                                            && (operatingHoursFridayOpening.dirty
+                                                            || operatingHoursFridayOpening.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- closing hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursFridayClosing" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursFridayClosing"
+                                                name="operatingHoursFridayClosing"
+                                                #operatingHoursFridayClosing="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__friday_end"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__friday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursFridayClosingHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursFridayClosingHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursFridayClosing.invalid">
+
+                                                <span *ngIf="operatingHoursFridayClosing.errors.required
+                                                            && (operatingHoursFridayClosing.dirty
+                                                            || operatingHoursFridayClosing.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- saturday content -->
+                            <div class="tab-pane fade pl-3 pr-3" id="operating-hours-v-pills-tab-saturday-content"
+                                role="tabpanel" aria-labelledby="operating-hours-v-pills-tab-saturday-content">
+
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <h6 class="text-center">{{ 'GENERIC.LABELS.SATURDAY' | translate }}</h6>
+                                    </div>
+                                </div>
+
+                                <hr class="mb-4" />
+
+                                <div class="row">
+
+                                    <!-- shop closed -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-6 text-center">
+
+                                        <div class="form-group">
+
+                                            <input type="checkbox" name="closeOnSaturday" id="closeOnSaturday"
+                                                class="form-check-input"
+                                                [(ngModel)]="company_data.operating_hours__saturday_close"
+                                                #closeOnSaturday="ngModel" aria-describedby="closeOnSaturdayHelp"
+                                                [readonly]="!user_privileges?.company_data_edit" />
+
+                                            <label for="closeOnSaturday" class="form-check-label">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_CLOSED' | translate }}
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- start hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursSaturdayOpening" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursSaturdayOpening"
+                                                name="operatingHoursSaturdayOpening"
+                                                #operatingHoursSaturdayOpening="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__saturday_start"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__saturday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursSaturdayOpeningHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursSaturdayOpeningHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursSaturdayOpening.invalid">
+
+                                                <span *ngIf="operatingHoursSaturdayOpening.errors.required
+                                                            && (operatingHoursSaturdayOpening.dirty
+                                                            || operatingHoursSaturdayOpening.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- closing hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursSaturdayClosing" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursSaturdayClosing"
+                                                name="operatingHoursSaturdayClosing"
+                                                #operatingHoursSaturdayClosing="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__saturday_end"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__saturday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursSaturdayClosingHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursSaturdayClosingHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursSaturdayClosing.invalid">
+
+                                                <span *ngIf="operatingHoursSaturdayClosing.errors.required
+                                                            && (operatingHoursSaturdayClosing.dirty
+                                                            || operatingHoursSaturdayClosing.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- sunday content -->
+                            <div class="tab-pane fade pl-3 pr-3" id="operating-hours-v-pills-tab-sunday-content"
+                                role="tabpanel" aria-labelledby="operating-hours-v-pills-tab-sunday-content">
+
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <h6 class="text-center">{{ 'GENERIC.LABELS.SUNDAY' | translate }}</h6>
+                                    </div>
+                                </div>
+
+                                <hr class="mb-4" />
+
+                                <div class="row">
+
+                                    <!-- shop closed -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-6 text-center">
+
+                                        <div class="form-group">
+
+                                            <input type="checkbox" name="closeOnSunday" id="closeOnSunday"
+                                                class="form-check-input"
+                                                [(ngModel)]="company_data.operating_hours__sunday_close"
+                                                #closeOnSunday="ngModel" aria-describedby="closeOnSundayHelp"
+                                                [readonly]="!user_privileges?.company_data_edit" />
+
+                                            <label for="closeOnSunday" class="form-check-label">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.SHOP_CLOSED' | translate }}
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- start hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursSundayOpening" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursSundayOpening"
+                                                name="operatingHoursSundayOpening"
+                                                #operatingHoursSundayOpening="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.OPENING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__sunday_start"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__sunday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursSundayOpeningHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursSundayOpeningHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursSundayOpening.invalid">
+
+                                                <span *ngIf="operatingHoursSundayOpening.errors.required
+                                                            && (operatingHoursSundayOpening.dirty
+                                                            || operatingHoursSundayOpening.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- closing hour -->
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+
+                                            <label for="operatingHoursSundayClosing" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <ng-select id="operatingHoursSundayClosing"
+                                                name="operatingHoursSundayClosing"
+                                                #operatingHoursSundayClosing="ngModel"
+                                                placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.CLOSING_HOUR' | translate }}"
+                                                [items]="timeslots" [multiple]="false" bindLabel="label"
+                                                bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                                [(ngModel)]="company_data.operating_hours__sunday_end"
+                                                [minTermLength]="3"
+                                                [disabled]="company_data.operating_hours__sunday_close"
+                                                ng-required="true" [searchable]="true"
+                                                aria-describedby="operatingHoursSundayClosingHelp"
+                                                [readonly]="!user_privileges?.company_data_edit">
+                                            </ng-select>
+
+
+                                            <small id="operatingHoursSundayClosingHelp" class="form-text text-danger"
+                                                *ngIf="operatingHoursSundayClosing.invalid">
+
+                                                <span *ngIf="operatingHoursSundayClosing.errors.required
+                                                            && (operatingHoursSundayClosing.dirty
+                                                            || operatingHoursSundayClosing.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </nb-accordion-item-body>
+
+
+        </nb-accordion-item>
+    </nb-accordion>
+
+
+
+
+    <div class="row mt-5">
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+
+            <button type="button" class="btn btn-primary" id="submitCompanyDataForm" [ladda]="isSubmitting"
+                [disabled]="companyGeneralInformation.invalid" (click)="submitForm()">
+                <span *ngIf="!company_data?.rec_id && user_privileges?.company_data_edit">
+                    <i class="fas fa-save"></i>
+                    {{ 'GENERIC.ACTIONS.SAVE' | translate }}
+                </span>
+                <span *ngIf="company_data?.rec_id && user_privileges?.company_data_edit">
+                    <i class="fas fa-sync-alt"></i>
+                    {{ 'GENERIC.ACTIONS.UPDATE' | translate }}
+                </span>
+            </button>
+
+        </div>
+
+
+
+        <!-- why we need these information ? -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-right">
+            <a href="javascript:void(0)" data-toggle="modal" data-target="#whyWeNeedTheseInformationModal">
+                {{ 'VIEWS.SETTINGS.COMPANY_DATA.WHY_DO_WE_NEED_THESE_INFORMATION' | translate }}
+            </a>
+        </div>
+
+    </div>
+
+
+</form>
+
+
+
+
+
+
+<!-- why we need these information modal -->
+<div class="modal fade" id="whyWeNeedTheseInformationModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.WHY_DO_WE_NEED_THESE_INFORMATION' | translate }}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-why-company-data-are-important></app-why-company-data-are-important>
+            </div>
+        </div>
+    </div>
+</div>

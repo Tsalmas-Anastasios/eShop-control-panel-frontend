@@ -1,0 +1,18 @@
+::-moz-selection {
+    /* Code for Firefox */
+    color: $selection-letters-color;
+    background: $selection-background-color;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+::selection {
+    color: $selection-letters-color;
+    background: $selection-background-color;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+}

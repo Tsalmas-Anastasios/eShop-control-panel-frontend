@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="387.49866mm"
+   height="390.24338mm"
+   viewBox="0 0 387.49866 390.24338"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09, custom)"
+   sodipodi:docname="logo-icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.36257715"
+     inkscape:cx="366.81849"
+     inkscape:cy="546.09068"
+     inkscape:window-width="1920"
+     inkscape:window-height="1015"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g324" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="powermask"
+       id="path-effect1233"
+       is_visible="true"
+       lpeversion="1"
+       uri="#mask-powermask-path-effect1233"
+       invert="false"
+       hide_mask="false"
+       background="true"
+       background_color="#ffffffff" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect385"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="20"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect383"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="20"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect381"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="20"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <rect
+       x="4444.0933"
+       y="16.070337"
+       width="3550.7209"
+       height="1090.29"
+       id="rect4451-6" />
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Drop Shadow"
+       id="filter331"
+       x="-0.1552467"
+       y="-0.1727208"
+       width="1.3109246"
+       height="1.3502394">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood321" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite323" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="15"
+         result="blur"
+         id="feGaussianBlur325" />
+      <feOffset
+         dx="0.1"
+         dy="1"
+         result="offset"
+         id="feOffset327" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite329" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Drop Shadow"
+       id="filter331-6"
+       x="-0.15388973"
+       y="-0.17297381"
+       width="1.3082069"
+       height="1.3507524">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood321-7" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite323-5" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="15"
+         result="blur"
+         id="feGaussianBlur325-3" />
+      <feOffset
+         dx="0.1"
+         dy="1"
+         result="offset"
+         id="feOffset327-5" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite329-6" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath618">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+         x="-153.28929"
+         y="-350.4183"
+         id="text622"><tspan
+           sodipodi:role="line"
+           id="tspan620"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+           x="-153.28929"
+           y="-350.4183"></tspan></text>
+    </clipPath>
+    <filter
+       id="mask-powermask-path-effect1223_inverse"
+       inkscape:label="filtermask-powermask-path-effect1223"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect1223_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect1223_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask-powermask-path-effect1233">
+      <path
+         id="mask-powermask-path-effect1233_box"
+         style="fill:#ffffff;fill-opacity:1"
+         d="m 1205.2751,-262.46185 h 389.4986 v 392.24348 h -389.4986 z" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#011645;stroke-width:0.860999"
+         id="rect1231"
+         width="644.69342"
+         height="402.85641"
+         x="-419.85284"
+         y="-570.28406"
+         clip-path="url(#clipPath618)"
+         inkscape:transform-center-x="4.4396432"
+         inkscape:transform-center-y="47.632742"
+         transform="matrix(2.4036682,0,0,2.4036682,1598.8119,873.99849)" />
+    </mask>
+    <filter
+       id="mask-powermask-path-effect1233_inverse"
+       inkscape:label="filtermask-powermask-path-effect1233"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect1233_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect1233_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1345">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+         x="-100.76588"
+         y="58.538208"
+         id="text1349"><tspan
+           sodipodi:role="line"
+           id="tspan1347"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+           x="-100.76588"
+           y="58.538208"></tspan></text>
+    </clipPath>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask-powermask-path-effect1233-0">
+      <path
+         id="mask-powermask-path-effect1233_box-6"
+         style="fill:#ffffff;fill-opacity:1"
+         d="m 1205.2751,-262.46185 h 389.4986 v 392.24348 h -389.4986 z" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#011645;stroke-width:0.860999"
+         id="rect1231-2"
+         width="644.69342"
+         height="402.85641"
+         x="-419.85284"
+         y="-570.28406"
+         clip-path="url(#clipPath618-6)"
+         inkscape:transform-center-x="4.4396432"
+         inkscape:transform-center-y="47.632742"
+         transform="matrix(2.4036682,0,0,2.4036682,1598.8119,873.99849)" />
+    </mask>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath618-6">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+         x="-153.28929"
+         y="-350.4183"
+         id="text622-1"><tspan
+           sodipodi:role="line"
+           id="tspan620-8"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+           x="-153.28929"
+           y="-350.4183"></tspan></text>
+    </clipPath>
+    <inkscape:path-effect
+       effect="powermask"
+       id="path-effect1233-7"
+       is_visible="true"
+       lpeversion="1"
+       uri="#mask-powermask-path-effect1233-7"
+       invert="false"
+       hide_mask="false"
+       background="true"
+       background_color="#ffffffff" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect381-9"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="20"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect383-2"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="20"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect385-0"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="20"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1345-2">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+         x="-100.76588"
+         y="58.538208"
+         id="text1349-3"><tspan
+           sodipodi:role="line"
+           id="tspan1347-7"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+           x="-100.76588"
+           y="58.538208"></tspan></text>
+    </clipPath>
+    <filter
+       id="mask-powermask-path-effect1233_inverse-5"
+       inkscape:label="filtermask-powermask-path-effect1233"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect1233_primitive1-9"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect1233_primitive2-2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask-powermask-path-effect1233-7">
+      <path
+         id="path1482"
+         style="fill:#ffffff;fill-opacity:1"
+         d="m 1205.2751,-262.46185 h 389.4986 v 392.24348 h -389.4986 z" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#011645;stroke-width:0.860999"
+         id="rect1484"
+         width="644.69342"
+         height="402.85641"
+         x="-419.85284"
+         y="-570.28406"
+         clip-path="url(#clipPath618-6)"
+         inkscape:transform-center-x="4.4396432"
+         inkscape:transform-center-y="47.632742"
+         transform="matrix(2.4036682,0,0,2.4036682,1598.8119,873.99849)" />
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask-powermask-path-effect1233-6">
+      <path
+         id="mask-powermask-path-effect1233_box-1"
+         style="fill:#ffffff;fill-opacity:1"
+         d="m 1205.2751,-262.46185 h 389.4986 v 392.24348 h -389.4986 z" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#011645;stroke-width:0.860999"
+         id="rect1231-29"
+         width="644.69342"
+         height="402.85641"
+         x="-419.85284"
+         y="-570.28406"
+         clip-path="url(#clipPath618-3)"
+         inkscape:transform-center-x="4.4396432"
+         inkscape:transform-center-y="47.632742"
+         transform="matrix(2.4036682,0,0,2.4036682,1598.8119,873.99849)" />
+    </mask>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath618-3">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+         x="-153.28929"
+         y="-350.4183"
+         id="text622-19"><tspan
+           sodipodi:role="line"
+           id="tspan620-4"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+           x="-153.28929"
+           y="-350.4183"></tspan></text>
+    </clipPath>
+    <inkscape:path-effect
+       effect="powermask"
+       id="path-effect1233-78"
+       is_visible="true"
+       lpeversion="1"
+       uri="#mask-powermask-path-effect1233-78"
+       invert="false"
+       hide_mask="false"
+       background="true"
+       background_color="#ffffffff" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect381-4"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="20"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect383-5"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="20"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect385-03"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1 @ F,0,0,1,0,5.2916667,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="20"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1345-6">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+         x="-100.76588"
+         y="58.538208"
+         id="text1349-1"><tspan
+           sodipodi:role="line"
+           id="tspan1347-0"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96.2038px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:37.8756"
+           x="-100.76588"
+           y="58.538208"></tspan></text>
+    </clipPath>
+    <filter
+       id="mask-powermask-path-effect1233_inverse-6"
+       inkscape:label="filtermask-powermask-path-effect1233"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect1233_primitive1-3"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect1233_primitive2-20"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask-powermask-path-effect1233-78">
+      <path
+         id="mask-powermask-path-effect1233-78_box"
+         style="fill:#ffffff;fill-opacity:1"
+         d="m 1205.2751,-262.46185 h 389.4986 v 392.24348 h -389.4986 z" />
+      <path
+         id="path1792"
+         style="fill:#ffffff;fill-opacity:1"
+         d="m 1205.2751,-262.46185 h 389.4986 v 392.24348 h -389.4986 z" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#011645;stroke-width:0.860999"
+         id="rect1794"
+         width="644.69342"
+         height="402.85641"
+         x="-419.85284"
+         y="-570.28406"
+         clip-path="url(#clipPath618-3)"
+         inkscape:transform-center-x="4.4396432"
+         inkscape:transform-center-y="47.632742"
+         transform="matrix(2.4036682,0,0,2.4036682,1598.8119,873.99849)" />
+    </mask>
+    <filter
+       id="mask-powermask-path-effect1233-78_inverse"
+       inkscape:label="filtermask-powermask-path-effect1233-78"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect1233-78_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect1233-78_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(496.57798,-267.1406)">
+    <g
+       id="g324"
+       transform="translate(-1623.0956,543.57616)">
+      <path
+         sodipodi:type="star"
+         style="fill:none;stroke:#a50021;stroke-width:13.9839;stroke-dasharray:none;stroke-opacity:1"
+         id="path234-0"
+         inkscape:flatsided="true"
+         sodipodi:sides="6"
+         sodipodi:cx="22.234364"
+         sodipodi:cy="44.452534"
+         sodipodi:r1="76.126022"
+         sodipodi:r2="65.927071"
+         sodipodi:arg1="0.52402057"
+         sodipodi:arg2="1.0476193"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         d="M 88.145372,82.543349 22.202254,120.57855 -43.708755,82.487734 -43.676645,6.3617183 22.266473,-31.673482 88.177482,6.4173336 Z"
+         transform="matrix(1.1525084,0,0,0.99834465,532.78038,-205.36786)"
+         inkscape:export-filename="logo-icon.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <path
+         sodipodi:type="star"
+         style="fill:none;stroke:#d8560e;stroke-width:11.6789;stroke-dasharray:none;stroke-opacity:1"
+         id="path234-3-6"
+         inkscape:flatsided="true"
+         sodipodi:sides="6"
+         sodipodi:cx="22.234364"
+         sodipodi:cy="44.452534"
+         sodipodi:r1="76.126022"
+         sodipodi:r2="65.927071"
+         sodipodi:arg1="0.52402057"
+         sodipodi:arg2="1.0476193"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         d="M 88.145372,82.543349 22.202254,120.57855 -43.708755,82.487734 -43.676645,6.3617183 22.266473,-31.673482 88.177482,6.4173336 Z"
+         transform="matrix(1.3799772,0,0,1.1953864,732.11043,-220.63452)" />
+      <path
+         sodipodi:type="star"
+         style="fill:none;stroke:#e6af00;stroke-width:10.0262;stroke-dasharray:none;stroke-opacity:1"
+         id="path234-6-2"
+         inkscape:flatsided="true"
+         sodipodi:sides="6"
+         sodipodi:cx="22.234364"
+         sodipodi:cy="44.452534"
+         sodipodi:r1="76.126022"
+         sodipodi:r2="65.927071"
+         sodipodi:arg1="0.52402057"
+         sodipodi:arg2="1.0476193"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         d="M 88.145372,82.543349 22.202254,120.57855 -43.708755,82.487734 -43.676645,6.3617183 22.266473,-31.673482 88.177482,6.4173336 Z"
+         transform="matrix(1.607446,0,0,1.3924281,612.9915,-46.433182)" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:208.124px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:81.9386;filter:url(#filter331)"
+         x="522.12567"
+         y="-1.104514"
+         id="text476"><tspan
+           sodipodi:role="line"
+           id="tspan474"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:208.124px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#02133e;fill-opacity:1;stroke-width:81.9386"
+           x="522.12567"
+           y="-1.104514"></tspan></text>
+      <g
+         id="g1217"
+         mask="url(#mask-powermask-path-effect1233)"
+         inkscape:path-effect="#path-effect1233"
+         transform="translate(-79.75746,-14.973725)"
+         inkscape:export-filename="../../../../../../../Desktop/g1217.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96">
+        <path
+           sodipodi:type="star"
+           style="fill:none;stroke:#a50021;stroke-width:13.9839;stroke-dasharray:none;stroke-opacity:1"
+           id="path234-0-2"
+           inkscape:flatsided="true"
+           sodipodi:sides="6"
+           sodipodi:cx="22.234364"
+           sodipodi:cy="44.452534"
+           sodipodi:r1="76.126022"
+           sodipodi:r2="65.927071"
+           sodipodi:arg1="0.52402057"
+           sodipodi:arg2="1.0476193"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="M 83.561539,85.187249 26.786087,117.93465 a 9.1654356,9.1654356 0 0 1 -9.165434,-0.004 L -39.127153,85.1355 a 9.1654356,9.1654356 0 0 1 -4.57937,-7.939432 l 0.02765,-65.542684 a 9.1654356,9.1654356 0 0 1 4.586065,-7.9355659 L 17.68264,-29.029582 a 9.1654356,9.1654356 0 0 1 9.165434,0.0039 L 83.59588,3.7695675 A 9.1654356,9.1654356 0 0 1 88.17525,11.709 l -0.02765,65.542683 a 9.1654356,9.1654356 0 0 1 -4.586065,7.935566 z"
+           transform="matrix(1.1525084,0,0,0.99834465,1264.7055,-203.05188)"
+           inkscape:export-filename="logo-icon.png"
+           inkscape:export-xdpi="96"
+           inkscape:export-ydpi="96"
+           inkscape:path-effect="#path-effect381" />
+        <path
+           sodipodi:type="star"
+           style="fill:none;stroke:#d8560e;stroke-width:11.6789;stroke-dasharray:none;stroke-opacity:1"
+           id="path234-3-6-9"
+           inkscape:flatsided="true"
+           sodipodi:sides="6"
+           sodipodi:cx="22.234364"
+           sodipodi:cy="44.452534"
+           sodipodi:r1="76.126022"
+           sodipodi:r2="65.927071"
+           sodipodi:arg1="0.52402057"
+           sodipodi:arg2="1.0476193"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="M 83.561539,85.187249 26.786087,117.93465 a 9.1654356,9.1654356 0 0 1 -9.165434,-0.004 L -39.127153,85.1355 a 9.1654356,9.1654356 0 0 1 -4.57937,-7.939432 l 0.02765,-65.542684 a 9.1654356,9.1654356 0 0 1 4.586065,-7.9355659 L 17.68264,-29.029582 a 9.1654356,9.1654356 0 0 1 9.165434,0.0039 L 83.59588,3.7695675 A 9.1654356,9.1654356 0 0 1 88.17525,11.709 l -0.02765,65.542683 a 9.1654356,9.1654356 0 0 1 -4.586065,7.935566 z"
+           transform="matrix(1.3799772,0,0,1.1953864,1464.0356,-218.31854)"
+           inkscape:path-effect="#path-effect383" />
+        <path
+           sodipodi:type="star"
+           style="fill:none;stroke:#e6af00;stroke-width:10.0262;stroke-dasharray:none;stroke-opacity:1"
+           id="path234-6-2-1"
+           inkscape:flatsided="true"
+           sodipodi:sides="6"
+           sodipodi:cx="22.234364"
+           sodipodi:cy="44.452534"
+           sodipodi:r1="76.126022"
+           sodipodi:r2="65.927071"
+           sodipodi:arg1="0.52402057"
+           sodipodi:arg2="1.0476193"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="M 83.561539,85.187249 26.786087,117.93465 a 9.1654356,9.1654356 0 0 1 -9.165434,-0.004 L -39.127153,85.1355 a 9.1654356,9.1654356 0 0 1 -4.57937,-7.939432 l 0.02765,-65.542684 a 9.1654356,9.1654356 0 0 1 4.586065,-7.9355659 L 17.68264,-29.029582 a 9.1654356,9.1654356 0 0 1 9.165434,0.0039 L 83.59588,3.7695675 A 9.1654356,9.1654356 0 0 1 88.17525,11.709 l -0.02765,65.542683 a 9.1654356,9.1654356 0 0 1 -4.586065,7.935566 z"
+           transform="matrix(1.607446,0,0,1.3924281,1344.9167,-44.117197)"
+           inkscape:path-effect="#path-effect385" />
+      </g>
+      <rect
+         style="fill:#02133e;fill-opacity:1;stroke:none;stroke-width:0.860784;stroke-dasharray:none"
+         id="rect1310"
+         width="555.11908"
+         height="324.14822"
+         x="-298.96289"
+         y="-118.67825"
+         clip-path="url(#clipPath1345)"
+         transform="matrix(2.0655583,0,0,2.0655583,1379.853,-116.89016)" />
+      <g
+         id="g1217-6"
+         mask="url(#mask-powermask-path-effect1233-78)"
+         inkscape:path-effect="#path-effect1233-78"
+         transform="translate(-755.92564,464.8065)">
+        <path
+           sodipodi:type="star"
+           style="fill:none;stroke:#a50021;stroke-width:13.9839;stroke-dasharray:none;stroke-opacity:1"
+           id="path234-0-2-1"
+           inkscape:flatsided="true"
+           sodipodi:sides="6"
+           sodipodi:cx="22.234364"
+           sodipodi:cy="44.452534"
+           sodipodi:r1="76.126022"
+           sodipodi:r2="65.927071"
+           sodipodi:arg1="0.52402057"
+           sodipodi:arg2="1.0476193"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="M 83.561539,85.187249 26.786087,117.93465 a 9.1654356,9.1654356 0 0 1 -9.165434,-0.004 L -39.127153,85.1355 a 9.1654356,9.1654356 0 0 1 -4.57937,-7.939432 l 0.02765,-65.542684 a 9.1654356,9.1654356 0 0 1 4.586065,-7.9355659 L 17.68264,-29.029582 a 9.1654356,9.1654356 0 0 1 9.165434,0.0039 L 83.59588,3.7695675 A 9.1654356,9.1654356 0 0 1 88.17525,11.709 l -0.02765,65.542683 a 9.1654356,9.1654356 0 0 1 -4.586065,7.935566 z"
+           transform="matrix(1.1525084,0,0,0.99834465,1264.7055,-203.05188)"
+           inkscape:export-filename="logo-icon.png"
+           inkscape:export-xdpi="96"
+           inkscape:export-ydpi="96"
+           inkscape:path-effect="#path-effect381-4" />
+        <path
+           sodipodi:type="star"
+           style="fill:none;stroke:#d8560e;stroke-width:11.6789;stroke-dasharray:none;stroke-opacity:1"
+           id="path234-3-6-9-5"
+           inkscape:flatsided="true"
+           sodipodi:sides="6"
+           sodipodi:cx="22.234364"
+           sodipodi:cy="44.452534"
+           sodipodi:r1="76.126022"
+           sodipodi:r2="65.927071"
+           sodipodi:arg1="0.52402057"
+           sodipodi:arg2="1.0476193"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="M 83.561539,85.187249 26.786087,117.93465 a 9.1654356,9.1654356 0 0 1 -9.165434,-0.004 L -39.127153,85.1355 a 9.1654356,9.1654356 0 0 1 -4.57937,-7.939432 l 0.02765,-65.542684 a 9.1654356,9.1654356 0 0 1 4.586065,-7.9355659 L 17.68264,-29.029582 a 9.1654356,9.1654356 0 0 1 9.165434,0.0039 L 83.59588,3.7695675 A 9.1654356,9.1654356 0 0 1 88.17525,11.709 l -0.02765,65.542683 a 9.1654356,9.1654356 0 0 1 -4.586065,7.935566 z"
+           transform="matrix(1.3799772,0,0,1.1953864,1464.0356,-218.31854)"
+           inkscape:path-effect="#path-effect383-5" />
+        <path
+           sodipodi:type="star"
+           style="fill:none;stroke:#e6af00;stroke-width:10.0262;stroke-dasharray:none;stroke-opacity:1"
+           id="path234-6-2-1-5"
+           inkscape:flatsided="true"
+           sodipodi:sides="6"
+           sodipodi:cx="22.234364"
+           sodipodi:cy="44.452534"
+           sodipodi:r1="76.126022"
+           sodipodi:r2="65.927071"
+           sodipodi:arg1="0.52402057"
+           sodipodi:arg2="1.0476193"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="M 83.561539,85.187249 26.786087,117.93465 a 9.1654356,9.1654356 0 0 1 -9.165434,-0.004 L -39.127153,85.1355 a 9.1654356,9.1654356 0 0 1 -4.57937,-7.939432 l 0.02765,-65.542684 a 9.1654356,9.1654356 0 0 1 4.586065,-7.9355659 L 17.68264,-29.029582 a 9.1654356,9.1654356 0 0 1 9.165434,0.0039 L 83.59588,3.7695675 A 9.1654356,9.1654356 0 0 1 88.17525,11.709 l -0.02765,65.542683 a 9.1654356,9.1654356 0 0 1 -4.586065,7.935566 z"
+           transform="matrix(1.607446,0,0,1.3924281,1344.9167,-44.117197)"
+           inkscape:path-effect="#path-effect385-03" />
+      </g>
+      <rect
+         style="fill:#02133e;fill-opacity:1;stroke:#011645;stroke-width:0.860999"
+         id="rect1310-4"
+         width="555.11908"
+         height="324.14822"
+         x="-298.96289"
+         y="-118.67825"
+         clip-path="url(#clipPath1345-6)"
+         transform="matrix(2.0655583,0,0,2.0655583,703.6848,362.89006)" />
+    </g>
+  </g>
+</svg>

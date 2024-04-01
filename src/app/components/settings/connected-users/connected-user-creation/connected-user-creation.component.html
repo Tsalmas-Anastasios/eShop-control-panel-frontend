@@ -1,0 +1,269 @@
+<div class="row">
+
+
+    <!-- general data && privileges -->
+    <div class="col-12 col-sm-12 col-md-7 col-lg-8">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h5>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.GENERAL_DATA' | translate }}</h5>
+            </div>
+
+
+            <div class="card-body">
+
+
+                <div class="row">
+
+
+
+                    <!-- first name -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+
+                            <label for="userFirstName" class="mb-1">
+                                {{ 'GENERIC.LABELS.FIRST_NAME' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="userFirstName" id="userFirstName" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.FIRST_NAME' | translate }}"
+                                [(ngModel)]="user.first_name" #userFirstName="ngModel"
+                                aria-describedby="userFirstNameHelp" (keyup)="onUpdateUserData();"
+                                (change)="onUpdateUserData();" required />
+
+
+                            <small id="userFirstNameHelp" class="form-text text-danger" *ngIf="userFirstName.invalid">
+
+                                <span *ngIf="userFirstName.errors.required
+                                            && (userFirstName.dirty
+                                            || userFirstName.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- last name -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+
+                            <label for="userLastName" class="mb-1">
+                                {{ 'GENERIC.LABELS.LAST_NAME' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="userLastName" id="userLastName" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.LAST_NAME' | translate }}" [(ngModel)]="user.last_name"
+                                #userLastName="ngModel" aria-describedby="userLastNameHelp"
+                                (keyup)="onUpdateUserData();" (change)="onUpdateUserData();" required />
+
+
+                            <small id="userLastNameHelp" class="form-text text-danger" *ngIf="userLastName.invalid">
+
+                                <span *ngIf="userLastName.errors.required
+                                            && (userLastName.dirty
+                                            || userLastName.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="row">
+
+
+                    <!-- user email -->
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <div class="form-group">
+
+                            <label for="userEmail" class="mb-1">
+                                {{ 'GENERIC.LABELS.EMAIL' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="email" name="userEmail" id="userEmail" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.EMAIL' | translate }}"
+                                pattern="[^@\s]+@[^@\s]+\.[^@\s]+" [(ngModel)]="user.email" #userEmail="ngModel"
+                                aria-describedby="userEmailHelp" (keyup)="onUpdateUserData();"
+                                (change)="onUpdateUserData();" required />
+
+                            <small id="userEmailHelp" class="form-text text-danger" *ngIf="userEmail.invalid">
+
+                                <span *ngIf="userEmail.errors.required
+                                    && (userEmail.dirty
+                                    || userEmail.touched)">
+                                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS' |
+                                    translate }}
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- user phone -->
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <div class="form-group">
+
+                            <label for="userPhone" class="mb-1 d-block">
+                                {{ 'GENERIC.LABELS.PHONE_NUMBER' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24"
+                                [phoneValidation]="true" [separateDialCode]="true" id="userPhone" name="userPhone"
+                                #userPhone="ngModel" [(ngModel)]="profile_phone" aria-describedby="userPhoneHelp"
+                                (ngModelChange)="formatProfileTelephone()" required>
+                            </ngx-intl-tel-input>
+
+                            <small id="userPhoneHelp" class="form-text text-danger" *ngIf="userPhone.invalid">
+
+                                <span *ngIf="userPhone.errors.required
+                                    && (userPhone.dirty
+                                    || userPhone.touched)">
+                                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.PLEASE_ENTER_A_VALID_PHONE_NUMBER' |
+                                    translate }}
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="row">
+
+
+                    <!-- username -->
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <div class="form-group">
+
+                            <label for="userUsername" class="mb-1">
+                                {{ 'GENERIC.LABELS.USERNAME' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="userUsername" id="userUsername" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.USERNAME' | translate }}" [(ngModel)]="user.username"
+                                #userUsername="ngModel" aria-describedby="userUsernameHelp"
+                                (keyup)="onUpdateUserData();" (change)="onUpdateUserData();" required />
+
+                            <small id="userUsernameHelp" class="form-text text-danger" *ngIf="userUsername.invalid">
+
+                                <span *ngIf="userUsername.errors.required
+                                            && (userUsername.dirty
+                                            || userUsername.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <nb-accordion class="mt-4">
+            <nb-accordion-item>
+                <nb-accordion-item-header>
+                    <h5>
+                        {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.USER_PRIVILEGES' | translate }}
+                    </h5>
+                </nb-accordion-item-header>
+                <nb-accordion-item-body>
+
+
+                    <app-settings-user-privileges [user_privileges]="user_privileges"
+                        (updateUserPrivileges)="onUpdateUserPrivileges($event)" [mode]="'edit'">
+                    </app-settings-user-privileges>
+
+
+                </nb-accordion-item-body>
+            </nb-accordion-item>
+        </nb-accordion>
+
+
+
+    </div>
+
+
+
+
+    <!-- profile picture -->
+    <!-- <div class="col-12 col-sm-12 col-md-5 col-lg-4">
+
+        <div class="card sticky-top" style="top: 110px;">
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12 profile-pic-container">
+
+                        <div class="profile-pic">
+                            <label class="-label" for="file">
+                                <i class="fas fa-camera"></i>&nbsp;
+                                <span style="padding-top: 5px;" *ngIf="profile_picture_link">
+                                    {{ 'VIEWS.SETTINGS.PROFILE.CHANGE_PROFILE_PICTURE' | translate }}
+                                </span>
+                                <span style="padding-top: 5px;" *ngIf="!profile_picture_link">
+                                    {{ 'VIEWS.SETTINGS.PROFILE.UPLOAD_PROFILE_PICTURE' | translate }}
+                                </span>
+                            </label>
+                            <input type="file" id="file" name="userProfilePictureUploadInput" accept="image/*"
+                                (change)="onUserProfileImageChange($event);" hidden="true" />
+                            <img [src]=" profile_picture_link || '../../../../assets/images/account/user.png'"
+                                id="uploadProfilePicture"
+                                onerror="this.src='../../../../assets/images/account/user.png';" alt="" />
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div> -->
+
+
+</div>

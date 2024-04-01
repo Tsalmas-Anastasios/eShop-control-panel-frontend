@@ -1,0 +1,62 @@
+@import '../../../assets/scss/colors';
+
+
+
+
+.cash-registry-products {
+    min-width: 1552px;
+}
+
+
+
+
+
+
+
+// search orders dropdown
+.product-appearance-dropdown {
+    padding: 0;
+
+    &.dropdown.dropdown-lg {
+        padding: 0;
+    }
+
+    .dropdown-menu {
+        padding: 0;
+    }
+
+
+
+    .no-products-found {
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+
+
+.product-row-card {
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.4s;
+    display: inline-block;
+    width: 100%;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &:not(:first-child) {
+        border-top: 1px solid $grey-light-3;
+    }
+}
+
+
+
+
+.paragraph-cursor-pointer {
+    cursor: pointer;
+}

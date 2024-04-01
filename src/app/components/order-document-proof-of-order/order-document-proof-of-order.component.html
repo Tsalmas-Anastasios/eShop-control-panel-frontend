@@ -1,0 +1,223 @@
+<div id="orderProofTemplate-eCommerceControlPanelBizyhive" class="border rounded mx-5 my-5 p-5" *ngIf="order">
+
+
+
+    <div class="row">
+
+        <div class="col-6">
+
+            <div class="row">
+                <div class="col-12">
+                    {{ order?.company_data?.shop_name || [ 'GENERIC.LABELS.N_A' | translate ] }},
+                    {{ order?.company_data?.business_name || '' }}
+                </div>
+                <div class="col-12">
+                    {{ order?.company_data?.headquarters_address__street || [ 'GENERIC.LABELS.N_A' | translate ] }},
+                    {{ order?.company_data?.headquarters_address__city || '' }}
+                    {{ order?.company_data?.headquarters_address__postal_code || '' }}
+                </div>
+                <div class="col-12">
+                    {{ order?.company_data?.headquarters_address__state || [ 'GENERIC.LABELS.N_A' | translate] }},
+                    {{ order?.company_data?.headquarters_address__country || '' }}
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-6">
+
+            <h3 class="text-right mt-5 mr-5"><strong class="text-muted">
+                    {{ 'PRINT.ORDER_CONFIRMATION_DOC.TITLE' | translate | uppercase }}
+                </strong></h3>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="row mt-5 pt-5">
+
+        <div class="col-6">
+
+            <div class="row">
+                <div class="col-12">
+                    {{ order.first_name }} {{ order.last_name }}
+                </div>
+                <div class="col-12">
+                    {{ order.address }}, {{ order.city }} {{ order.postal_code }}
+                </div>
+                <div class="col-12">{{ order.country }}</div>
+            </div>
+
+        </div>
+
+
+        <div class="col-6 text-right">
+
+            <div class="row">
+
+                <div class="col-12">
+                    <strong>{{ 'PRINT.ORDER_CONFIRMATION_DOC.ORDER_NUMBER' | translate }}</strong>
+                    {{ order.order_number }}
+                </div>
+                <div class="col-12">
+                    <strong>{{ 'PRINT.ORDER_CONFIRMATION_DOC.DATE_ISSUED' | translate }}</strong>
+                    {{ date_issued | date: 'short' }}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="row mt-5">
+        <div class="col-12 pt-3 pb-3" style="border: 2px solid #ccc; border-radius: 10px;">
+
+
+            <div class="row border">
+                <div class="col-12">
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th style="width: 35%">{{ 'PRINT.ORDER_CONFIRMATION_DOC.PRODUCT' | translate | uppercase
+                                    }}</th>
+                                <th class="text-center">{{ 'PRINT.ORDER_CONFIRMATION_DOC.PRICE' | translate | uppercase
+                                    }}</th>
+                                <th class="text-center">{{ 'PRINT.ORDER_CONFIRMATION_DOC.FEES' | translate | uppercase
+                                    }}</th>
+                                <th class="text-center">{{ 'PRINT.ORDER_CONFIRMATION_DOC.DISCOUNT' | translate |
+                                    uppercase }}
+                                </th>
+                                <th class="text-center">{{ 'PRINT.ORDER_CONFIRMATION_DOC.QUANTITY_MIN' | translate }}
+                                </th>
+                                <th class="text-center">{{ 'PRINT.ORDER_CONFIRMATION_DOC.AMOUNT' | translate | uppercase
+                                    }}</th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr *ngFor="let product of order.order_products">
+                                <td>
+                                    <strong class="text-break">{{ product.product_details.headline }}</strong>
+                                    <small class="d-block text-muted">
+                                        {{ product.product_details.product_code }}
+                                    </small>
+                                </td>
+                                <td class="text-center">
+                                    {{ product.supplied_customer_price - product.fees }} {{
+                                    user?.company_data?.coin_symbol || '€' }}
+                                </td>
+                                <td class="text-center">
+                                    {{ product.fees }} {{ user?.company_data?.coin_symbol || '€' }}
+                                    ({{ product.fee_percent }}%)
+                                </td>
+                                <td class="text-center">
+                                    {{ product.discount }} {{ user?.company_data?.coin_symbol || '€' }}
+                                    ({{ product.discount_percent }}%)
+                                </td>
+                                <td class="text-center">
+                                    {{ product.quantity }}
+                                </td>
+                                <td class="text-center">
+                                    {{ product.supplied_customer_price }} {{ user?.company_data?.coin_symbol || '€' }}
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+
+
+
+
+            <div class="row mt-4" id="order-pricing">
+
+                <!-- blank field -->
+                <div class="col-7"></div>
+
+
+                <!-- pricing -->
+                <div class="col-5">
+
+                    <div class="row">
+                        <div class="col-7"><strong>{{ 'PRINT.ORDER_CONFIRMATION_DOC.SUBTOTAL' | translate | uppercase
+                                }}</strong></div>
+                        <div class="col-5 text-right">{{ order.clear_value }} {{ user?.company_data?.coin_symbol || '€'
+                            }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7"><strong>{{ 'PRINT.ORDER_CONFIRMATION_DOC.TAXABLE' | translate | uppercase
+                                }}</strong>
+                        </div>
+                        <div class="col-5 text-right">{{ order.fees }} {{ user?.company_data?.coin_symbol || '€' }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7"><strong>{{ 'PRINT.ORDER_CONFIRMATION_DOC.DISCOUNT' | translate | uppercase
+                                }}</strong></div>
+                        <div class="col-5 text-right">{{ discount }} {{ user?.company_data?.coin_symbol || '€' }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7"><strong>{{ 'PRINT.ORDER_CONFIRMATION_DOC.FEES' | translate | uppercase
+                                }}</strong>
+                        </div>
+                        <div class="col-5 text-right">{{ order.fees }} {{ user?.company_data?.coin_symbol || '€' }}
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="order.extra_fees">
+                        <div class="col-7"><strong>{{ 'PRINT.ORDER_CONFIRMATION_DOC.EXTRA_FEES' | translate | uppercase
+                                }}</strong></div>
+                        <div class="col-5 text-right">{{ order.extra_fees_costs }} {{ user?.company_data?.coin_symbol ||
+                            '€' }}</div>
+                    </div>
+                    <hr class="mt-3 mb-3" />
+                    <div class="row">
+                        <div class="col-7">
+                            <h5><strong>{{ 'PRINT.ORDER_CONFIRMATION_DOC.TOTAL' | translate }}</strong></h5>
+                        </div>
+                        <div class="col-5 text-right">
+                            <h5><strong>{{ order.order_total }} {{ user?.company_data?.coin_symbol || '€' }}</strong>
+                            </h5>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <app-printable-documents-footer></app-printable-documents-footer>
+
+
+
+</div>

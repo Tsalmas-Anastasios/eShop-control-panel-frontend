@@ -1,0 +1,89 @@
+<!-- filtering status -->
+<div class="row">
+
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+        <div class="form-group">
+
+            <label for="productsStatus" class="mb-1">
+                {{ 'VIEWS.PRODUCTS_LIST.PRODUCTS_STATUS' | translate }}
+            </label>
+
+            <ng-select id="productsStatus" name="productsStatus" #productsStatus="ngModel"
+                placeholder="{{ 'VIEWS.PRODUCTS_LIST.PRODUCTS_STATUS' | translate }}" [items]="products_statuses"
+                [multiple]="false" bindLabel="label" bindValue="value" [closeOnSelect]="true"
+                [dropdownPosition]="'bottom'" [(ngModel)]="products_status" [minTermLength]="3" [disabled]="false"
+                ng-required="true" [searchable]="true" aria-describedby="productsStatusHelp"
+                (ngModelChange)="loadProductsData(false, true)">
+            </ng-select>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<!-- table card -->
+<div class="row mt-4">
+    <div class="col">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h5>
+                    <span *ngIf="products_status === 'all' || products_status === '' || products_status === null"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_ALL' | translate">
+                    </span>
+                    <span *ngIf="products_status === 'in_stock'"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_IN_STOCK' | translate">
+                    </span>
+                    <span *ngIf="products_status === 'available_1_to_3_days'"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_AVAILABLE_1_TO_3_DAYS' | translate">
+                    </span>
+                    <span *ngIf="products_status === 'available_1_to_10_days'"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_AVAILABLE_1_TO_10_DAYS' | translate">
+                    </span>
+                    <span *ngIf="products_status === 'available_1_to_30_days'"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_AVAILABLE_1_TO_30_DAYS' | translate">
+                    </span>
+                    <span *ngIf="products_status === 'with_order'"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_WITH_ORDER' | translate">
+                    </span>
+                    <span *ngIf="products_status === 'unavailable'"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_UNAVAILABLE' | translate">
+                    </span>
+                    <span *ngIf="products_status === 'temporary_unavailable'"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_TEMPORARY_UNAVAILABLE' | translate">
+                    </span>
+                    <span *ngIf="products_status === 'out_of_stock'"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_OUT_OF_STOCK' | translate">
+                    </span>
+                    <span *ngIf="products_status === 'ended'"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_ENDED' | translate">
+                    </span>
+                    <span *ngIf="products_status === 'closed'"
+                        [innerHTML]="'VIEWS.PRODUCTS_LIST.STATUS_CLOSED' | translate">
+                    </span>
+                </h5>
+            </div>
+
+
+
+            <div class="card-body">
+
+                <app-data-table-custom-module [columnHeaders]="columnHeaders" [data]="products_list"
+                    [options]="productsTableOptions" [statuses]="formatted_products_statuses"
+                    [statuses_options]="status_dropdown_options" (endingPagesData)="loadProductsData($event)"
+                    (statusChange)="productStatusChange($event)">
+                </app-data-table-custom-module>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

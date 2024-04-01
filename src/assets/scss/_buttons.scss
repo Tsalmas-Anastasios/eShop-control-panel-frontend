@@ -1,0 +1,95 @@
+@import './colors';
+
+.btn-green {
+    background-color: $success-button-green;
+    color: $white;
+}
+
+.btn-green:focus,
+.btn-green:active {
+    box-shadow: 0 0 0 .2rem rgba(101, 183, 47, .5)
+}
+
+
+.btn-orange:focus,
+.btn-orange:active {
+    box-shadow: 0 0 0 .2rem rgba(230, 112, 22, .5)
+}
+
+.btn-left-border-1px-grey {
+    border-left: 1px solid $grey-light-1;
+}
+
+
+.btn-primary {
+    background-color: $btn-primary-color;
+    border: 1px solid $border-btn-group-right;
+    color: $btn-primary-letters-color;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: $btn-primary-color !important;
+        border-color: $border-btn-group-right !important;
+        color: $btn-primary-letters-color !important;
+    }
+
+    &:active,
+    &:focus {
+        box-shadow: 0 0 0 3px $btn-primary-box-shadow-color !important;
+    }
+
+
+    &:disabled {
+        background-color: $btn-primary-color !important;
+        border-color: $border-btn-group-right !important;
+        color: $btn-primary-letters-color !important;
+    }
+
+}
+
+
+.btn-secondary-primary {
+    background-color: $btn-primary-secondary-color;
+    border: 1px solid $border-btn-group-right;
+
+    &:active,
+    &:focus {
+        box-shadow: 0 0 0 3px $btn-primary-secondary-box-shadow-color !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+// .btn-group {
+
+//     // button:not(:last-child) {
+//     //     border-right: 1px solid $border-btn-group-right !important;
+//     // }
+
+//     .dropdown-menu {
+//         padding-top: 0;
+//         padding-bottom: 0;
+
+//         a {
+//             display: block;
+//             padding: 12px 15px;
+//             text-decoration: none;
+//             transition: 0.4s;
+//             color: $btn-menu-dropdown-link-color;
+
+//             &:hover {
+//                 background-color: #ccc;
+//             }
+//         }
+
+//     }
+
+// }

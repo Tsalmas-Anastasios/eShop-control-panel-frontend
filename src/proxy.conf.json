@@ -1,0 +1,9 @@
+{
+    "/api": {
+        "target": "https://demo.adorithm.com/api",
+        "secure": false,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    }
+}

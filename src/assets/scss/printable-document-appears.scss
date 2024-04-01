@@ -1,0 +1,42 @@
+// app-root app-print {
+//     display: none;
+// }
+
+
+@media print {
+    app-root>* {
+        display: none;
+    }
+
+    app-root app-print {
+        display: block;
+    }
+
+
+    @page {
+        // size: landscape;
+        margin: 0;
+    }
+
+    .overlay-container {
+        display: none !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+// printable documents
+.printable-document {
+    page-break-after: always;
+
+    &:last-child {
+        page-break-after: avoid;
+    }
+}

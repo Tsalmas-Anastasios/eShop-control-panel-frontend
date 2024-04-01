@@ -1,0 +1,31 @@
+nb-layout-column {
+
+    a,
+    .nb-theme-default a {
+        color: $link-color;
+        transform: 0.4s;
+        text-decoration: none !important;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: $link-color;
+            opacity: 0.7;
+        }
+    }
+
+}
+
+
+.nb-theme-default a {
+    color: $link-color;
+    transform: 0.4s;
+    text-decoration: none !important;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $link-color;
+        opacity: 0.7;
+    }
+}

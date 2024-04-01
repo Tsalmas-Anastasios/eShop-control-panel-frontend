@@ -1,0 +1,16 @@
+ngx-dropzone {
+    background: $input-background-color !important;
+    border: none !important;
+
+    ngx-dropzone-label {
+        color: $input-letters-color !important;
+    }
+}
+
+
+
+ngx-dropzone-preview {
+    background-image: none !important;
+    background-color: $ngx-dropzone-preview-background !important;
+    color: $input-letters-color !important;
+}

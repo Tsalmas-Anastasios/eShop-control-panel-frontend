@@ -1,0 +1,292 @@
+<nav aria-label="breadcrumb d-flex">
+
+    <h3 class="float-left">
+        {{ 'VIEWS.CONTACTS.CONTACTS' | translate }}
+    </h3>
+
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/dashboard']">
+                <i class="fas fa-home"></i>
+            </a>
+        </li>
+
+        <li class="breadcrumb-item active">
+            {{ 'VIEWS.CONTACTS.CONTACTS' | translate }}
+        </li>
+    </ol>
+</nav>
+
+
+
+
+<div class="row">
+    <div class="col-12">
+
+
+
+        <ul class="nav pills mb-3" id="pills-product-options-cats" role="tablist">
+            <li class="nav-item">
+                <a href="#private-contacts" class="nav-link active" aria-current="page" data-toggle="pill" role="tab" aria-controls="private-contacts"
+                    aria-selected="true" (click)="fetchContacts('private')">
+                    {{ 'VIEWS.CONTACTS.PRIVATE_CONTACTS' | translate }}
+                </a>
+            </li>
+            <li class="nav-item" *ngIf="!only_private_contacts">
+                <a href="#public-contacts" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="public-contacts"
+                    aria-selected="true" (click)="fetchContacts('public')">
+                    {{ 'VIEWS.CONTACTS.PUBLIC_CONTACTS' | translate }}
+                </a>
+            </li>
+        </ul>
+
+
+
+
+
+        <div class="tab-content">
+
+
+
+            <!-- private contacts -->
+            <div class="tab-pane fade show active" id="private-contacts" role="tabpanel" aria-labelledby="privateContacts">
+                <ng-container [ngTemplateOutlet]="contactsTable"></ng-container>
+            </div>
+
+
+
+
+            <!-- public contacts -->
+            <div class="tab-pane fade" id="public-contacts" role="tabpanel" aria-labelledby="publicContacts" *ngIf="!only_private_contacts">
+                <ng-container [ngTemplateOutlet]="contactsTable"></ng-container>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- contacts table -->
+<ng-template #contactsTable>
+
+
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+
+
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 *ngIf="page_mode === 'private'">
+                        {{ 'VIEWS.CONTACTS.PRIVATE_CONTACTS' | translate }}
+                    </h5>
+                    <h5 *ngIf="page_mode === 'public'">
+                        {{ 'VIEWS.CONTACTS.PUBLIC_CONTACTS' | translate }}
+                    </h5>
+
+
+                    <div class="actions d-flex justify-content-between align-items-center" *ngIf="contacts.length > 0">
+
+                        <button type="button" class="btn btn-primary" id="seeFavorites" *ngIf="!display_favorites" (click)="toggleFavoritesContacts();">
+                            <i class="fas fa-star"></i>
+                            {{ 'VIEWS.CONTACTS.FAVORITES' | translate }}
+                        </button>
+
+                        <button type="button" class="btn btn-primary" id="hideFavorites" *ngIf="display_favorites" (click)="toggleFavoritesContacts();">
+                            <i class="fas fa-eye-slash"></i>
+                            {{ 'VIEWS.CONTACTS.SEE_ALL' | translate }}
+                        </button>
+
+
+                        <a href="javascript:void(0);" class="text-muted h4 d-block ml-2" data-toggle="modal" data-target="#contactsFiltersModal">
+                            <i class="fas fa-filter"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+
+                <div class="card-body">
+
+                    <table class="table table-striped table-hover w-100" *ngIf="contacts.length > 0">
+
+                        <thead>
+                            <tr>
+                                <th>{{ 'VIEWS.CONTACTS.NAME' | translate }}</th>
+                                <th>{{ 'VIEWS.CONTACTS.EMAIL' | translate }}</th>
+                                <th>{{ 'VIEWS.CONTACTS.PHONE_NUMBER' | translate }}</th>
+                                <th>{{ 'VIEWS.CONTACTS.JOB_TITLE_AND_COMPANY' | translate }}</th>
+                                <th>{{ 'VIEWS.CONTACTS.LABELS' | translate }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr *ngFor="let contact of contacts; let i = index">
+
+                                <td (click)="redirectToContact(contact.contact_id)">
+                                    <p>
+                                        {{ contact?.name || '' }}
+                                        {{ contact?.father_name || '' }}
+                                        {{ contact?.surname || '' }}
+                                    </p>
+                                </td>
+
+
+                                <td>
+                                    <span *ngIf="contact?.emails && contact.emails.length > 0">
+                                        <a href="mailto:{{ contact.emails[0].value}}">
+                                            {{ contact.emails[0].value }}
+                                        </a>
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <span *ngIf="contact?.phones && contact.phones.length > 0">
+                                        <a href="tel:{{ contact.phones[0].phone }}">
+                                            {{ contact.phones[0].phone }}
+                                        </a>
+                                    </span>
+                                </td>
+
+
+                                <td (click)="redirectToContact(contact.contact_id)">
+                                    <p>
+                                        <span *ngIf="contact?.work_position_title && contact?.work_department && contact?.company">
+                                            {{ contact?.work_position_title || '' }}
+                                            <span *ngIf="contact?.work_position_title">&nbsp;&#x2022;&nbsp;</span>
+                                            {{ contact?.work_department || '' }}
+                                            <span *ngIf="contact?.work_position_title || contact?.work_department">&nbsp;&#x2022;&nbsp;</span>
+                                            {{ contact?.company || '' }}
+                                        </span>
+                                    </p>
+                                </td>
+
+
+                                <td (click)="redirectToContact(contact.contact_id)">
+
+                                    <div class="badge badge-secondary" *ngFor="let label of contact.contact_labels">
+                                        {{ label.label }}
+                                    </div>
+
+                                </td>
+
+
+                                <td class="text-center actions-field ">
+
+                                    <div class="d-flex">
+
+                                        <a href="javascript:void(0);" class="d-block" (click)="onToggleFavoriteStarExisting(i)">
+                                            <i class="far fa-star" *ngIf="!contact?.favorite"></i>
+                                            <i class="fas fa-star" *ngIf="contact?.favorite"></i>
+                                        </a>
+
+                                        <a href="javascript:void(0);" class="text-muted d-block ml-2" (click)="redirectToContact(contact.contact_id)">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+
+                                        <a href="javascript:void(0);" class="text-muted d-block ml-2" (click)="redirectToContact(contact.contact_id, true)">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+
+                    <div class="text-center" *ngIf="contacts.length <= 0">
+
+                        <h6 class="text-center text-muted mt-5 mb-2">
+                            {{ 'VIEWS.CONTACTS.NO_CONTACTS_TO_BE_DISPLAYED' | translate }}
+                        </h6>
+
+                        <button type="button" class="btn btn-success mb-5" id="addNewContactNoContacts">
+                            <i class="fas fa-plus"></i>
+                            {{ 'VIEWS.CONTACTS.ACTIONS.ADD_NEW_CONTACT' | translate }}
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+</ng-template>
+
+
+
+
+
+
+
+
+
+<!-- filters modal -->
+<div class="modal fade" id="contactsFiltersModal" tabindex="-1" aria-labelledby="contactsFiltersModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactsFiltersModalLabel">
+                    {{ 'VIEWS.CONTACTS.FILTERS' | translate }}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row mb-3" *ngIf="active_label_filter">
+                    <div class="col-12 text-right">
+                        <a href="javascript:void(0)" class="text-danger" (click)="toggleLabelFilters(null, true)" data-dismiss="modal">
+                            <i class="fas fa-backspace"></i>
+                            {{ 'VIEWS.CONTACTS.ACTIONS.ERASE_FILTERS' | translate }}
+                        </a>
+                    </div>
+                </div>
+
+                <ul class="list-group">
+
+                    <li class="list-group-item" *ngFor="let label of contact_labels" [ngClass]="{ 'active' : label.label_id === active_label_filter }"
+                        (click)="toggleLabelFilters(label.label_id)" data-dismiss="modal">
+                        <i class="fas fa-tag"></i>
+                        {{ label.label }}
+                    </li>
+
+                </ul>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    {{ 'GENERIC.ACTIONS.CLOSE' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="card">
+
+
+    <div class="card-header d-flex justify-content-between">
+        <div>
+            <h5>{{ 'GENERIC.LABELS.PRODUCT_CATEGORIES' | translate }}</h5>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-primary" id="addNewCategory"
+                *ngIf="user_privileges?.product_categories_new" [routerLink]="['/dashboard/product-categories/new']">
+                <i class="fas fa-plus"></i>
+                {{ 'GENERIC.ACTIONS.ADD_NEW_PRODUCT_CATEGORY' | translate }}
+            </button>
+        </div>
+    </div>
+
+
+
+    <div class="card-body">
+
+
+        <app-data-table-custom-module [columnHeaders]="columnHeaders" [data]="product_categories"
+            [options]="productCategoriesTableOptions">
+        </app-data-table-custom-module>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- order preview modal -->
+<div class="modal fade" role="dialog" aria-labelledby="productCategoryEdit" aria-hidden="true" id="productCategoryEdit"
+    #productCategoryEdit [ngClass]="{ 'show': product_category_modal === 'open' }"
+    [ngStyle]="{ 'display': product_category_modal === 'open' ? 'block' : 'none' }" aria-modal="true">
+    <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLabel">
+                    {{ 'VIEWS.PRODUCT_CATEGORIES_LIST.EDIT_CATEGORY' | translate }}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+
+
+            <div class="modal-body">
+
+                <app-product-category-handle-form [product_category]="product_category" [mode]="'edit'"
+                    [user_privileges]="user_privileges" (submitForm)="submitEditForm($event)">
+                </app-product-category-handle-form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

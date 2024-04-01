@@ -1,0 +1,28 @@
+<nb-layout>
+    <nb-layout-header [fixed]="true">
+        <app-navbar-dashboard style="width: 100%;"></app-navbar-dashboard>
+    </nb-layout-header>
+
+    <nb-layout-footer [fixed]="false" style="margin-top: 20px;">
+        <app-footer-dashboard></app-footer-dashboard>
+    </nb-layout-footer>
+
+    <nb-layout-column style="position: relative;">
+        <router-outlet></router-outlet>
+    </nb-layout-column>
+
+    <nb-sidebar tag="app-sidebar-dashboard" left="true" responsive="true" state="expanded"
+        collapsedBreakpoints="['xs', 'is']" compactedBreakpoints="['xs', 'is', 'sm', 'md', 'lg']">
+        <app-sidebar-settings-layout></app-sidebar-settings-layout>
+    </nb-sidebar>
+</nb-layout>
+
+
+
+
+
+
+
+<ngx-spinner size="medium" type="square-jelly-box" [fullScreen]="true" color="#E6AF00" bdColor="rgba(0, 0, 0, 0.9)">
+    <p style="color: #fff"> {{ 'GENERIC.LABELS.LOADING' | translate }}... </p>
+</ngx-spinner>

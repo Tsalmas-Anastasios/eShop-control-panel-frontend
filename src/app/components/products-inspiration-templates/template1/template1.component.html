@@ -1,0 +1,152 @@
+<!-- <div class="item">
+
+    <ngx-skeleton-loader count="5" appearance="line" [theme]="{background: '#a8a8a8','border-radius': '50px'}"
+        animation="pulse"></ngx-skeleton-loader>
+
+</div> -->
+
+
+
+
+<div class="text-muted mt-3 mb-4">
+    <i class="fas fa-info-circle"></i>
+    {{ 'VIEWS.PRODUCT_PAGE.TEMPLATES_EXPLAIN' | translate }}
+</div>
+
+
+
+<!-- <ul class="nav pills mb-3 mt-3" id="pills-product-options-cats" role="tablist">
+    <li class="nav-item">
+        <a href="#vertical-cards" class="nav-link active" aria-current="page" data-toggle="pill" role="tab"
+            aria-controls="vertical-cards" aria-selected="true">
+            {{ 'VIEWS.PRODUCT_PAGE.VERTICAL_LISTING' | translate }}
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="#vertical-cards" class="nav-link" aria-current="page" data-toggle="pill" role="tab"
+            aria-controls="vertical-cards" aria-selected="true">
+            {{ 'GENERIC.LABELS.OVERVIEW' | translate }}
+        </a>
+    </li>
+</ul> -->
+
+
+
+
+
+
+
+<!-- tabs -->
+<div class="tab-content" *ngIf="product">
+
+
+
+
+    <!-- vertical cards -->
+    <div class="tab-pane fade show active mt-5 pt-3 mb-5 pb-4" id="vertical-cards" role="tabpanel"
+        aria-labelledby="verticalCards">
+
+        <div class="row">
+
+
+            <div class="col-12 col-sm-12 col-md-4 d-flex justify-content-center">
+
+                <div class="w-100 card-skeleton-loader">
+
+                    <div class="item image-loader d-flex justify-content-center align-items-center">
+                        <ngx-skeleton-loader animation="pulse" appearance="circle"
+                            [theme]="{height: '150px', width: '150px', background: '#4d4d4d'}">
+                        </ngx-skeleton-loader>
+                    </div>
+
+                    <div class="item text-loader pr-4 pl-4">
+                        <ngx-skeleton-loader count="3" appearance="line"
+                            [theme]="{background: '#4d4d4d','border-radius': '50px'}" animation="pulse">
+                        </ngx-skeleton-loader>
+                    </div>
+
+                    <div class="item text-center pt-4">
+                        <ngx-skeleton-loader count="1" appearance="line"
+                            [theme]="{background: '#4d4d4d','border-radius': '50px', width: '150px'}" animation="pulse"
+                            class="mx-auto">
+                        </ngx-skeleton-loader>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-12 col-sm-12 col-md-4 d-flex justify-content-center">
+
+                <div class="product-square-card w-100">
+                    <div class="img-area">
+                        <img [src]="main_image" alt="product-image" />
+                    </div>
+                    <div class="new-badge">
+                        {{ 'GENERIC.LABELS.NEW' | translate }}
+                    </div>
+                    <div class="info-section">
+                        <div class="title">
+                            {{ product.headline }}
+                        </div>
+                        <div class="categories-area">
+                            <div class="category-badge" *ngFor="let category of product_categories">
+                                {{ category[1] }}
+                            </div>
+                        </div>
+                        <div class="price">
+                            {{ product.clear_price * (1 + (user?.company_data?.fee_percent || 0) / 100) }}
+                            {{ user?.company_data?.coin_symbol || '€' }}
+                        </div>
+                    </div>
+                    <div class="buy-now-button-area">
+                        <button type="button" class="buy-now-btn" id="buy-now-button">
+                            {{ 'GENERIC.ACTIONS.BUY_NOW' | translate }}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="col-12 col-sm-12 col-md-4 d-flex justify-content-center">
+
+                <div class="w-100 card-skeleton-loader">
+
+                    <div class="item image-loader d-flex justify-content-center align-items-center">
+                        <ngx-skeleton-loader animation="pulse" appearance="circle"
+                            [theme]="{height: '150px', width: '150px', background: '#4d4d4d'}">
+                        </ngx-skeleton-loader>
+                    </div>
+
+                    <div class="item text-loader pr-4 pl-4">
+                        <ngx-skeleton-loader count="3" appearance="line"
+                            [theme]="{background: '#4d4d4d','border-radius': '50px'}" animation="pulse">
+                        </ngx-skeleton-loader>
+                    </div>
+
+                    <div class="item text-center pt-4">
+                        <ngx-skeleton-loader count="1" appearance="line"
+                            [theme]="{background: '#4d4d4d','border-radius': '50px', width: '150px'}" animation="pulse"
+                            class="mx-auto">
+                        </ngx-skeleton-loader>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>

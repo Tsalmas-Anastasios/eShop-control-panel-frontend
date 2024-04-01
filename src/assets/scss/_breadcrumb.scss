@@ -1,0 +1,30 @@
+@import './colors';
+
+
+
+nav {
+    ol {
+        &.breadcrumb {
+
+            background-color: transparent;
+            justify-content: end;
+
+            li {
+                &.breadcrumb-item {
+                    a {
+                        text-decoration: none;
+                        color: $breadcrumb-color-non-active-link;
+
+                        &.active {
+                            color: $grey-light-3
+                        }
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

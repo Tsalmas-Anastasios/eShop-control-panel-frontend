@@ -1,0 +1,314 @@
+@import 'themes';
+
+@import '~@nebular/theme/styles/globals';
+
+@include nb-install() {
+    @include nb-theme-global();
+}
+
+;
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+
+
+
+@import '@sweetalert2/theme-dark/dark.scss';
+
+
+
+@import "~bootstrap"; // include bootstrap to recompile the Bootstrap 4 elements for the new custom colors
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~bootstrap/scss/buttons'; // include buttons to override the button colors for new custom colors
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+@import '~icheck-bootstrap/icheck-bootstrap.css';
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+@import 'ngx-toastr/toastr';
+@import 'ngx-toastr/toastr-bs4-alert';
+@import 'ngx-toastr/toastr-bs4-alert';
+@import './assets/scss/toastr';
+
+// reset and dependencies
+// @import '~bootstrap/scss/normalize';
+@import '~bootstrap/scss/print';
+
+// core css
+@import '~bootstrap/scss/reboot';
+@import '~bootstrap/scss/type';
+@import '~bootstrap/scss/images';
+@import '~bootstrap/scss/code';
+@import '~bootstrap/scss/grid';
+@import '~bootstrap/scss/tables';
+@import '~bootstrap/scss/forms';
+@import '~bootstrap/scss/buttons';
+@import '~bootstrap/scss/transitions';
+@import '~bootstrap/scss/dropdown';
+@import '~bootstrap/scss/button-group';
+@import '~bootstrap/scss/input-group';
+@import '~bootstrap/scss/custom-forms';
+@import '~bootstrap/scss/nav';
+@import '~bootstrap/scss/navbar';
+@import '~bootstrap/scss/card';
+@import '~bootstrap/scss/breadcrumb';
+@import '~bootstrap/scss/pagination';
+@import '~bootstrap/scss/badge';
+@import '~bootstrap/scss/jumbotron';
+@import '~bootstrap/scss/alert';
+@import '~bootstrap/scss/progress';
+@import '~bootstrap/scss/media';
+@import '~bootstrap/scss/list-group';
+// @import '~bootstrap/scss/responsive-embed';
+@import '~bootstrap/scss/close';
+
+@import '~bootstrap/scss/modal';
+@import '~bootstrap/scss/tooltip';
+@import '~bootstrap/scss/popover';
+@import '~bootstrap/scss/carousel';
+
+@import '~bootstrap/scss/utilities';
+
+@import 'assets/scss/bootstrap-print.scss';
+
+@import 'assets/scss/webfonts.scss';
+
+@import 'assets/scss/colors';
+
+@import 'assets/scss/selection';
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+@import './assets/scss/modals';
+@import './assets/scss/buttons';
+@import './assets/scss/label';
+@import './assets/scss/card';
+@import './assets/scss/badges';
+@import './assets/scss/collapsible';
+
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+
+@import './assets/scss/pills';
+
+@import './assets/scss/smart-table';
+
+@import './assets/scss/inputs';
+
+@import './assets/scss/component-loaders';
+
+
+@import './assets/scss/object-fit';
+@import './assets/scss/sizing';
+@import './assets//scss/text-wrapping';
+@import './assets/scss/tabs';
+@import './assets/scss/breadcrumb';
+@import './assets/scss/ckeditor';
+@import './assets/scss/spinner-icon';
+
+@import './assets/scss/printable-document-appears.scss';
+@import './assets/scss/dropdown-menu';
+@import './assets/scss/link';
+@import './assets/scss/text-typography';
+@import './assets/scss/sweet-alert';
+@import './assets/scss/alerts';
+
+@import './assets/scss/table';
+@import './assets/scss/textarea';
+@import './assets/scss/ngx-dropzone';
+@import './assets/scss/progress-bar';
+
+@import './assets/scss/list-group';
+
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+
+body {
+    font-family: 'Open Sans', sans-serif !important;
+    // font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+    padding-right: 0 !important;
+    letter-spacing: 0.3px;
+    background: #f9f9f9 !important;
+}
+
+button {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+
+
+
+
+.nb-theme-default p,
+.nb-theme-default .p,
+.nb-theme-default .paragraph,
+.nb-theme-default nb-layout .layout {
+    color: $entire-body-color !important;
+}
+
+
+.router-outlet-area {
+
+    p,
+    div,
+    .nb-theme-default p,
+    .nb-theme-default .p,
+    .nb-theme-default .paragraph,
+    legend {
+        color: $entire-body-color !important;
+    }
+
+}
+
+p,
+div,
+.nb-theme-default p,
+.nb-theme-default .p,
+.nb-theme-default .paragraph,
+legend {
+    color: $entire-body-color !important;
+}
+
+
+
+legend {
+    color: $entire-body-color !important;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
+// sweet alert
+.swal2-container {
+
+    p,
+    div,
+    .nb-theme-default p,
+    .nb-theme-default .p {
+        color: $entire-body-color !important;
+    }
+
+
+    button.swal2-confirm {
+        background-color: $sweet-alert-confirm-button-background !important;
+        color: $sweet-alert-confirm-button-letters-control !important;
+
+        &:active,
+        &:focus {
+            box-shadow: none;
+            opacity: 0.7;
+        }
+    }
+}
+
+
+
+
+
+
+
+.full-height-column-overflow-auto {
+    height: calc(100vh - 190px);
+    overflow: auto;
+}
+
+
+
+
+ngx-charts {}
+
+
+
+
+.text-muted {
+    color: $grey-light-1;
+}
+
+
+
+
+.modal {
+    background: rgba(0, 0, 0, .9);
+}
+
+
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: $headers-color;
+}
+
+
+
+
+
+.nb-theme-default h1,
+.nb-theme-default h2,
+.nb-theme-default h3,
+.nb-theme-default h4,
+.nb-theme-default h5,
+.nb-theme-default h6,
+.nb-theme-default .h1,
+.nb-theme-default .h2,
+.nb-theme-default .h3,
+.nb-theme-default .h4,
+.nb-theme-default .h5,
+.nb-theme-default .h6 {
+    color: $headers-color;
+}
+
+
+
+
+hr {
+    border-color: #ccc;
+}
+
+
+
+
+
+
+
+/* sidebar */
+nb-menu ul.menu-items li.menu-item {
+
+    a {
+        margin-left: 10px;
+
+        &.active {
+            border-radius: 50px;
+        }
+    }
+}
+
+/* sidebar */
+
+
+
+
+
+/* dividers */
+.divider {
+    border: 1px solid $simple-divider-color;
+}
+
+/* dividers */

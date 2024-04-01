@@ -1,0 +1,1725 @@
+<div *ngIf="product">
+
+    <!-- preview product -->
+    <div class="row" *ngIf="mode === 'preview'">
+        <div class="col-12">
+
+
+
+            <ul class="nav pills mb-3" id="pills-product-options-cats" role="tablist">
+                <li class="nav-item">
+                    <a href="#general-product-data-preview" class="nav-link active" aria-current="page" data-toggle="pill" role="tab"
+                        aria-controls="general-product-data-preview" aria-selected="true" (click)="onToggleOtherTabTransactions();">
+                        {{ 'GENERIC.LABELS.OVERVIEW' | translate }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#product-specification-description-preview" class="nav-link" aria-current="page" data-toggle="pill" role="tab"
+                        aria-controls="product-specification-description-preview" aria-selected="false" (click)="onToggleOtherTabTransactions();">
+                        {{ 'VIEWS.PRODUCT_PAGE.SPECIFICATION' | translate }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#product-media-preview" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="product-media-preview"
+                        aria-selected="false" (click)="onToggleOtherTabTransactions();">
+                        {{ 'VIEWS.PRODUCT_PAGE.MEDIA' | translate }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#product-notes-preview" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="product-notes-preview"
+                        aria-selected="false" (click)="onToggleOtherTabTransactions();">
+                        {{ 'VIEWS.PRODUCT_PAGE.NOTES' | translate }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#product-transactions-preview" class="nav-link" aria-current="page" data-toggle="pill" role="tab"
+                        aria-controls="product-transactions-preview" aria-selected="false" id="product-transactions-preview-btn"
+                        (click)="onLoadMoreProductTransactions('new', 'product-transactions-preview-btn')">
+                        {{ 'VIEWS.PRODUCT_PAGE.TRANSACTIONS' | translate }}
+                    </a>
+                </li>
+            </ul>
+
+
+
+
+
+            <div class="tab-content">
+
+
+
+                <!-- general data -->
+                <div class="tab-pane fade show active" id="general-product-data-preview" role="tabpanel" aria-labelledby="generalProductDataPreview">
+
+
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h5>{{ 'VIEWS.PRODUCT_PAGE.GENERAL_DATA' | translate }}</h5>
+                        </div>
+
+
+
+                        <div class="card-body">
+
+
+                            <div class="row">
+
+
+
+                                <!-- product id -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                    <div class="form-group">
+
+                                        <label for="productIdParagraph" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.PRODUCT_ID' | translate }}
+                                        </label>
+                                        <p id="productIdParagraph">
+                                            {{ product?.product_id || ['GENERIC.LABELS.N_A' | translate ] }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- product code -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                    <div class="form-group">
+
+                                        <label for="productCodeParagraph" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.PRODUCT_CODE' | translate }}
+                                        </label>
+                                        <p id="productCodeParagraph">
+                                            {{ product?.product_code || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- product status -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                    <ng-container [ngTemplateOutlet]="productStatusField"></ng-container>
+                                </div>
+
+
+
+                            </div>
+
+
+
+                            <div class="row">
+
+
+                                <!-- product headline -->
+                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
+
+                                    <div class="form-group">
+
+                                        <label for="productHeadlineParagraph" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.PRODUCT_HEADLINE' | translate }}
+                                        </label>
+                                        <p id="productHeadlineParagraph">
+                                            {{ product?.headline || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- product brand -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                    <div class="form-group">
+
+                                        <label for="productBrandParagraph" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.BRAND' | translate }}
+                                        </label>
+                                        <p id="productBrandParagraph">
+                                            {{ product?.product_brand || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- product model -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                    <div class="form-group">
+
+                                        <label for="productModelParagraph" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.MODEL' | translate }}
+                                        </label>
+                                        <p id="productModelParagraph">
+                                            {{ product?.product_model || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+
+
+                            <!-- categories belongs -->
+                            <div class="row">
+
+                                <!-- categories belongs -->
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+                                    <ng-container [ngTemplateOutlet]="categoriesProductBelongs"></ng-container>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- product pricing -->
+                    <div class="card mt-4">
+
+                        <div class="card-header">
+                            <h5>{{ 'VIEWS.PRODUCT_PAGE.PRODUCT_PRICING' | translate }}</h5>
+                        </div>
+
+                        <div class="card-body">
+
+
+                            <div class="row">
+
+                                <!-- product stock -->
+                                <div class="col-12 col-sm-12 col-md-3 col-lg-1">
+
+                                    <div class="form-group">
+
+                                        <label for="productStockParagraph" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.STOCK' | translate }}
+                                        </label>
+                                        <p id="productStockParagraph" class="text-center">
+                                            {{ product?.stock || ['GENERIC.LABELS.N_A' | translate ] }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- product supplied price -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                    <div class="form-group">
+                                        <label for="productSuppliedPriceParagraph" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.PURCHASED_PRICE_PER_PIECE' | translate }}
+                                        </label>
+                                        <p id="productSuppliedPriceParagraph" class="text-center">
+                                            {{ product?.supplied_price || ['GENERIC.LABELS.N_A' | translate ] }}
+                                            {{ user?.company_data?.coin_symbol || '€' }}
+                                        </p>
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- selling price -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                    <div class="form-group">
+                                        <label for="productSellingPriceParagraph" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.SELLING_PRICE_PER_PIECE' | translate }}
+                                        </label>
+                                        <p id="productSellingPriceParagraph" class="text-center">
+                                            {{ product?.clear_price || ['GENERIC.LABELS.N_A' | translate ] }}
+                                            {{ user?.company_data?.coin_symbol || '€' }}
+                                        </p>
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- product discount (%) -->
+                                <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+
+                                    <div class="form-group">
+
+                                        <label for="productStockParagraph" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.DISCOUNT' | translate }} (%)
+                                        </label>
+                                        <p id="productStockParagraph" class="text-center">
+                                            {{ product?.discount_percent || 0 }} %
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- total price -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                                    <ng-container [ngTemplateOutlet]="productTotalPriceCalculator"></ng-container>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- stock analysis here -->
+                    <div class="card mt-4" *ngIf="stock_analysis.length > 0">
+
+                        <div class="card-header">
+                            <h5>{{ 'VIEWS.PRODUCT_PAGE.STOCK_ANALYSIS' | translate }}</h5>
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="row" *ngFor="let product_stock of stock_analysis; let ps = index">
+                                <div class="col-12">
+                                    <div class="row">
+
+
+                                        <!-- warehouse -->
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                            <div class="form-group">
+
+                                                <label for="stockWarehouseChoose_{{ ps }}" class="mb-1">
+                                                    {{ 'VIEWS.PRODUCT_PAGE.WAREHOUSE' | translate }}
+                                                </label>
+                                                <p id="stockWarehouseChoose_{{ ps }}">
+                                                    {{ product_stock.warehouse_label }}
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- runway -->
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                            <div class="form-group">
+
+                                                <label for="stockWarehouseRunway_{{ ps }}" class="mb-1">
+                                                    {{ 'VIEWS.PRODUCT_PAGE.RUNWAY' | translate }}
+                                                </label>
+                                                <p id="stockWarehouseRunway_{{ ps }}">
+                                                    {{ product_stock.runway_label }}
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- column -->
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                            <div class="form-group">
+
+                                                <label for="stockWarehouseRunwayColumn_{{ ps }}" class="mb-1">
+                                                    {{ 'VIEWS.PRODUCT_PAGE.COLUMN' | translate }}
+                                                </label>
+                                                <p id="stockWarehouseRunwayColumn_{{ ps }}">
+                                                    {{ product_stock.column_label }}
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- shelf -->
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                            <div class="form-group">
+
+                                                <label for="stockWarehouseRunwayColumnShelf_{{ ps }}" class="mb-1">
+                                                    {{ 'VIEWS.PRODUCT_PAGE.SHELF' | translate }}
+                                                </label>
+                                                <p id="stockWarehouseRunwayColumnShelf_{{ ps }}">
+                                                    {{ product_stock.shelf_label }}
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- stock quantity -->
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                            <div class="form-group">
+
+                                                <label for="stockQuantity_{{ ps }}" class="mb-1">
+                                                    {{ 'VIEWS.PRODUCT_PAGE.STOCK' | translate }}
+                                                </label>
+                                                <p id="stockQuantity_{{ ps }}">
+                                                    {{ product_stock.stock_quantity }}
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+
+                <!-- specification -->
+                <div class="tab-pane fade" id="product-specification-description-preview" role="tabpanel"
+                    aria-labelledby="productSpecificationDescriptionPreview">
+
+
+
+                    <!-- specification -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="tbl-container mx-auto">
+
+                                <h4>{{ 'VIEWS.PRODUCT_PAGE.PRODUCT_SPECIFICATION' | translate }}</h4>
+
+
+                                <div class="card mb-4" *ngFor="let category of product.specification; let i = index">
+
+                                    <div class="card-header">
+                                        <h5>{{ category.category_name }}</h5>
+                                    </div>
+
+
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <tbody>
+
+                                                <tr *ngFor="let field of category.fields">
+                                                    <td class="w-50">{{ field.specification_field_name }}</td>
+                                                    <td class="w-50 text-left">{{ field.specification_field_value }}
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- description -->
+                    <div class="row mt-4">
+
+                        <div class="col-12">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>
+                                        {{ 'VIEWS.PRODUCT_PAGE.PRODUCT_DESCRIPTION' | translate }}
+                                    </h5>
+                                </div>
+
+
+                                <div class="card-body" [innerHTML]="product.product_description"></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- media data -->
+                <div class="tab-pane fade" id="product-media-preview" role="tabpanel" aria-labelledby="productMediaDataPreview">
+
+
+
+                    <!-- images -->
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h5>{{ 'VIEWS.PRODUCT_PAGE.IMAGES' | translate }}</h5>
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="carousel slide" data-ride="carousel" id="carouselImagesIndicator">
+
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carouselImagesIndicator" [ngClass]="{ 'active': i === 0 }"
+                                        *ngFor="let image of product.images; let i = index" data-slide-to="0">
+                                    </li>
+                                </ol>
+
+
+                                <div class="carousel-inner">
+
+                                    <div class="carousel-item" [ngClass]="{ 'active': i === 0 }" *ngFor="let image of product.images; let i = index">
+                                        <img [src]="image.url" alt="Slide {{ i + 1 }}" class="d-block w-100">
+                                        <div class="carousel-caption d-none d-md-block" *ngIf="image.main_image">
+                                            <h5>{{ 'GENERIC.LABELS.MAIN_IMAGE' | translate }}</h5>
+                                        </div>
+                                    </div>
+
+
+
+                                    <a class="carousel-control-prev" href="#carouselImagesIndicator" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">{{ 'GENERIC.LABELS.PREVIOUS' | translate }}</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselImagesIndicator" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">{{ 'GENERIC.LABELS.NEXT' | translate }}</span>
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- notes & other -->
+                <div class="tab-pane fade" id="product-notes-preview" role="tabpanel" aria-labelledby="productNotesPreview">
+                    <ng-container [ngTemplateOutlet]="productNotes"></ng-container>
+                </div>
+
+
+                <!-- product transactions -->
+                <div class="tab-pane fade" id="product-transactions-preview" role="tabpanel" aria-labelledby="productTransactionsPreview">
+                    <ng-container [ngTemplateOutlet]="productTransactionsArea"></ng-container>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- edit product -->
+    <div class="row mt-4" *ngIf="mode === 'edit'">
+        <div class="col-12">
+
+
+            <!-- tab pills -->
+            <ul class="nav pills mb-3" id="pills-product-options-cats" role="tablist">
+                <li class="nav-item">
+                    <a href="#general-product-data-edit" class="nav-link active" aria-current="page" data-toggle="pill" role="tab"
+                        aria-controls="general-product-data-edit" aria-selected="true" (click)="onToggleOtherTabTransactions();">
+                        {{ 'GENERIC.LABELS.OVERVIEW' | translate }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#product-specification-description-edit" class="nav-link" aria-current="page" data-toggle="pill" role="tab"
+                        aria-controls="product-specification-description-edit" aria-selected="false" (click)="onToggleOtherTabTransactions();">
+                        {{ 'VIEWS.PRODUCT_PAGE.SPECIFICATION' | translate }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#product-media-edit" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="product-media-edit"
+                        aria-selected="false" (click)="onToggleOtherTabTransactions();">
+                        {{ 'VIEWS.PRODUCT_PAGE.MEDIA' | translate }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#product-notes-edit" class="nav-link" aria-current="page" data-toggle="pill" role="tab" aria-controls="product-notes-edit"
+                        aria-selected="false" (click)="onToggleOtherTabTransactions();">
+                        {{ 'VIEWS.PRODUCT_PAGE.NOTES' | translate }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#product-transactions-edit" class="nav-link" aria-current="page" data-toggle="pill" role="tab"
+                        aria-controls="product-transactions-edit" aria-selected="false" id="product-transactions-edit-btn"
+                        (click)="onLoadMoreProductTransactions('new', 'product-transactions-edit-btn')">
+                        {{ 'VIEWS.PRODUCT_PAGE.TRANSACTIONS' | translate }}
+                    </a>
+                </li>
+            </ul>
+
+
+
+            <!-- tabs -->
+            <div class="tab-content">
+
+
+                <!-- general data & pricing -->
+                <div class="tab-pane fade show active" id="general-product-data-edit" role="tabpanel" aria-labelledby="generalProductDataEdit">
+
+
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h5>{{ 'VIEWS.PRODUCT_PAGE.GENERAL_DATA' | translate }}</h5>
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <div class="row">
+
+
+                                <!-- product id -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                    <div class="form-group">
+
+                                        <label for="productIdEdit" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.PRODUCT_ID' | translate }}
+                                        </label>
+                                        <p id="productIdEdit">
+                                            {{ product?.product_id || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- product code -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                                    <div class="form-group">
+
+                                        <label for="productCodeEdit" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.PRODUCT_CODE' | translate }}
+                                        </label>
+                                        <p id="productCodeEdit">
+                                            {{ product?.product_code || [ 'GENERIC.LABELS.N_A' | translate ] }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- product status -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                    <ng-container [ngTemplateOutlet]="productStatusField"></ng-container>
+                                </div>
+
+
+
+                            </div>
+
+
+
+
+                            <div class="row">
+
+
+                                <!-- headline -->
+                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
+
+                                    <div class="form-group">
+
+                                        <label for="productHeadlineEdit" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.PRODUCT_HEADLINE' | translate }}
+                                            <app-required-field [type]="'asterisk_tooltip'">
+                                            </app-required-field>
+                                        </label>
+
+                                        <input type="text" name="productHeadlineEdit" id="productHeadlineEdit" class="form-control"
+                                            placeholder="{{ 'VIEWS.PRODUCT_PAGE.PRODUCT_HEADLINE' | translate }}" [(ngModel)]="product.headline"
+                                            #productHeadlineEdit="ngModel" aria-describedby="productHeadlineEditHelp" (change)="onProductDataUpdate();"
+                                            (keyup)="onProductDataUpdate();" required />
+
+                                        <small id="productHeadlineEditHelp" class="form-text text-danger" *ngIf="productHeadlineEdit.invalid">
+
+                                            <span *ngIf="productHeadlineEdit.errors.required && (productHeadlineEdit.dirty || productHeadlineEdit.touched)">
+                                                <app-required-field [type]="'input_invalid'"></app-required-field>
+                                            </span>
+
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <!-- brand -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+
+                                        <label for="productBrandEdit" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.BRAND' | translate }}
+                                            <app-required-field [type]="'asterisk_tooltip'">
+                                            </app-required-field>
+                                        </label>
+
+                                        <input type="text" name="productBrandEdit" id="productBrandEdit" class="form-control"
+                                            placeholder="{{ 'VIEWS.PRODUCT_PAGE.BRAND' | translate }}" [(ngModel)]="product.product_brand"
+                                            #productBrandEdit="ngModel" aria-describedby="productBrandEditHelp" (change)="onProductDataUpdate();"
+                                            (keyup)="onProductDataUpdate();" required />
+
+                                        <small id="productBrandEditHelp" class="form-text text-danger" *ngIf="productBrandEdit.invalid">
+
+                                            <span *ngIf="productBrandEdit.errors.required && (productBrandEdit.dirty || productBrandEdit.touched)">
+                                                <app-required-field [type]="'input_invalid'"></app-required-field>
+                                            </span>
+
+                                        </small>
+
+                                    </div>
+                                </div>
+
+
+
+                                <!-- model -->
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+
+                                        <label for="productModelEdit" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.MODEL' | translate }}
+                                            <app-required-field [type]="'asterisk_tooltip'">
+                                            </app-required-field>
+                                        </label>
+
+                                        <input type="text" name="productModelEdit" id="productModelEdit" class="form-control"
+                                            placeholder="{{ 'VIEWS.PRODUCT_PAGE.MODEL' | translate }}" [(ngModel)]="product.product_model"
+                                            #productModelEdit="ngModel" aria-describedby="productModelEditHelp" (change)="onProductDataUpdate();"
+                                            (keyup)="onProductDataUpdate();" required />
+
+                                        <small id="productModelEditHelp" class="form-text text-danger" *ngIf="productModelEdit.invalid">
+
+                                            <span *ngIf="productModelEdit.errors.required && (productModelEdit.dirty || productModelEdit.touched)">
+                                                <app-required-field [type]="'input_invalid'"></app-required-field>
+                                            </span>
+
+                                        </small>
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+
+
+                            <!-- categories -->
+                            <div class="row">
+
+                                <div class="col-12">
+
+                                    <div class="form-group">
+                                        <ng-container [ngTemplateOutlet]="categoriesProductBelongs"></ng-container>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- pricing -->
+                    <div class="card mt-4">
+
+                        <div class="card-header">
+                            <h5>{{ 'VIEWS.PRODUCT_PAGE.PRODUCT_PRICING' | translate }}</h5>
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="row">
+
+
+                                <!-- stock -->
+                                <div class="col-12 col-sm-12 col-md-2 col-lg-1">
+
+                                    <div class="form-group">
+
+                                        <label for="productStockEdit" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.STOCK' | translate }}
+                                        </label>
+
+                                        <!-- <input type="number" name="productStockEdit" id="productStockEdit" class="form-control"
+                                            placeholder="{{ 'VIEWS.PRODUCT_PAGE.STOCK' | translate }}" [(ngModel)]="product.stock" min="1" value="1"
+                                            #productStockEdit="ngModel" aria-describedby="productStockEditHelp" (change)="onProductDataUpdate();"
+                                            (keyup)="onProductDataUpdate();" required /> -->
+
+                                        <p id="productStockEdit">
+                                            {{ product?.stock || 0}}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- supplied price -->
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+
+                                    <div class="form-group">
+
+                                        <label for="productPurchasedPriceEdit" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.PURCHASED_PRICE_PER_PIECE' | translate }}
+                                            <app-required-field [type]="'asterisk_tooltip'">
+                                            </app-required-field>
+                                        </label>
+
+                                        <input type="number" name="productPurchasedPriceEdit" id="productPurchasedPriceEdit" class="form-control"
+                                            placeholder="{{ 'VIEWS.PRODUCT_PAGE.PURCHASED_PRICE_PER_PIECE' | translate }}" [(ngModel)]="product.supplied_price"
+                                            #productPurchasedPriceEdit="ngModel" aria-describedby="productPurchasedPriceEditHelp"
+                                            (change)="onProductDataUpdate();" (keyup)="onProductDataUpdate();" required />
+
+                                        <small id="productPurchasedPriceEditHelp" class="form-text text-danger" *ngIf="productPurchasedPriceEdit.invalid">
+
+                                            <span
+                                                *ngIf="productPurchasedPriceEdit.errors.required && (productPurchasedPriceEdit.dirty || productPurchasedPriceEdit.touched)">
+                                                <app-required-field [type]="'input_invalid'"></app-required-field>
+                                            </span>
+
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- clear price -->
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+
+                                    <div class="form-group">
+
+                                        <label for="productSellingPriceEdit" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.SELLING_PRICE_PER_PIECE' | translate }}
+                                            <app-required-field [type]="'asterisk_tooltip'">
+                                            </app-required-field>
+                                        </label>
+
+                                        <input type="number" name="productSellingPriceEdit" id="productSellingPriceEdit" class="form-control"
+                                            placeholder="{{ 'VIEWS.PRODUCT_PAGE.SELLING_PRICE_PER_PIECE' | translate }}" [(ngModel)]="product.clear_price"
+                                            #productSellingPriceEdit="ngModel" aria-describedby="productSellingPriceEditHelp" (change)="onProductDataUpdate();"
+                                            (keyup)="onProductDataUpdate();" required />
+
+                                        <small id="productSellingPriceEditHelp" class="form-text text-danger" *ngIf="productSellingPriceEdit.invalid">
+
+                                            <span
+                                                *ngIf="productSellingPriceEdit.errors.required && (productSellingPriceEdit.dirty || productSellingPriceEdit.touched)">
+                                                <app-required-field [type]="'input_invalid'"></app-required-field>
+                                            </span>
+
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- discount -->
+                                <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+
+                                    <div class="form-group">
+
+                                        <label for="productDiscountPercentEdit" class="mb-1">
+                                            {{ 'VIEWS.PRODUCT_PAGE.DISCOUNT' | translate }} (%)
+                                            <app-required-field [type]="'asterisk_tooltip'">
+                                            </app-required-field>
+                                        </label>
+
+                                        <input type="number" name="productDiscountPercentEdit" id="productDiscountPercentEdit" class="form-control"
+                                            placeholder="{{ 'VIEWS.PRODUCT_PAGE.DISCOUNT' | translate }}" [(ngModel)]="product.discount_percent" min="0"
+                                            max="100" #productDiscountPercentEdit="ngModel" aria-describedby="productDiscountPercentEditHelp"
+                                            (change)="onProductDataUpdate();" (keyup)="onProductDataUpdate();" required />
+
+                                        <small id="productDiscountPercentEditHelp" class="form-text text-danger" *ngIf="productDiscountPercentEdit.invalid">
+
+                                            <span
+                                                *ngIf="productDiscountPercentEdit.errors.required && (productDiscountPercentEdit.dirty || productDiscountPercentEdit.touched)">
+                                                <app-required-field [type]="'input_invalid'"></app-required-field>
+                                            </span>
+
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- total price -->
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+                                    <ng-container [ngTemplateOutlet]="productTotalPriceCalculator"></ng-container>
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- stock analysis -->
+                    <div class="card mt-4" *ngIf="product?.product_stock?.length > 0">
+
+                        <div class="card-header">
+                            <h5>{{ 'VIEWS.PRODUCT_PAGE.STOCK_ANALYSIS' | translate }}</h5>
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <div class="row" *ngFor="let product_stock of product.product_stock; let ps = index">
+                                <div class="col-12">
+                                    <div class="row">
+
+
+                                        <!-- warehouse choosing -->
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                            <div class="form-group">
+
+                                                <label for="stockWarehouseChoose_{{ ps }}" class="mb-1">
+                                                    {{ 'VIEWS.PRODUCT_PAGE.WAREHOUSE' | translate }}
+                                                </label>
+
+                                                <ng-select id="stockWarehouseChoose_{{ ps }}" name="stockWarehouseChoose_{{ ps }}"
+                                                    placeholder="{{ 'VIEWS.PRODUCT_PAGE.WAREHOUSE_CODE' | translate }}" [items]="warehouses" [multiple]="false"
+                                                    bindLabel="code_name" bindValue="warehouse_id" [closeOnSelect]="true" [dropdownPosition]="'top'"
+                                                    [(ngModel)]="product_stock.warehouse_id" [minTermLength]="3" [disabled]="false" ng-required="true"
+                                                    [searchable]="true" aria-describedby="stockWarehouseChoose_{{ ps }}Help"
+                                                    (change)="onChangeWarehouseCode(ps);onProductDataUpdate();">
+                                                </ng-select>
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <!-- runway choosing -->
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                            <div class="form-group">
+
+                                                <label for="stockRunwayChoose_{{ ps }}" class="mb-1"
+                                                    [ngClass]="{ 'text-muted': warehouse_fields[ps].runway.disabled }">
+                                                    {{ 'VIEWS.PRODUCT_PAGE.RUNWAY' | translate }}
+                                                </label>
+
+                                                <ng-select id="stockRunwayChoose_{{ ps }}" name="stockRunwayChoose_{{ ps }}"
+                                                    placeholder="{{ 'VIEWS.PRODUCT_PAGE.RUNWAY_CODE' | translate }}" [items]="warehouse_runways[ps]"
+                                                    [multiple]="false" bindLabel="runway_code" bindValue="runway_id" [closeOnSelect]="true"
+                                                    [dropdownPosition]="'top'" [(ngModel)]="product_stock.runway_id" [minTermLength]="3" [disabled]="false"
+                                                    ng-required="true" [searchable]="true" aria-describedby="stockRunwayChoose_{{ ps }}Help"
+                                                    [disabled]="warehouse_fields[ps].runway.disabled" [nbSpinner]="warehouse_fields[ps].runway.spinner"
+                                                    (change)="onChangeWarehouseRunwayCode(ps);onProductDataUpdate();">
+                                                </ng-select>
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <!-- column choosing -->
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                            <div class="form-group">
+
+                                                <label for="stockWarehouseColumn_{{ ps }}" class="mb-1"
+                                                    [ngClass]="{ 'text-muted': warehouse_fields[ps].column.disabled }">
+                                                    {{ 'VIEWS.PRODUCT_PAGE.COLUMN' | translate }}
+                                                </label>
+
+                                                <ng-select id="stockWarehouseColumn_{{ ps }}" name="stockWarehouseColumn_{{ ps }}"
+                                                    placeholder="{{ 'VIEWS.PRODUCT_PAGE.COLUMN_CODE' | translate }}" [items]="warehouse_runways_columns[ps]"
+                                                    [multiple]="false" bindLabel="column_code" bindValue="column_id" [closeOnSelect]="true"
+                                                    [dropdownPosition]="'top'" [(ngModel)]="product_stock.column_id" [minTermLength]="3" [disabled]="false"
+                                                    ng-required="true" [searchable]="true" aria-describedby="stockWarehouseColumn_{{ ps }}Help"
+                                                    [disabled]="warehouse_fields[ps].column.disabled" [nbSpinner]="warehouse_fields[ps].column.spinner"
+                                                    (click)="onChangeWarehouseRunwayColumnCode(ps);onProductDataUpdate();">
+                                                </ng-select>
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <!-- shelf choosing -->
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                                            <div class="form-group">
+
+                                                <label for="stockWarehouseColumnShelf_{{ ps }}" class="mb-1"
+                                                    [ngClass]=" { 'text-muted': warehouse_fields[ps].shelf.disabled }">
+                                                    {{ 'VIEWS.PRODUCT_PAGE.SHELF' | translate }}
+                                                </label>
+
+                                                <ng-select id="stockWarehouseColumnShelf_{{ ps }}" name="stockWarehouseColumnShelf_{{ ps }}"
+                                                    placeholder="{{ 'VIEWS.PRODUCT_PAGE.SHELF_CODE' | translate }}" [items]="warehouse_columns_shelf[ps]"
+                                                    [multiple]="false" bindLabel="shelf_code" bindValue="shelf_id" [closeOnSelect]="true"
+                                                    [dropdownPosition]="'top'" [(ngModel)]="product_stock.column_shelf_id" [minTermLength]="3"
+                                                    [disabled]="false" ng-required="true" [searchable]="true"
+                                                    aria-describedby="stockWarehouseColumnShelf_{{ ps }}Help" [disabled]="warehouse_fields[ps].shelf.disabled"
+                                                    [nbSpinner]="warehouse_fields[ps].shelf.spinner" (change)="onProductDataUpdate();">
+                                                </ng-select>
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <!-- stock quantity -->
+                                        <div class="col-12 col-sm-12 col-md-2 col-lg-1">
+                                            <div class="form-group">
+
+                                                <label for="stockQuantity_{{ ps }}" class="mb-1">
+                                                    {{ 'VIEWS.PRODUCT_PAGE.STOCK' | translate }}
+                                                </label>
+
+                                                <input type="number" name="stockQuantity_{{ ps }}" id="stockQuantity_{{ ps }}" class="form-control"
+                                                    placeholder="{{ 'VIEWS.PRODUCT_PAGE.STOCK' | translate }}" [(ngModel)]="product_stock.stock_quantity"
+                                                    min="1" value="1" (change)="calculateProductTotalStock();onProductDataUpdate();"
+                                                    (keyup)="calculateProductTotalStock();onProductDataUpdate();" />
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <!-- delete btn -->
+                                        <div class="col-12 col-sm-12 col-md-2 col-lg-1">
+
+                                            <label for="deleteStockRow_{{ ps }}" class="mb-1" style="visibility: hidden;">label</label>
+
+                                            <button type="button" class="btn btn-danger w-100" id="deleteStockRow_{{ ps }}" (click)="deleteStockRow(ps);">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <button type="button" class="btn btn-success" id="addNewStockRow" (click)="addStockRow();" [disabled]="product.product_stock[product.product_stock.length - 1].warehouse_id === null
+                                                    || product.product_stock[product.product_stock.length - 1].runway_id === null
+                                                    || product.product_stock[product.product_stock.length - 1].column_id === null
+                                                    || product.product_stock[product.product_stock.length - 1].column_shelf_id === null">
+                                        <i class="fas fa-plus"></i>
+                                        {{ 'VIEWS.PRODUCT_PAGE.ACTIONS.ADD_WAREHOUSE' | translate }}
+                                    </button>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- specification -->
+                <div class="tab-pane fade" id="product-specification-description-edit" role="tabpanel" aria-labelledby="productSpecificationDescriptionEdit">
+
+
+                    <!-- specification -->
+                    <div class="row mt-4">
+
+                        <div class="col-12">
+                            <div class="tbl-container mx-auto">
+
+
+                                <h4>{{ 'VIEWS.PRODUCT_PAGE.PRODUCT_SPECIFICATION' | translate }}</h4>
+
+
+
+                                <div class="card mb-4" *ngFor="let category of product.specification; let i = index">
+                                    <div class="card-body">
+
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <!-- delete field -->
+                                                <td class="text-center" *ngIf="product.specification.length > 1">
+                                                    <a class="text-danger d-inline-block mt-2" style="font-size: 24px;"
+                                                        (click)="removeCharacteristicsCategory(i);">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+
+                                                <th class="w-100">
+                                                    <input type="text" name="specificationCategoryLabel_{{ i }}" id="specificationCategoryLabel_{{ i }}"
+                                                        class="form-control" placeholder="{{ 'VIEWS.PRODUCT_PAGE.CATEGORY_LABEL' | translate }}"
+                                                        [(ngModel)]="category.category_name" (change)="onProductDataUpdate();"
+                                                        (keyup)="onProductDataUpdate();" />
+                                                </th>
+                                            </thead>
+                                        </table>
+
+
+
+                                        <table class="table">
+
+                                            <tbody *ngIf="category?.fields">
+
+                                                <tr *ngFor="let field of category.fields; let j = index">
+                                                    <!-- delete field -->
+                                                    <td class="text-center" *ngIf="category.fields.length > 1">
+                                                        <a class="text-danger d-inline-block mt-2" style="font-size: 24px;"
+                                                            (click)="removeCharacteristicsCategoryField(i, j);">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </td>
+
+                                                    <td>
+                                                        <input type="text" name="specificationCategoryLabelFieldName_{{ j }}"
+                                                            id="specificationCategoryLabelFieldName_{{ j }}" class="form-control"
+                                                            placeholder="{{ 'VIEWS.PRODUCT_PAGE.FIELD_LABEL_NAME' | translate }}"
+                                                            [(ngModel)]="field.specification_field_name" (change)="onProductDataUpdate();"
+                                                            (keyup)="onProductDataUpdate();" />
+                                                    </td>
+
+                                                    <td>
+                                                        <input type="text" name="specificationCategoryLabelFieldValue_{{ j }}"
+                                                            id="specificationCategoryLabelFieldValue_{{ j }}" class="form-control"
+                                                            placeholder="{{ 'VIEWS.PRODUCT_PAGE.FIELD_LABEL_VALUE' | translate }}"
+                                                            (change)="onProductDataUpdate();" (keyup)="onProductDataUpdate();"
+                                                            [(ngModel)]="field.specification_field_value" />
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+
+                                        </table>
+
+
+
+                                        <!-- button to add specification field -->
+                                        <button type="button" class="btn btn-secondary ml-4" id="addNewSpecificationField_{{ i }}"
+                                            (click)="addNewCharacteristicsCategoryField(i);">
+                                            <i class="fas fa-plus"></i>
+                                            {{ 'VIEWS.PRODUCT_PAGE.ACTIONS.ADD_ATTRIBUTE_FIELD' | translate }}
+                                        </button>
+
+
+                                    </div>
+                                </div>
+
+
+
+                                <button type="button" class="btn btn-success" id="addNewSpecificationCategory" (click)="addNewCharacteristicsCategory()">
+                                    <i class="fas fa-plus"></i>
+                                    {{ 'VIEWS.PRODUCT_PAGE.ACTIONS.ADD_NEW_FEATURE_CATEGORY' | translate }}
+                                </button>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- description -->
+                    <div class="row mt-4">
+
+                        <div class="col-12">
+
+                            <div class="card">
+
+
+                                <div class="card-header">
+                                    <h5>
+                                        {{ 'VIEWS.PRODUCT_PAGE.PRODUCT_DESCRIPTION' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </h5>
+                                </div>
+
+
+
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <ckeditor [editor]="productDescriptionEditorTextEditor.editor" name="productDescription" id="productDescription"
+                                                [config]="productDescriptionEditorTextEditor.config" #productDescription="ngModel"
+                                                [(ngModel)]="product.product_description" (ready)="onProductDescriptionEditorReady($event);"
+                                                (keyup)="onProductDataUpdate();" (change)="onProductDescriptionEditorChange($event);onProductDataUpdate();"
+                                                [required]="true">
+                                            </ckeditor>
+                                        </div>
+                                        <div class="col-12 text-right mt-2">
+                                            <small class="text-muted" [ngClass]="{ 'text-danger': productDescriptionFieldCharactersCount > 8000 }">
+                                                {{ productDescriptionFieldCharactersCount }} / 8000
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- media data -->
+                <div class="tab-pane fade" id="product-media-edit" role="tabpanel" aria-labelledby="productMediaDataEdit">
+
+
+                    <div class="card mt-4">
+
+                        <div class="card-header">
+                            <h5>{{ 'VIEWS.PRODUCT_PAGE.IMAGES' | translate }}</h5>
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <ngx-dropzone [multiple]="true" accept="image/jpg, image/jpeg, image/png" [maxFileSize]="imageMaxFileSize" [required]="true"
+                                        (change)="onProductImagesSelect($event)">
+
+                                        <ngx-dropzone-label>
+                                            {{ 'GENERIC.ACTIONS.UPLOAD_PRODUCT_IMAGES' | translate }}
+                                        </ngx-dropzone-label>
+
+
+                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let file of productImages" [file]="file"
+                                            [removable]="true" (removed)="onProductImagesRemoved(file)">
+
+                                            <ngx-dropzone-label>
+                                                <!-- {{ file.name }} -->
+                                            </ngx-dropzone-label>
+
+                                        </ngx-dropzone-image-preview>
+
+                                    </ngx-dropzone>
+
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="row mt-4 product-images-main-image" *ngIf="product.images.length > 0">
+
+                                <!-- saved image -->
+                                <div class="col-12 col-sm-6 col-md-3 col-lg-2" *ngFor="let image of product.images; let i = index">
+
+                                    <label>
+
+                                        <!-- (click)="onMainImageSelect(i)" -->
+                                        <input type="radio" name="mainProductImage" id="mainProductImage" [value]="i" [checked]="image.main_image"
+                                            (click)="onMainImageSelect({part: 'existing', index: i})" />
+                                        <img [src]="image.url" alt="Product image {{ i }}" class="w-100 rounded" />
+
+                                        <div class="pop-over" *ngIf="!image.main_image">
+                                            {{ 'VIEWS.PRODUCT_PAGE.MAKE_THIS_IMAGE_MAIN' | translate }}
+                                        </div>
+
+                                        <div class="static" *ngIf="image.main_image">
+                                            {{ 'VIEWS.PRODUCT_PAGE.MAIN_IMAGE' | translate }}
+                                        </div>
+
+                                    </label>
+
+                                    <!-- delete button -->
+                                    <div class="text-center mt-3">
+
+                                        <button type="button" class="btn btn-danger" id="deleteImagePrevious_{{ i }}" (click)="onExistingImageDelete(i);">
+                                            <i class="fas fa-trash"></i>
+                                            {{ 'GENERIC.ACTIONS.DELETE' | translate }}
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- new images -->
+                            <div class="row mt-4 product-images-main-image" *ngIf="productImages.length > 0">
+
+                                <div class="mt-4 mb-3 col-12">
+                                    <h6>{{ 'VIEWS.PRODUCT_PAGE.UNSAVED_IMAGES' | translate }}</h6>
+
+                                    <div class="mt-4 mb-4 text-muted">
+                                        <i class="fas fa-info-circle"></i>
+                                        {{ 'VIEWS.PRODUCT_PAGE.UPDATE_PRODUCT_TO_SAVE_NEW_PHOTOS' | translate }}
+                                    </div>
+                                </div>
+
+
+                                <!-- new image -->
+                                <div class="col-12 col-sm-6 col-md-3 col-lg-2" *ngFor="let image of productImages; let i = index">
+
+
+                                    <label>
+
+                                        <!-- (click)="onMainImageSelect(i)" -->
+                                        <input type="radio" name="mainProductImage" id="mainProductImage" [value]="i" [checked]="image.main_image"
+                                            (click)="onMainImageSelect({part: 'new', index: i})" />
+                                        <img [src]="image.url" alt="Product image (extras) {{ i }}" class="w-100 rounded" />
+
+                                        <div class="pop-over" *ngIf="product_main_image_index !== i">
+                                            {{ 'VIEWS.PRODUCT_PAGE.MAKE_THIS_IMAGE_MAIN' | translate }}
+                                        </div>
+
+                                        <div class="static" *ngIf="product_main_image_index === i">
+                                            {{ 'VIEWS.PRODUCT_PAGE.MAIN_IMAGE' | translate }}
+                                        </div>
+
+                                    </label>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- notes & other -->
+                <div class="tab-pane fade" id="product-notes-edit" role="tabpanel" aria-labelledby="productNotesEdit">
+                    <ng-container [ngTemplateOutlet]="productNotes"></ng-container>
+                </div>
+
+
+                <!-- product transactions -->
+                <div class="tab-pane fade" id="product-transactions-edit" role="tabpanel" aria-labelledby="productTransactionsEdit">
+                    <ng-container [ngTemplateOutlet]="productTransactionsArea"></ng-container>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- status change -->
+<ng-template #productStatusField>
+
+    <div class="form-group">
+
+        <label for="productStatusField" class="mb-1">
+            {{ 'VIEWS.PRODUCT_PAGE.STATUS' | translate }}
+            <!-- <app-required-field [type]="'asterisk_tooltip'">
+            </app-required-field> -->
+        </label>
+
+        <app-status-dropdown-custom-module [current_status_value]="product.current_status" [statuses]="formatted_product_statuses"
+            [options]="status_dropdown_options" (statusChange)="onProductStatusChange($event);">
+        </app-status-dropdown-custom-module>
+
+    </div>
+
+</ng-template>
+
+
+
+
+
+<!-- categories that the product belongs -->
+<ng-template #categoriesProductBelongs>
+
+
+    <label for="productCategoriesBelongs" class="mb-1 d-flex align-items-center">
+        <div>
+            {{ 'VIEWS.PRODUCT_PAGE.CATEGORIES_BELONGS' | translate }}
+            <app-required-field [type]="'asterisk_tooltip'">
+            </app-required-field>
+        </div>
+
+
+        <div class="dropdown ml-4">
+
+            <button type="button" class="btn btn-success" data-toggle="dropdown" aria-expanded="false">
+                {{ 'GENERIC.ACTIONS.ADD' | translate }}
+                <i class="fas fa-plus"></i>
+            </button>
+
+
+            <div class="dropdown-menu w-285px">
+
+                <div class="row pl-3 pr-3">
+                    <div class="col-12">
+                        <div class="form-group">
+
+                            <label for="productChooseCategory" class="mb-1">
+                                {{ 'GENERIC.LABELS.CATEGORY' | translate }}
+                            </label>
+
+
+                            <ng-select id="productChooseCategory" name="productChooseCategory" #productChooseCategory="ngModel"
+                                placeholder="{{ 'GENERIC.LABELS.SELECT_CATEGORY' | translate }}" [items]="product_categories_list" [multiple]="false"
+                                bindLabel="label" bindValue="pcategory_id" [closeOnSelect]="true" [dropdownPosition]="'bottom'" [(ngModel)]="category_temp_id"
+                                [minTermLength]="3" [disabled]="false" ng-required="true" [searchable]="true" aria-describedby="productChooseCategoryHelp"
+                                (change)="addProductCategory();">
+                            </ng-select>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </label>
+
+
+
+    <div class="row mb-4 mt-4">
+        <div class="col-12">
+            <span class="text-muted">
+                <i class="fas fa-info-circle"></i>
+                {{ 'VIEWS.PRODUCT_PAGE.CATEGORIES_AUTOMATICALLY_UPDATED' | translate }}
+            </span>
+        </div>
+    </div>
+
+
+
+    <div class="mt-4" id="productCategoriesBelongs">
+
+        <nb-tag-list (tagRemove)="onProductCategoryRemove($event)">
+
+            <nb-tag status="basic" appearance="filled" removable *ngFor="let category of product_categories" [text]="category[1]">
+            </nb-tag>
+
+        </nb-tag-list>
+
+    </div>
+
+</ng-template>
+
+
+
+
+
+<!-- product total price calculator -->
+<ng-template #productTotalPriceCalculator>
+
+    <div class="form-group" *ngIf="product">
+
+        <label for="productTotalPrice" class="mb-1">
+            {{ 'VIEWS.PRODUCT_PAGE.TOTAL_AFTER_TAX_PER_PIECE' | translate }}
+            -
+            {{ 'VIEWS.PRODUCT_PAGE.VAT' | translate | lowercase }}
+            {{ user?.company_data?.fee_percent || 0 }}%
+        </label>
+
+        <p id="productTotalPrice" class="text-center">
+            {{ product.clear_price * (1 + (user?.company_data?.fee_percent || 0) / 100) * (1 -
+            product.discount_percent / 100) }}
+            {{ user?.company_data?.coin_symbol || '€' }}
+        </p>
+
+    </div>
+
+</ng-template>
+
+
+
+
+
+
+
+
+<!-- product notes -->
+<ng-template #productNotes>
+
+    <div class="card">
+
+        <div class="card-header">
+            <h5>
+                {{ 'VIEWS.PRODUCT_PAGE.NOTES_FOR_PRODUCT' | translate }}
+                <span class="text-muted" *ngIf="notes_updating_procedure_description !== 'nothing'">
+                    &nbsp;
+                    <i class="fas fa-sync-alt spinner-icon-circle" *ngIf="notes_updating_procedure_description === 'updating'"></i>
+                    <i class="fas fa-save" *ngIf="notes_updating_procedure_description === 'saved'"></i>
+                    <i class="fas fa-times" *ngIf="notes_updating_procedure_description === 'error'"></i>
+                </span>
+            </h5>
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="row mb-4">
+                <div class="col-12">
+                    <span class="text-muted">
+                        <i class="fas fa-info-circle"></i>
+                        {{ 'VIEWS.PRODUCT_PAGE.NOTES_AUTOMATICALLY_SAVED' | translate }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <ckeditor [editor]="notesFieldEditorTextEditor.editor" name="productNotes" id="productNotes" [config]="notesFieldEditorTextEditor.config"
+                        #productNotes="ngModel" [(ngModel)]="product.notes" (ready)="onProductNotesEditorReady($event);"
+                        (change)="onProductNotesEditorChange($event)">
+                    </ckeditor>
+                </div>
+                <div class="col-12 text-right mt-2">
+                    <small class="text-muted" [ngClass]="{ 'text-danger': notesFieldCharactersCount > 8000 }">
+                        {{ notesFieldCharactersCount }} / 8000
+                    </small>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-template>
+
+
+
+
+
+<!-- product transactions -->
+<ng-template #productTransactionsArea>
+
+
+    <div class="card mt-4" *ngFor="let productTransaction of product_transactions">
+        <div class="card-body">
+            <!-- {{ productTransaction | json }} -->
+
+            <span *ngIf="productTransaction?.product_created_at" [innerHTML]="'VIEWS.PRODUCT_PAGE.TRANSACTION_CARDS.PRODUCT_CREATED_AT_TEXT' | translate:
+            {
+                product_id: productTransaction.product_id,
+                created_at: utilsService.moment(productTransaction.product_created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                updated_by: productTransaction.updated_by
+            }">
+            </span>
+
+            <span *ngIf="productTransaction?.whole_product_update" [innerHTML]="'VIEWS.PRODUCT_PAGE.TRANSACTION_CARDS.WHOLE_PRODUCT_UPDATED_TEXT' | translate:
+            {
+                date: utilsService.moment(productTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                updated_by: productTransaction.updated_by
+            }">
+            </span>
+
+            <span *ngIf="productTransaction?.product_update_categories && productTransaction?.added_category" [innerHTML]="'VIEWS.PRODUCT_PAGE.TRANSACTION_CARDS.ADDED_CATEGORY_TEXT' | translate:
+                {
+                    category_label: productTransaction.added_category,
+                    created_at: utilsService.moment(productTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                    updated_by: productTransaction.updated_by
+                }">
+            </span>
+
+            <span *ngIf="productTransaction?.product_update_categories && productTransaction?.removed_category" [innerHTML]="'VIEWS.PRODUCT_PAGE.TRANSACTION_CARDS.REMOVED_CATEGORY_TEXT' | translate:
+                {
+                    category_label: productTransaction.removed_category,
+                    created_at: utilsService.moment(productTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                    updated_by: productTransaction.updated_by
+                }">
+            </span>
+
+            <span *ngIf="productTransaction?.product_update_images" [innerHTML]="'VIEWS.PRODUCT_PAGE.TRANSACTION_CARDS.IMAGES_UPDATED_TEXT' | translate:
+            {
+                created_at: utilsService.moment(productTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                updated_by: productTransaction.updated_by
+            }">
+            </span>
+
+            <span *ngIf="productTransaction?.field_changed" [innerHTML]="'VIEWS.PRODUCT_PAGE.TRANSACTION_CARDS.FIELD_CHANGED_TEXT' | translate:
+            {
+                field_name: productTransaction.field_name,
+                value_before: productTransaction.value_before,
+                value_after: productTransaction.value_after,
+                updated_by: productTransaction.updated_by,
+                created_at: utilsService.moment(productTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss')
+            }">
+            </span>
+
+            <span *ngIf="productTransaction?.status_changed" [innerHTML]="'VIEWS.PRODUCT_PAGE.TRANSACTION_CARDS.STATUS_UPDATED_TEXT' | translate:
+            {
+                status_before: productTransaction.status_before,
+                status_after: productTransaction.status_after,
+                updated_by: productTransaction.updated_by,
+                created_at: utilsService.moment(productTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss')
+            }">
+            </span>
+
+
+
+            <!-- product stock messages -->
+            <span *ngIf="productTransaction?.quantity_sold" [innerHTML]="'VIEWS.PRODUCT_PAGE.TRANSACTION_CARDS.QUANTITY_SOLD' | translate: {
+                created_at: utilsService.moment(productTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                quantity_sold: productTransaction.quantity_sold
+            }">
+            </span>
+
+            <span *ngIf="productTransaction?.quantity_removed" [innerHTML]="'VIEWS.PRODUCT_PAGE.TRANSACTION_CARDS.QUANTITY_REMOVED' | translate: {
+                quantity_removed: productTransaction.quantity_removed,
+                created_at: utilsService.moment(productTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                updated_by: productTransaction.updated_by,
+                warehouse_id: productTransaction.warehouse_id,
+                runway_id: productTransaction.runway_id,
+                column_id: productTransaction.column_id,
+                shelf_id: productTransaction.column_shelf_id
+            }">
+            </span>
+
+            <span *ngIf="productTransaction?.quantity_added" [innerHTML]="'VIEWS.PRODUCT_PAGE.TRANSACTION_CARDS.QUANTITY_ADDED' | translate: {
+                quantity_added: productTransaction.quantity_added,
+                purchased_price: productTransaction.purchased_price,
+                coin_symbol: user.company_data.coin_symbol,
+                created_at: utilsService.moment(productTransaction.created_at / 1).format('MM/DD/YYYY HH:mm:ss'),
+                updated_by: productTransaction.updated_by,
+                warehouse_id: productTransaction.warehouse_id,
+                runway_id: productTransaction.runway_id,
+                column_id: productTransaction.column_id,
+                shelf_id: productTransaction.column_shelf_id
+            }">
+            </span>
+
+
+
+        </div>
+    </div>
+
+
+    <div class="w-100 text-center text-muted mt-5" *ngIf="product_transactions_loading">
+        <i class="fas fa-sync-alt spinner-icon-circle mx-auto" style="font-size: 2rem"></i>
+    </div>
+
+    <h1 class="text-muted mt-5 text-center" *ngIf="product_transactions.length <= 0 && !product_transactions_loading">
+        {{ 'VIEWS.PRODUCT_PAGE.NO_TRANSACTIONS_FOUND' | translate }}
+    </h1>
+
+
+
+
+
+    <!-- load more button -->
+    <div class="row mt-5 mb-5" *ngIf="!product_transactions_loading && product_transactions.length % 30 === 0 && product_transactions.length > 0">
+        <div class="col-12 text-center">
+
+
+            <button type="button" class="btn btn-secondary" id="loadMoreProductTransactions" (click)="onLoadMoreProductTransactions('extend')">
+                <i class="fas fa-sync-alt"></i>
+                {{ 'GENERIC.ACTIONS.LOAD_MORE' | translate }}
+            </button>
+
+
+        </div>
+    </div>
+
+
+</ng-template>

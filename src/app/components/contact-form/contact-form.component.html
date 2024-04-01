@@ -1,0 +1,1511 @@
+<!-- message for only private contacts - show it when edit or new -->
+<div class="row mb-4" *ngIf="(mode === 'new' || mode === 'edit') && only_private_contact">
+    <div class="col-12">
+
+        <nb-alert status="warning">
+            {{ 'VIEWS.CONTACT_PAGE.WITHOUT_PUBLIC_PRIVILEGES' | translate }}
+        </nb-alert>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- read / preview -->
+<div class="row" *ngIf="mode === 'preview'">
+
+
+    <!-- contact picture -->
+    <div class="col-12 col-sm-12 col-md-5 col-lg-4">
+        <div class="card sticky-top" style="top: 110px;">
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12 profile-pic-container">
+
+                        <div class="profile-pic">
+                            <img [src]=" user?.profile_picture_url || '../../../../assets/images/account/user.png'" id="uploadProfilePicture"
+                                onerror="this.src='../../../../assets/images/account/user.png';" alt="" />
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- favorite & tags -->
+                <div class="row mt-4">
+
+                    <!-- favorite star -->
+                    <div class="col-1">
+                        <a href="javascript:void(0);" (click)="toggleFavoriteStarExisting.emit();">
+                            <i class="far fa-star" *ngIf="!contact?.favorite"></i>
+                            <i class="fas fa-star" *ngIf="contact?.favorite"></i>
+                        </a>
+                    </div>
+
+
+                    <!-- tags -->
+                    <div class="col-11">
+                        <h6>
+
+                            <div class="badge badge-secondary" *ngFor="let label of contact.contact_labels; let i = index">
+                                {{ label.label }}
+                            </div>
+
+                        </h6>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- contact's data -->
+    <div class="col-12 col-sm-12 col-md-7 col-lg-8">
+
+
+        <!-- general data -->
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+
+                    <!-- <div class="card-header">
+                        <i class="fas fa-user"></i>
+                        {{ 'VIEWS.CONTACT_PAGE.GENERAL_DETAILS' | translate }}
+                    </div> -->
+
+
+                    <div class="card-body">
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <h5>
+                                    <span class="text-muted" *ngIf="contact?.prefix">{{ contact.prefix }}</span>
+                                    {{ contact?.name || '' }}
+                                    {{ contact?.father_name || '' }}
+                                    {{ contact?.surname || '' }}
+                                    <span class="text-muted" *ngIf="contact?.suffix">({{ contact.suffix }})</span>
+                                </h5>
+                            </div>
+                            <div class="col-12" *ngIf="contact?.work_position_title && contact?.work_department && contact?.company">
+                                <h6 class="text-muted">
+                                    {{ contact?.work_position_title || '' }}
+                                    <span *ngIf="contact?.work_position_title">&nbsp;&#x2022;&nbsp;</span>
+                                    {{ contact?.work_department || '' }}
+                                    <span *ngIf="contact?.work_position_title || contact?.work_department">&nbsp;&#x2022;&nbsp;</span>
+                                    {{ contact?.company || '' }}
+                                </h6>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row mt-4" *ngIf="contact?.mother_name || contact?.date_of_birth">
+
+
+                            <!-- mother name -->
+                            <div class="col-12 col-sm-12 col-md-6 d-flex" *ngIf="contact?.mother_name">
+                                <label for="motherName" class="mb-0 text-muted mr-2">
+                                    {{ 'VIEWS.CONTACT_PAGE.MOTHER_NAME' | translate }}
+                                </label>
+                                <p id="motherName">
+                                    {{ contact.mother_name }}
+                                </p>
+                            </div>
+
+
+                            <!-- date of birth -->
+                            <div class="col-12 col-sm-12 col-md-6 d-flex" *ngIf="contact?.date_of_birth">
+                                <label for="dateOfBirth" class="mb-0 text-muted mr-2">
+                                    {{ 'VIEWS.CONTACT_PAGE.DATE_OF_BIRTH' | translate }}
+                                </label>
+                                <p id="dateOfBirth">
+                                    {{ utilsService.moment(+contact.date_of_birth / 1).format('MM/DD/YYYY') }}
+                                </p>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row">
+
+
+                            <!-- name in speaking format -->
+                            <div class="col-12 col-sm-12 col-md-6 d-flex" *ngIf="contact?.name_in_speaking_format">
+                                <label for="nameInSpeakingFormat" class="mb-0 text-muted mr-2">
+                                    {{ 'VIEWS.CONTACT_PAGE.NAME_IN_SPEAKING_FORMAT' | translate }}
+                                </label>
+                                <p id="nameInSpeakingFormat">
+                                    {{ contact.name_in_speaking_format }}
+                                </p>
+                            </div>
+
+
+                            <!-- father name in speaking format -->
+                            <div class="col-12 col-sm-12 col-md-6 d-flex" *ngIf="contact?.father_name_in_speaking_format">
+                                <label for="fatherNameInSpeakingFormat" class="mb-0 text-muted mr-2">
+                                    {{ 'VIEWS.CONTACT_PAGE.FATHER_NAME_IN_SPEAKING_FORMAT' | translate }}
+                                </label>
+                                <p id="fatherNameInSpeakingFormat">
+                                    {{ contact.father_name_in_speaking_format }}
+                                </p>
+                            </div>
+
+
+                            <!-- alias -->
+                            <div class="col-12 col-sm-12 col-md-6 d-flex" *ngIf="contact?.alias">
+                                <label for="contactAlias" class="mb-0 text-muted mr-2">
+                                    {{ 'VIEWS.CONTACT_PAGE.ALIAS' | translate }}
+                                </label>
+                                <p id="contactAlias">
+                                    {{ contact.alias }}
+                                </p>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- company's data -->
+        <div class="row mt-4">
+            <div class="col-12">
+
+                <nb-accordion>
+                    <nb-accordion-item [collapsed]="true" [expanded]="false">
+                        <nb-accordion-item-header>
+                            <h5>
+                                <i class="fas fa-building"></i>
+                                {{ 'VIEWS.CONTACT_PAGE.BUSINESS_DETAILS' | translate }}
+                            </h5>
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+
+
+                                <!-- company -->
+                                <div class="col-12 col-sm-12 col-md-4" *ngIf="contact?.company">
+                                    <label for="contactCompany" class="mb-1">
+                                        {{ 'VIEWS.CONTACT_PAGE.COMPANY' | translate }}
+                                    </label>
+                                    <p id="contactCompany">
+                                        {{ contact.company }}
+                                    </p>
+                                </div>
+
+
+                                <!-- work department -->
+                                <div class="col-12 col-sm-12 col-md-4" *ngIf="contact?.work_department">
+                                    <label for="contactWorkDepartment" class="mb-1">
+                                        {{ 'VIEWS.CONTACT_PAGE.WORK_DEPARTMENT' | translate }}
+                                    </label>
+                                    <p id="contactWorkDepartment">
+                                        {{ contact.work_department }}
+                                    </p>
+                                </div>
+
+
+                                <!-- work position title -->
+                                <div class="col-12 col-sm-12 col-md-4" *ngIf="contact?.work_position_title">
+                                    <label for="contactWorkPositionTitle" class="mb-1">
+                                        {{ 'VIEWS.CONTACT_PAGE.WORK_POSITION_TITLE' | translate }}
+                                    </label>
+                                    <p id="contactWorkPositionTitle">
+                                        {{ contact.work_position_title }}
+                                    </p>
+                                </div>
+
+
+                            </div>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+                </nb-accordion>
+
+
+            </div>
+        </div>
+
+
+
+        <!-- phones, emails -->
+        <div class="row mt-4" *ngIf="(contact?.phones && contact.phones.length > 0) || (contact?.emails && contact.emails.length > 0)">
+
+
+            <!-- phones -->
+            <div class="col-12 col-sm-12 col-md-6" *ngIf="contact?.phones && contact.phones.length > 0">
+
+                <nb-accordion>
+                    <nb-accordion-item [collapsed]="true" [expanded]="false">
+                        <nb-accordion-item-header>
+                            <h5>
+                                <i class="fas fa-phone"></i>
+                                {{ 'VIEWS.CONTACT_PAGE.TELEPHONES' | translate }}
+                            </h5>
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+
+
+                                <div class="col-12" *ngFor="let phone of contact.phones; let i = index">
+                                    <label for="contactPhone_{{ i }}" class="mb-0 mr-2">
+                                        {{ phone.label }}
+                                    </label>
+                                    <a href="tel:{{ phone.phone }}">{{ phone.phone }}</a>
+                                </div>
+
+
+                            </div>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+                </nb-accordion>
+
+            </div>
+
+
+
+            <!-- emails -->
+            <div class="col-12 col-sm-12 col-md-6" *ngIf="contact?.emails">
+
+                <nb-accordion>
+                    <nb-accordion-item [collapsed]="true" [expanded]="false">
+                        <nb-accordion-item-header>
+                            <h5>
+                                <i class="fas fa-envelope"></i>
+                                {{ 'VIEWS.CONTACT_PAGE.EMAILS' | translate }}
+                            </h5>
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+
+
+                                <div class="col-12" *ngFor="let email of contact.emails; let i = index">
+                                    <label for="contactEmail_{{ i }}" class="mb-0 mr-2">
+                                        {{ email.label }}
+                                    </label>
+                                    <a href="mailto:{{ email.value }}">{{ email.value }}</a>
+                                </div>
+
+
+                            </div>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+                </nb-accordion>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- addresses -->
+        <div class="row mt-4" *ngIf="contact?.addresses && contact.addresses.length > 0">
+            <div class="col-12">
+
+
+                <nb-accordion>
+                    <nb-accordion-item [collapsed]="true" [expanded]="false">
+                        <nb-accordion-item-header>
+                            <h5>
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ 'VIEWS.CONTACT_PAGE.ADDRESSES' | translate }}
+                            </h5>
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+
+
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4 border rounded p-2 m-2" *ngFor="let address of contact.addresses; let i = index">
+
+
+                                    <span *ngIf="address?.country">
+                                        {{ utilsService.getCountryLabel(address.country) }}
+                                    </span>
+
+                                    <span *ngIf="address?.address">
+                                        <span *ngIf="address?.country">,</span>
+                                        {{ address.address }}
+                                    </span>
+
+                                    <span *ngIf="address?.address_line_2">
+                                        <span *ngIf="address?.country || address?.address">,</span>
+                                        {{ address.address_line_2 }}
+                                    </span>
+
+                                    <span *ngIf="address?.postal_code">
+                                        <span *ngIf="address?.country || address?.address || address?.address_line_2">,</span>
+                                        {{ address.postal_code }}
+                                    </span>
+
+                                    <span *ngIf="address?.city">
+                                        <span *ngIf="address?.country || address?.address || address?.address_line_2 || address?.postal_code">,</span>
+                                        {{ address.city }}
+                                    </span>
+
+                                    <span *ngIf="address?.postal_vault">
+                                        <span
+                                            *ngIf="address?.country || address?.address || address?.address_line_2 || address?.postal_code || address?.city">,</span>
+                                        {{ address.postal_vault }}
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+                </nb-accordion>
+
+
+            </div>
+        </div>
+
+
+
+        <!-- custom fields -->
+        <div class="row mt-4" *ngIf="contact?.custom_fields && contact.custom_fields.length">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-12 d-flex" *ngFor="let field of contact.custom_fields; let i = index">
+                                <label for="contactCustomField_{{ i }}" class="mb-0 mr-2">
+                                    {{ field.label }}
+                                </label>
+                                <p id="contactCustomField_{{ i }}">{{ field.value }}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- other -->
+        <div class="row mt-4" *ngIf="contact?.website || contact?.notes">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+
+                            <!-- website -->
+                            <div class="col-12" *ngIf="contact?.website">
+                                <a href="{{ contact.website }}" target="_blank">
+                                    <i class="fas fa-globe"></i>
+                                    {{ contact.website }}
+                                </a>
+                            </div>
+
+
+                            <!-- notes -->
+                            <div class="col-12 mt-3" *ngIf="contact?.notes">
+                                <label for="contactNotes" class="mb-1">
+                                    {{ 'GENERIC.LABELS.NOTES' | translate }}
+                                </label>
+                                <p id="contactNotes">
+                                    {{ contact.notes }}
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- new / edit -->
+<div class="row" *ngIf="mode === 'new' || mode === 'edit'">
+
+
+
+    <!-- contact's data -->
+    <div class="col-12 col-sm-12 col-md-7 col-lg-8">
+
+
+
+        <!-- contact type -->
+        <div class="row" *ngIf="!only_private_contact">
+            <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                <div class="form-group">
+
+                    <label for="contactSavingType" class="mb-1">
+                        {{ 'VIEWS.CONTACT_PAGE.CONTACT_TYPE' | translate }}
+                    </label>
+
+
+                    <ng-select id="contactSavingType" placeholder="{{ 'VIEWS.CONTACT_PAGE.CONTACT_TYPE' | translate }}" [items]="contact_types"
+                        [multiple]="false" bindLabel="label" bindValue="value" [closeOnSelect]="true" [(ngModel)]="contact_saving_type" name="contactSavingType"
+                        #contactSavingType="ngModel" aria-describedby="contactSavingTypeHelp" (ngModelChange)="changeContactType();"
+                        (change)="changeContactType();">
+                    </ng-select>
+
+                    <small id="contactSavingTypeHelp" class="form-text text-muted" *ngIf="contact_saving_type === null">
+                        {{ 'VIEWS.CONTACT_PAGE.LEAVE_CONTACT_TYPE_BLANK' | translate }}
+                    </small>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row mt-4">
+
+
+            <div class="col-12 col-sm-12 col-md-6">
+
+
+                <!-- personal data -->
+                <div class="row">
+                    <div class="col-12">
+
+
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h5>
+                                    <i class="fas fa-user"></i>
+                                    {{ 'VIEWS.CONTACT_PAGE.PERSONAL_DATA' | translate }}
+                                </h5>
+                            </div>
+
+
+                            <div class="card-body">
+                                <div class="row">
+
+
+                                    <!-- prefix -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactPrefix" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.PREFIX' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactPrefix" id="contactPrefix" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.PREFIX' | translate }}" [(ngModel)]="contact.prefix"
+                                                #contactPrefix="ngModel" aria-describedby="contactPrefixHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- name -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactFirstName" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.FIRST_NAME' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactFirstName" id="contactFirstName" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.FIRST_NAME' | translate }}" [(ngModel)]="contact.name"
+                                                #contactFirstName="ngModel" aria-describedby="contactFirstNameHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- surname -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactLastName" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.LAST_NAME' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactLastName" id="contactLastName" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.LAST_NAME' | translate }}" [(ngModel)]="contact.surname"
+                                                #contactLastName="ngModel" aria-describedby="contactLastNameHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- father name -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactFatherName" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.FATHER_NAME' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactFatherName" id="contactFatherName" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.FATHER_NAME' | translate }}" [(ngModel)]="contact.father_name"
+                                                #contactFatherName="ngModel" aria-describedby="contactFatherNameHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- suffix -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactSuffix" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.SUFFIX' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactSuffix" id="contactSuffix" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.SUFFIX' | translate }}" [(ngModel)]="contact.suffix"
+                                                #contactSuffix="ngModel" aria-describedby="contactSuffixHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- mother name -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactMotherName" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.MOTHER_NAME' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactMotherName" id="contactMotherName" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.MOTHER_NAME' | translate }}" [(ngModel)]="contact.mother_name"
+                                                #contactMotherName="ngModel" aria-describedby="contactMotherNameHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- name in speaking format -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="nameInSpeakingFormat" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.NAME_IN_SPEAKING_FORMAT' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="nameInSpeakingFormat" id="nameInSpeakingFormat" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.NAME_IN_SPEAKING_FORMAT' | translate }}"
+                                                [(ngModel)]="contact.name_in_speaking_format" #nameInSpeakingFormat="ngModel"
+                                                aria-describedby="nameInSpeakingFormatHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- father name in speaking format -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="fatherNameInSpeakingFormat" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.FATHER_NAME_IN_SPEAKING_FORMAT' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="fatherNameInSpeakingFormat" id="fatherNameInSpeakingFormat" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.FATHER_NAME_IN_SPEAKING_FORMAT' | translate }}"
+                                                [(ngModel)]="contact.father_name_in_speaking_format" #fatherNameInSpeakingFormat="ngModel"
+                                                aria-describedby="fatherNameInSpeakingFormatHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- alias -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactAlias" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.ALIAS' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactAlias" id="contactAlias" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.ALIAS' | translate }}" [(ngModel)]="contact.alias" #contactAlias="ngModel"
+                                                aria-describedby="contactAliasHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- archive as -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactArchiveAs" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.ARCHIVE_AS' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactArchiveAs" id="contactArchiveAs" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.ARCHIVE_AS' | translate }}" [(ngModel)]="contact.archive_as"
+                                                #contactArchiveAs="ngModel" aria-describedby="contactArchiveAsHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- date of birth -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="dateOfBirth" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.DATE_OF_BIRTH' | translate }}
+                                            </label> -->
+
+                                            <input nbInput id="dateOfBirth" name="dateOfBirth" [nbDatepicker]="birthdayDatePicker" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.DATE_OF_BIRTH' | translate }}" #dateOfBirth="ngModel"
+                                                [(ngModel)]="contact.date_of_birth" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+                                            <nb-datepicker #birthdayDatePicker format="MM-dd-yyyy"></nb-datepicker>
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+                <!-- business details-->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h5>
+                                    <i class="fas fa-building"></i>
+                                    {{ 'VIEWS.CONTACT_PAGE.BUSINESS_DETAILS' | translate }}
+                                </h5>
+                            </div>
+
+
+
+                            <div class="card-body">
+
+
+                                <div class="row">
+
+
+                                    <!-- company -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="businessName" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.COMPANY' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="businessName" id="businessName" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.COMPANY' | translate }}" [(ngModel)]="contact.company"
+                                                #businessName="ngModel" aria-describedby="businessNameHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- position title -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="workPositionTitle" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.WORK_POSITION_TITLE' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="workPositionTitle" id="workPositionTitle" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.WORK_POSITION_TITLE' | translate }}"
+                                                [(ngModel)]="contact.work_position_title" #workPositionTitle="ngModel" aria-describedby="workPositionTitleHelp"
+                                                (change)="contactDataChange.emit(contact)" (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- department -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="workDepartment" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.WORK_DEPARTMENT' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="workDepartment" id="workDepartment" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.WORK_DEPARTMENT' | translate }}" [(ngModel)]="contact.work_department"
+                                                #workDepartment="ngModel" aria-describedby="workDepartmentHelp" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- other -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h5>
+                                    <i class="fas fa-th-large"></i>
+                                    {{ 'GENERIC.LABELS.OTHER' | translate }}
+                                </h5>
+                            </div>
+
+
+                            <div class="card-body">
+
+
+                                <!-- website -->
+                                <div class="col-12">
+                                    <div class="form-group">
+
+                                        <!-- <label for="website" class="mb-1">
+                                            {{ 'VIEWS.CONTACT_PAGE.WEBSITE' | translate }}
+                                        </label> -->
+
+                                        <input type="text" name="website" id="website" class="form-control"
+                                            placeholder="{{ 'VIEWS.CONTACT_PAGE.WEBSITE' | translate }}" [(ngModel)]="contact.website" #website="ngModel"
+                                            aria-describedby="websiteHelp" (change)="contactDataChange.emit(contact)"
+                                            (keyup)="contactDataChange.emit(contact)" />
+
+                                    </div>
+                                </div>
+
+
+
+                                <!-- notes -->
+                                <div class="col-12">
+                                    <div class="form-group">
+
+                                        <!-- <label for="notes" class="mb-1">
+                                            {{ 'VIEWS.CONTACT_PAGE.NOTES' | translate }}
+                                        </label> -->
+
+                                        <textarea type="text" name="notes" id="notes" class="form-control"
+                                            placeholder="{{ 'VIEWS.CONTACT_PAGE.NOTES' | translate }}" [(ngModel)]="contact.notes" #notes="ngModel"
+                                            aria-describedby="notesHelp" (change)="contactDataChange.emit(contact)"
+                                            (keyup)="contactDataChange.emit(contact)"></textarea>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="col-12 col-sm-12 col-md-6">
+
+
+                <!-- phones here -->
+                <div class="row">
+                    <div class="col-12">
+
+
+                        <button type="button" class="btn btn-custom-other-data-contact w-100" *ngIf="contact.phones.length <= 0" (click)="addNewPhone();">
+                            <span class="text-success">
+                                <i class="fas fa-phone"></i>
+                            </span>
+                            {{ 'VIEWS.CONTACT_PAGE.ACTIONS.ADD_NEW_TELEPHONE' | translate }}
+                        </button>
+
+
+
+                        <div class="card" *ngIf="contact.phones.length > 0">
+
+                            <div class="card-header">
+                                <h5>
+                                    <i class="fas fa-phone"></i>
+                                    {{ 'VIEWS.CONTACT_PAGE.TELEPHONES' | translate }}
+                                </h5>
+                            </div>
+
+
+                            <div class="card-body">
+
+                                <div class="row" *ngFor="let phone of contact.phones; let i = index" [ngClass]="{ 'mb-4': i < (contact.phones.length - 1) }">
+
+                                    <!-- title -->
+                                    <div class="col-12">
+                                        <h6>
+                                            {{ 'VIEWS.CONTACT_PAGE.TELEPHONE' | translate }}
+                                            #{{ i + 1 }}
+
+                                            &nbsp;
+                                            <a href="javascript:void(0);" class="text-muted" (click)="deletePhone(i);">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </h6>
+                                    </div>
+
+
+                                    <!-- label -->
+                                    <div class="col-6">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactLabel_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.LABEL' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactLabel_{{ i }}" id="contactLabel_{{ i }}" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.LABEL' | translate }}" [(ngModel)]="phone.label"
+                                                (change)="contactDataChange.emit(contact)" (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+                                    <!-- phone -->
+                                    <div class="col-6">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactPhone_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.PHONE' | translate }}
+                                            </label> -->
+
+                                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+                                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="true"
+                                                [selectedCountryISO]="selectedCountryISO" [maxLength]="24" [phoneValidation]="true" [separateDialCode]="true"
+                                                id="contactPhone_{{ i }}" name="contactPhone_{{ i }}" [(ngModel)]="phones[i]"
+                                                (ngModelChange)="formatTelephone(i)">
+                                            </ngx-intl-tel-input>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <button type="button" class="btn btn-success float-right" [disabled]="contact.phones[contact.phones.length - 1].label === null
+                                        || contact.phones[contact.phones.length - 1].label === ''
+                                        || contact.phones[contact.phones.length - 1].phone === null
+                                        || contact.phones[contact.phones.length - 1].phone === ''" (click)="addNewPhone();">
+                                            <i class="fas fa-plus"></i>
+                                            {{ 'VIEWS.CONTACT_PAGE.ACTIONS.ADD_NEW_TELEPHONE' | translate }}
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+                <!-- emails here -->
+                <div class="row mt-4">
+                    <div class="col-12">
+
+
+                        <button type="button" class="btn btn-custom-other-data-contact w-100" (click)="addNewEmail();" *ngIf="contact.emails.length <= 0">
+                            <span class="text-success">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            {{ 'VIEWS.CONTACT_PAGE.ACTIONS.ADD_NEW_EMAIL' | translate }}
+                        </button>
+
+
+
+                        <div class="card" *ngIf="contact.emails.length > 0">
+
+                            <div class="card-header">
+                                <h5>
+                                    <i class="fas fa-envelope"></i>
+                                    {{ 'VIEWS.CONTACT_PAGE.EMAILS' | translate }}
+                                </h5>
+                            </div>
+
+
+                            <div class="card-body">
+
+                                <!-- emails here -->
+                                <div class="row" *ngFor="let email of contact.emails; let i = index" [ngClass]="{ 'mb-4': i < (contact.emails.length - 1) }">
+
+                                    <div class="col-12">
+                                        <h6>
+                                            {{ 'VIEWS.CONTACT_PAGE.EMAIL' | translate }}
+                                            #{{ i + 1}}
+
+                                            &nbsp;
+                                            <a href="javascript:void(0);" class="text-muted" (click)="deleteEmail(i);">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </h6>
+                                    </div>
+
+
+                                    <div class="col-6">
+
+                                        <!-- <label for="contactEmailLabel_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.LABEL' | translate }}
+                                            </label> -->
+
+                                        <input type="text" name="contactEmailLabel_{{ i }}" id="contactEmailLabel_{{ i }}" class="form-control"
+                                            placeholder="{{ 'VIEWS.CONTACT_PAGE.LABEL' | translate }}" [(ngModel)]="email.label"
+                                            (change)="contactDataChange.emit(contact)" (keyup)="contactDataChange.emit(contact)" />
+
+                                    </div>
+
+                                    <div class="col-6">
+
+                                        <!-- <label for="contactEmailValue_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.EMAIL' | translate }}
+                                            </label> -->
+
+                                        <input type="text" name="contactEmailValue_{{ i }}" id="contactEmailValue_{{ i }}" class="form-control"
+                                            placeholder="{{ 'VIEWS.CONTACT_PAGE.EMAIL' | translate }}" [(ngModel)]="email.value"
+                                            (change)="contactDataChange.emit(contact)" (keyup)="contactDataChange.emit(contact)" />
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <button type="button" class="btn btn-success float-right" [disabled]="contact.emails[contact.emails.length - 1].label === null
+                                        || contact.emails[contact.emails.length - 1].label === ''
+                                        || contact.emails[contact.emails.length - 1].value === null
+                                        || contact.emails[contact.emails.length - 1].value === ''" (click)="addNewEmail();">
+                                            <i class="fas fa-plus"></i>
+                                            {{ 'VIEWS.CONTACT_PAGE.ACTIONS.ADD_NEW_EMAIL' | translate }}
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+                <!-- addresses here -->
+                <div class="row mt-4">
+                    <div class="col-12">
+
+
+                        <button type="button" class="btn btn-custom-other-data-contact w-100" (click)="addNewAddress();" *ngIf="contact.addresses.length <= 0">
+                            <span class="text-success">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </span>
+                            {{ 'VIEWS.CONTACT_PAGE.ACTIONS.ADD_NEW_ADDRESS' | translate }}
+                        </button>
+
+
+
+                        <div class="card" *ngIf="contact.addresses.length > 0">
+
+                            <div class="card-header">
+                                <h5>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    {{ 'VIEWS.CONTACT_PAGE.ADDRESSES' | translate }}
+                                </h5>
+                            </div>
+
+
+                            <div class="card-body">
+
+                                <!-- addresses here -->
+                                <div class="row" *ngFor="let address of contact.addresses; let i = index"
+                                    [ngClass]="{ 'mb-4': i < (contact.addresses.length - 1) }">
+
+                                    <div class="col-12">
+                                        <h6>
+                                            {{ 'VIEWS.CONTACT_PAGE.ADDRESS' | translate }}
+                                            #{{ i + 1 }}
+
+                                            &nbsp;
+                                            <a href="javascript:void(0);" class="text-muted" (click)="deleteAddress(i);">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </h6>
+                                    </div>
+
+
+
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+
+                                            <!-- <label for="addressCountry_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.COUNTRY' | translate }}
+                                            </label> -->
+
+
+                                            <ng-select id="addressCountry_{{ i }}" placeholder="{{ 'VIEWS.CONTACT_PAGE.COUNTRY' | translate }}"
+                                                [items]="countries" [multiple]="false" bindLabel="name" bindValue="code" [closeOnSelect]="true"
+                                                [(ngModel)]="address.country" name="addressCountry_{{ i }}" (change)="contactDataChange.emit(contact)">
+                                            </ng-select>
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- address -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="addressAddress_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.ADDRESS' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="addressAddress_{{ i }}" id="addressAddress_{{ i }}" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.ADDRESS' | translate }}" [(ngModel)]="address.address"
+                                                (change)="contactDataChange.emit(contact)" (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- address line 2 -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="addressStreetAddressLine2_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.STREET_ADDRESS_LINE_2' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="addressStreetAddressLine2_{{ i }}" id="addressStreetAddressLine2_{{ i }}"
+                                                class="form-control" placeholder="{{ 'VIEWS.CONTACT_PAGE.STREET_ADDRESS_LINE_2' | translate }}"
+                                                [(ngModel)]="address.address_line_2" (change)="contactDataChange.emit(contact)"
+                                                (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- postal code -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="addressPostalCode_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.POSTAL_CODE' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="addressPostalCode_{{ i }}" id="addressPostalCode_{{ i }}" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.POSTAL_CODE' | translate }}" [(ngModel)]="address.postal_code"
+                                                (change)="contactDataChange.emit(contact)" (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- city -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="addressCity_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.CITY' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="addressCity_{{ i }}" id="addressCity_{{ i }}" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.CITY' | translate }}" [(ngModel)]="address.city"
+                                                (change)="contactDataChange.emit(contact)" (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- postal vault -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+
+                                            <!-- <label for="addressPostalVault_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.POSTAL_VAULT' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="addressPostalVault_{{ i }}" id="addressPostalVault_{{ i }}" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.POSTAL_VAULT' | translate }}" [(ngModel)]="address.postal_vault"
+                                                (change)="contactDataChange.emit(contact)" (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- add new address -->
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <button type="button" class="btn btn-success float-right" (click)="addNewAddress();" [disabled]="contact.addresses[contact.addresses.length - 1].address === null
+                                            || contact.addresses[contact.addresses.length - 1].address === ''">
+                                            <i class="fas fa-plus"></i>
+                                            {{ 'VIEWS.CONTACT_PAGE.ACTIONS.ADD_NEW_ADDRESS' | translate }}
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+                <!-- custom fields -->
+                <div class="row mt-4">
+                    <div class="col-12">
+
+
+                        <button type="button" class="btn btn-custom-other-data-contact w-100" *ngIf="contact.custom_fields.length <= 0"
+                            (click)="addNewCustomField();">
+                            <span class="text-success">
+                                <i class="fas fa-window-minimize"></i>
+                            </span>
+                            {{ 'VIEWS.CONTACT_PAGE.ACTIONS.ADD_NEW_CUSTOM_FIELD' | translate }}
+                        </button>
+
+
+
+                        <div class="card" *ngIf="contact.custom_fields.length > 0">
+
+                            <div class="card-header">
+                                <h6>
+                                    <i class="fas fa-window-minimize"></i>
+                                    {{ 'VIEWS.CONTACT_PAGE.CUSTOM_FIELDS' | translate }}
+                                </h6>
+                            </div>
+
+
+                            <div class="card-body">
+
+
+                                <div class="row" *ngFor="let custom_field of contact.custom_fields; let i = index"
+                                    [ngClass]="{ 'mb-4': i < (contact.phones.length - 1) }">
+
+                                    <!-- title -->
+                                    <div class="col-12">
+                                        <h6>
+                                            {{ 'VIEWS.CONTACT_PAGE.CUSTOM_FIELD' | translate }}
+                                            #{{ i + 1 }}
+
+                                            &nbsp;
+                                            <a href="javascript:void(0);" class="text-muted" (click)="deleteCustomField(i);">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </h6>
+                                    </div>
+
+
+                                    <!-- label -->
+                                    <div class="col-6">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactCustomFieldLabel_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.LABEL' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactCustomFieldLabel_{{ i }}" id="contactCustomFieldLabel_{{ i }}" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.LABEL' | translate }}" [(ngModel)]="custom_field.label"
+                                                (change)="contactDataChange.emit(contact)" (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+                                    <!-- value -->
+                                    <div class="col-6">
+                                        <div class="form-group">
+
+                                            <!-- <label for="contactCustomFieldValue_{{ i }}" class="mb-1">
+                                                {{ 'VIEWS.CONTACT_PAGE.VALUE' | translate }}
+                                            </label> -->
+
+                                            <input type="text" name="contactCustomFieldValue_{{ i }}" id="contactCustomFieldValue_{{ i }}" class="form-control"
+                                                placeholder="{{ 'VIEWS.CONTACT_PAGE.VALUE' | translate }}" [(ngModel)]="custom_field.value"
+                                                (change)="contactDataChange.emit(contact)" (keyup)="contactDataChange.emit(contact)" />
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="card-footer">
+
+                                <button type="button" class="btn btn-success float-right" [disabled]="contact.custom_fields[contact.custom_fields.length - 1].label === null
+                                || contact.custom_fields[contact.custom_fields.length - 1].label === ''
+                                || contact.custom_fields[contact.custom_fields.length - 1].value === null
+                                || contact.custom_fields[contact.custom_fields.length - 1].value === ''" (click)="addNewCustomField();">
+                                    <i class="fas fa-plus"></i>
+                                    {{ 'VIEWS.CONTACT_PAGE.ACTIONS.ADD_NEW_CUSTOM_FIELD' | translate }}
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+    <!-- contact's photo -->
+    <div class="col-12 col-sm-12 col-md-5 col-lg-4">
+
+        <!-- contact's photo -->
+        <div class="card sticky-top" style="top: 110px;">
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12 profile-pic-container">
+
+                        <div class="profile-pic">
+                            <label class="-label" for="file">
+                                <i class="fas fa-camera"></i>&nbsp;
+                                <span style="padding-top: 5px;" *ngIf="contact?.image_url">
+                                    {{ 'VIEWS.CONTACT_PAGE.ACTIONS.CHANGE_CONTACT_PHOTO' | translate }}
+                                </span>
+                                <span style="padding-top: 5px;" *ngIf="!contact?.image_url">
+                                    {{ 'VIEWS.CONTACT_PAGE.ACTIONS.UPLOAD_CONTACT_PHOTO' | translate }}
+                                </span>
+                            </label>
+                            <input type="file" id="file" name="userProfilePictureUploadInput" accept="image/*" hidden="true" />
+                            <img [src]=" contact?.image_url || '../../../../assets/images/account/user.png'" id="uploadProfilePicture"
+                                onerror="this.src='../../../../assets/images/account/user.png';" alt="" />
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row mt-4">
+
+
+                    <!-- favorite star -->
+                    <div class="col-1">
+                        <a href="javascript:void(0);" (click)="toggleFavoriteStar();">
+                            <i class="far fa-star" *ngIf="!contact?.favorite"></i>
+                            <i class="fas fa-star" *ngIf="contact?.favorite"></i>
+                        </a>
+                    </div>
+
+
+
+                    <div class="col-11">
+
+
+                        <nb-tag-list (tagRemove)="removeContactLabel($event)" class="d-inline-block">
+
+                            <nb-tag status="basic" appearance="filled" removable *ngFor="let contact_label of contact.contact_labels; let i = index"
+                                [text]="contact_label.label">
+                            </nb-tag>
+
+                        </nb-tag-list>
+
+
+                        <div class="dropdown d-inline-block" [ngClass]="{ 'ml-3': contact.contact_labels.length > 0 }">
+
+                            <a href="javascript:void(0)" data-toggle="dropdown" aria-expanded="false">
+                                <nb-tag-list>
+                                    <nb-tag status="success" appearance="filled" [text]="'VIEWS.CONTACT_PAGE.ACTIONS.ADD_LABEL' | translate">
+                                    </nb-tag>
+                                </nb-tag-list>
+                            </a>
+
+
+                            <div class="dropdown-menu w-285px">
+
+                                <div class="row pl-3 pr-3">
+
+                                    <div class="col-12 pt-2 pb-2" *ngFor="let contact_label of contact_labels; let i = index;">
+                                        <a href="javascript:void(0)" class="rounded" (click)="addContactLabel(contact_label.label_id);">
+                                            {{ contact_label.label }}
+                                        </a>
+                                    </div>
+
+
+                                    <!-- new label -->
+                                    <div class="col-12 pt-2 pb-2">
+                                        <button type="button" class="btn btn-secondary w-100" id="newContactLabel" data-toggle="modal"
+                                            data-target="#newContactLabelModal">
+                                            <i class="fas fa-plus"></i>
+                                            {{ 'VIEWS.CONTACT_PAGE.ACTIONS.NEW_LABEL' | translate }}
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- new contact label modal -->
+<div class="modal fade" id="newContactLabelModal" tabindex="-1" aria-labelledby="newContactLabelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newContactLabelModalLabel">
+                    {{ 'VIEWS.CONTACT_PAGE.ACTIONS.NEW_LABEL' | translate }}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <label for="newContactLabel" class="mb-1">
+                    {{ 'VIEWS.CONTACT_PAGE.NEW_CONTACTS_LABEL' | translate }}
+                </label>
+
+                <input type="text" name="newContactLabel" id="newContactLabel" class="form-control"
+                    placeholder="{{ 'VIEWS.CONTACT_PAGE.NEW_CONTACTS_LABEL' | translate }}" [(ngModel)]="new_contacts_label" />
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                    {{ 'GENERIC.ACTIONS.CLOSE' | translate }}
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    [disabled]="!new_contacts_label || new_contacts_label === null || new_contacts_label === ''"
+                    (click)="addNewContactLabel.emit(new_contacts_label)">
+                    <i class="fas fa-save"></i>
+                    {{ 'VIEWS.CONTACT_PAGE.ACTIONS.ADD' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

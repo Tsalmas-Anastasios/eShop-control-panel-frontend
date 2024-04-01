@@ -1,0 +1,25 @@
+@import '../../../../assets/scss/colors';
+
+
+
+.full-height {
+    min-height: 100vh;
+    background-color: $main-background-header-sidebar;
+}
+
+
+
+
+
+.divider {
+    border: none;
+}
+
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: $simple-divider-color;
+    border: none !important;
+}

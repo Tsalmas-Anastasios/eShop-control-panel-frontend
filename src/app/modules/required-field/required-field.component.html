@@ -1,0 +1,10 @@
+<div class="tooltip-element-box" *ngIf="type && type === 'asterisk_tooltip'">
+    <span style="color: #cc0000">*</span>
+    <span class="tooltiptext">
+        {{ 'GENERIC.LABELS.REQUIRED_FIELD' | translate }}
+    </span>
+</div>
+
+<span class="tooltip-element-box" *ngIf="type && type === 'input_invalid'">
+    {{ 'GENERIC.LABELS.REQUIRED_FIELD' | translate }}
+</span>

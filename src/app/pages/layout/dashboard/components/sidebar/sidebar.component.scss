@@ -1,0 +1,10 @@
+.category-label {
+    opacity: 0.5;
+    font-size: 0.75rem;
+    display: block;
+}
+
+.category-label:not(:first-child) {
+    margin-top: 50px;
+    width: 100%;
+}

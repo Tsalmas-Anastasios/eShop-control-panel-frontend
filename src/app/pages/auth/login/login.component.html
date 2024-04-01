@@ -1,0 +1,93 @@
+<!-- Section: Design Block -->
+<section class="full-height">
+    <!-- Jumbotron -->
+    <div class="px-4 py-5 px-md-5 my-auto d-block text-lg-start d-flex align-items-center full-height">
+        <div class="container">
+            <div class="row gx-lg-5 align-items-center">
+
+
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h1 class="my-5 display-3">
+                        <strong [innerHTML]="'VIEWS.LOGIN.BEST_OFFER_FOR_YOUR_BUSINESS' | translate"></strong>
+                    </h1>
+
+                    <!-- divider -->
+                    <div class="divider d-flex align-items-center my-4">
+                        <p class="text-center fw-bold mx-3 mb-0">
+                            <img class="w-150px" src="../../../../assets/logo/logo.png"
+                                alt="Bizyhive e-Commerce Control Panel" />
+                        </p>
+                    </div>
+
+                    <p class="text-muted">
+                        {{ 'VIEWS.LOGIN.BEST_OFFER_FOR_YOUR_BUSINESS_TEXT' | translate }}
+                    </p>
+                </div>
+
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="card">
+                        <div class="card-body py-5 px-md-5">
+                            <form>
+
+                                <!-- Email input -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="username" name="username"
+                                        class="form-control form-control-lg"
+                                        placeholder="{{ 'VIEWS.LOGIN.PLACEHOLDERS.ENTER_VALID_EMAIL_ADDRESS' | translate }}"
+                                        [(ngModel)]="login_data.username" />
+                                    <label class="form-label" for="username">
+                                        {{ 'VIEWS.LOGIN.EMAIL_ADDRESS' | translate }}
+                                    </label>
+                                </div>
+
+                                <!-- Password input -->
+                                <div class="form-outline mb-3">
+                                    <input type="password" id="password" name="password"
+                                        class="form-control form-control-lg"
+                                        placeholder="{{ 'VIEWS.LOGIN.PLACEHOLDERS.ENTER_PASSWORD' | translate }}"
+                                        [(ngModel)]="login_data.password" />
+                                    <label class="form-label" for="password">
+                                        {{ 'VIEWS.LOGIN.PASSWORD' | translate }}
+                                    </label>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Checkbox -->
+                                    <div class="form-check mb-0">
+                                        <input class="form-check-input me-2" type="checkbox" value="" id="rememberMe"
+                                            name="rememberMe" [(ngModel)]="login_data.remember_me" />
+                                        <label class="form-check-label" for="rememberMe" name="rememberMe">
+                                            {{ 'VIEWS.LOGIN.REMEMBER_ME' | translate }}
+                                        </label>
+                                    </div>
+                                    <a [routerLink]="['/password-change']">{{ 'VIEWS.LOGIN.FORGOT_PASSWORD' | translate
+                                        }}?</a>
+                                </div>
+
+                                <div class="text-center text-lg-start mt-4 pt-2">
+                                    <button type="button" class="btn btn-primary btn-lg"
+                                        style="padding-left: 2.5rem; padding-right: 2.5rem;" [ladda]="isConnecting"
+                                        [disabled]="login_data.username === '' || login_data.username === null || login_data.password === '' || login_data.password === null"
+                                        (click)="submitLoginForm()">
+                                        {{ 'VIEWS.LOGIN.LOGIN' | translate }}
+                                    </button>
+                                    <!-- <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
+                                class="link-danger">Register</a></p> -->
+                                </div>
+
+                            </form>
+
+                            <div class="form-error-message-something-wrong mt-3 text-danger text-center"
+                                *ngIf="user_not_found">
+                                {{ 'VIEWS.LOGIN.ERROR_MESSAGE_WRONG_CREDENTIALS' | translate }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+</section>
+<!-- Section: Design Block -->

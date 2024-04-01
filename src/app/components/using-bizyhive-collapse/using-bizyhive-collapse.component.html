@@ -1,0 +1,41 @@
+<div class="form-group">
+    <label for="usingBizyhiveCloud" class="mb-1"></label>
+    <p class="text-success" id="usingBizyhiveCloud" *ngIf="using_bizyhive_cloud">
+        <a href="#bizyhiveCloudUsingBenefits" class="text-success text-decoration-none" data-toggle="collapse"
+            role="button" aria-expanded="false" aria-controls="bizyhiveCloudUsingBenefits">
+            <span class="d-block">
+                <i class="fas fa-check-circle"></i>&nbsp;
+                {{ 'GENERIC.LABELS.THIS_ACCOUNT_IS_USING_BIZYHIVE_CLOUD' | translate }}
+            </span>
+            <span class="d-block mt-2">
+                <i class="fas fa-lock"></i>&nbsp;
+                {{ 'GENERIC.LABELS.YOUR_DATA_ARE_PROTECTED' | translate }}
+            </span>
+        </a>
+    </p>
+    <p class="text-danger" id="usingBizyhiveCloud" *ngIf="!using_bizyhive_cloud">
+        <a href="bizyhiveCloudNotUsingDefects" class="text-danger text-decoration-none" data-toggle="collapse"
+            role="button" aria-expanded="false" aria-controls="bizyhiveCloudNotUsingDefects">
+            <span class="d-block">
+                <i class="fas fa-times-circle"></i>&nbsp;
+                {{ 'GENERIC.LABELS.THIS_ACCOUNT_USES_EXTERNAL_STORAGE' | translate }}
+            </span>
+            <span class="d-block mt-2">
+                <i class="fas fa-lock-open"></i>&nbsp;
+                {{ 'GENERIC.LABELS.THE_INTEGRITY_OF_YOUR_DATA_CANNOT_BE_ENSURED' | translate }}
+            </span>
+        </a>
+    </p>
+</div>
+
+<!-- collapsible -->
+<div class="collapse" id="bizyhiveCloudUsingBenefits" *ngIf="using_bizyhive_cloud">
+    <p>
+        {{ 'GENERIC.USING_BIZYHIVE_CLOUD_BENEFITS' | translate }}
+    </p>
+</div>
+<div class="collapse" id="bizyhiveCloudNotUsingDefects" *ngIf="using_bizyhive_cloud">
+    <p>
+        {{ 'GENERIC.NOT_USING_BIZYHIVE_CLOUD_DEFECTS' | translate }}
+    </p>
+</div>

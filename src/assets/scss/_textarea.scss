@@ -1,0 +1,20 @@
+textarea {
+    color: $input-letters-color !important;
+    background-color: $input-background-color !important;
+    border-color: $input-background-color !important;
+
+    &:active,
+    &:focus {
+        border-color: $input-background-color !important;
+        box-shadow: 0 0 0 3px $input-border-color !important;
+    }
+}
+
+
+textarea.vertical-size-adjustment-only {
+    resize: vertical;
+}
+
+textarea.horizontal-size-adjustment-only {
+    resize: horizontal;
+}

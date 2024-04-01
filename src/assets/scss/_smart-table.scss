@@ -1,0 +1,22 @@
+// ng2-smart-table thead>tr>th {
+//     background-color: blue;
+// }
+
+
+// .ccccccccccccccccccccccccc {
+//     background-color: #000;
+// }
+
+
+
+:host {
+
+    ::ng-deep {
+
+        table {
+            background-color: #000;
+        }
+
+    }
+
+}

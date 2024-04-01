@@ -1,0 +1,938 @@
+<div class="row" *ngIf="mode === 'edit'">
+
+
+    <!-- orders -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+
+                <div class="d-flex justify-content-between">
+
+                    <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.SHOP_ORDERS' | translate }}</h6>
+
+
+                    <label for="ordersCategoryAll">
+                        <input type="checkbox" name="ordersCategoryAll" id="ordersCategoryAll" [(ngModel)]="categories_handler.orders"
+                            (click)="updateAllCategoryPrivileges('orders');" />
+                        {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.ALL' | translate }}
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="ordersListing">
+                                <input type="checkbox" name="ordersListing" id="ordersListing" [(ngModel)]="user_privileges.orders_read"
+                                    (click)="onUpdateUserPrivileges('orders_read');" [disabled]="user_privileges.orders_edit" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="ordersWriting">
+                                <input type="checkbox" name="ordersWriting" id="ordersWriting" [(ngModel)]="user_privileges.orders_new"
+                                    (click)="onUpdateUserPrivileges('orders_new');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="ordersModifying">
+                                <input type="checkbox" name="ordersModifying" id="ordersModifying" [(ngModel)]="user_privileges.orders_edit"
+                                    (click)="onUpdateUserPrivileges('orders_edit');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- products -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+
+                <div class="d-flex justify-content-between">
+
+                    <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.SHOP_PRODUCTS' | translate }}</h6>
+
+                    <label for="productsCategoryAll">
+                        <input type="checkbox" name="productsCategoryAll" id="productsCategoryAll" [(ngModel)]="categories_handler.products"
+                            (click)="updateAllCategoryPrivileges('products');" />
+                        {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.ALL' | translate }}
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productsListing">
+                                <input type="checkbox" name="productsListing" id="productsListing" [(ngModel)]="user_privileges.products_read"
+                                    (click)="onUpdateUserPrivileges('products_read');" [disabled]="user_privileges.products_edit" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productsWriting">
+                                <input type="checkbox" name="productsWriting" id="productsWriting" [(ngModel)]="user_privileges.products_new"
+                                    (click)="onUpdateUserPrivileges('products_new');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productsModifying">
+                                <input type="checkbox" name="productsModifying" id="productsModifying" [(ngModel)]="user_privileges.products_edit"
+                                    (click)="onUpdateUserPrivileges('products_edit');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- product categories -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+
+                <div class="d-flex justify-content-between">
+
+                    <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRODUCT_CATEGORIES' | translate }}</h6>
+
+                    <label for="productCategoriesCategoryAll">
+                        <input type="checkbox" name="productCategoriesCategoryAll" id="productCategoriesCategoryAll"
+                            [(ngModel)]="categories_handler.product_categories" (click)="updateAllCategoryPrivileges('product_categories');" />
+                        {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.ALL' | translate }}
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesListing">
+                                <input type="checkbox" name="productCategoriesListing" id="productCategoriesListing"
+                                    [(ngModel)]="user_privileges.product_categories_read" (click)="onUpdateUserPrivileges('product_categories_read');"
+                                    [disabled]="user_privileges.product_categories_edit" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesWriting">
+                                <input type="checkbox" name="productCategoriesWriting" id="productCategoriesWriting"
+                                    [(ngModel)]="user_privileges.product_categories_new" (click)="onUpdateUserPrivileges('product_categories_new');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesModifying">
+                                <input type="checkbox" name="productCategoriesModifying" id="productCategoriesModifying"
+                                    [(ngModel)]="user_privileges.product_categories_edit" (click)="onUpdateUserPrivileges('product_categories_edit');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- contacts -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+
+                <div class="d-flex justify-content-between">
+
+                    <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.CONTACTS' | translate }}</h6>
+
+                    <label for="contactsCategoryAll">
+                        <input type="checkbox" name="contactsCategoryAll" id="contactsCategoryAll" [(ngModel)]="categories_handler.contacts"
+                            (click)="updateAllCategoryPrivileges('contacts');" />
+                        {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.ALL' | translate }}
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesListing">
+                                <input type="checkbox" name="productCategoriesListing" id="productCategoriesListing" [(ngModel)]="user_privileges.contacts_read"
+                                    (click)="onUpdateUserPrivileges('contacts_read');" [disabled]="user_privileges.contacts_edit" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesWriting">
+                                <input type="checkbox" name="productCategoriesWriting" id="productCategoriesWriting" [(ngModel)]="user_privileges.contacts_new"
+                                    (click)="onUpdateUserPrivileges('contacts_new');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesModifying">
+                                <input type="checkbox" name="productCategoriesModifying" id="productCategoriesModifying"
+                                    [(ngModel)]="user_privileges.contacts_edit" (click)="onUpdateUserPrivileges('contacts_edit');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- company data -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+
+                <div class="d-flex justify-content-between">
+
+                    <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.COMPANY_CREDENTIALS' | translate }}</h6>
+
+                    <label for="companyDataCategoryAll">
+                        <input type="checkbox" name="companyDataCategoryAll" id="companyDataCategoryAll" [(ngModel)]="categories_handler.company_data"
+                            (click)="updateAllCategoryPrivileges('company_data');" />
+                        {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.ALL' | translate }}
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="companyDataListing">
+                                <input type="checkbox" name="companyDataListing" id="companyDataListing" [(ngModel)]="user_privileges.company_data_read"
+                                    (click)="onUpdateUserPrivileges('company_data_read');" [disabled]="user_privileges.company_data_edit" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="companyDataModifying">
+                                <input type="checkbox" name="companyDataModifying" id="companyDataModifying" [(ngModel)]="user_privileges.company_data_edit"
+                                    (click)="onUpdateUserPrivileges('company_data_edit');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- connected users -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+
+                <div class="d-flex justify-content-between">
+
+                    <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.CONNECTED_USERS' | translate }}</h6>
+
+                    <label for="connectedUsersCategoryAll">
+                        <input type="checkbox" name="connectedUsersCategoryAll" id="connectedUsersCategoryAll" [(ngModel)]="categories_handler.users"
+                            (click)="updateAllCategoryPrivileges('users');" />
+                        {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.ALL' | translate }}
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="connectedUsersListing">
+                                <input type="checkbox" name="connectedUsersListing" id="connectedUsersListing" [(ngModel)]="user_privileges.users_read"
+                                    (click)="onUpdateUserPrivileges('users_read');" [disabled]="user_privileges.users_edit" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="connectedUsersWriting">
+                                <input type="checkbox" name="connectedUsersWriting" id="connectedUsersWriting" [(ngModel)]="user_privileges.users_add_new"
+                                    (click)="onUpdateUserPrivileges('users_add_new');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="connectedUsersModifying">
+                                <input type="checkbox" name="connectedUsersModifying" id="connectedUsersModifying" [(ngModel)]="user_privileges.users_edit"
+                                    (click)="onUpdateUserPrivileges('users_edit');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- integrations -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+
+                <div class="d-flex justify-content-between">
+
+                    <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.SYSTEM_INTEGRATIONS' | translate }}</h6>
+
+                    <label for="integrationsCategoryAll">
+                        <input type="checkbox" name="integrationsCategoryAll" id="integrationsCategoryAll" [(ngModel)]="categories_handler.integrations"
+                            (click)="updateAllCategoryPrivileges('integrations');" />
+                        {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.ALL' | translate }}
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsListing">
+                                <input type="checkbox" name="integrationsListing" id="integrationsListing" [(ngModel)]="user_privileges.integrations_read"
+                                    (click)="onUpdateUserPrivileges('integrations_read');" [disabled]="user_privileges.integrations_edit" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsWriting">
+                                <input type="checkbox" name="integrationsWriting" id="integrationsWriting" [(ngModel)]="user_privileges.integrations_new"
+                                    (click)="onUpdateUserPrivileges('integrations_new');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsModifying">
+                                <input type="checkbox" name="integrationsModifying" id="integrationsModifying" [(ngModel)]="user_privileges.integrations_edit"
+                                    (click)="onUpdateUserPrivileges('integrations_edit');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- warehouses -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+
+                <div class="d-flex justify-content-between">
+                    <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.WAREHOUSES' | translate }}</h6>
+
+                    <label for="warehousesCategoryAll">
+                        <input type="checkbox" name="warehousesCategoryAll" id="warehousesCategoryAll" [(ngModel)]="categories_handler.warehouses"
+                            (click)="updateAllCategoryPrivileges('warehouses');" />
+                        {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.ALL' | translate }}
+                    </label>
+                </div>
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsListing">
+                                <input type="checkbox" name="integrationsListing" id="integrationsListing" [(ngModel)]="user_privileges.warehouses_read"
+                                    (click)="onUpdateUserPrivileges('warehouses_read');" [disabled]="user_privileges.warehouses_edit" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsWriting">
+                                <input type="checkbox" name="integrationsWriting" id="integrationsWriting" [(ngModel)]="user_privileges.warehouses_new"
+                                    (click)="onUpdateUserPrivileges('warehouses_new');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsModifying">
+                                <input type="checkbox" name="integrationsModifying" id="integrationsModifying" [(ngModel)]="user_privileges.warehouses_edit"
+                                    (click)="onUpdateUserPrivileges('warehouses_edit');" />
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+<div class="row" *ngIf="mode === 'preview'">
+
+
+    <!-- orders -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+                <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.SHOP_ORDERS' | translate }}</h6>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="ordersListing">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.orders_read"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.orders_read"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="ordersWriting">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.orders_new"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.orders_new"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="ordersModifying">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.orders_edit"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.orders_edit"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- products-->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+                <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.SHOP_PRODUCTS' | translate }}</h6>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productsListing">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.products_read"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.products_read"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productsWriting">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.products_new"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.products_new"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productsModifying">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.products_edit"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.products_edit"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- product categories -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+                <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRODUCT_CATEGORIES' | translate }}</h6>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesListing">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.product_categories_read"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.product_categories_read"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesWriting">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.product_categories_new"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.product_categories_new"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesModifying">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.product_categories_edit"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.product_categories_edit"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- product categories -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+                <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.CONTACTS' | translate }}</h6>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesListing">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.contacts_read"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.contacts_read"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesWriting">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.contacts_new"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.contacts_new"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="productCategoriesModifying">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.contacts_edit"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.contacts_edit"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- company data -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+                <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.COMPANY_CREDENTIALS' | translate }}</h6>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="companyDataListing">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.company_data_read"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.company_data_read"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="companyDataModifying">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.company_data_edit"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.company_data_edit"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- connected users -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+                <h6>
+                    {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.CONNECTED_USERS' | translate }}
+                </h6>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="connectedUsersListing">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.users_read"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.users_read"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="connectedUsersWriting">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.users_add_new"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.users_add_new"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="connectedUsersModifying">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.users_edit"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.users_edit"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- integrations -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+                <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.SYSTEM_INTEGRATIONS' | translate }}</h6>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsListing">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.integrations_read"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.integrations_read"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsWriting">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.integrations_new"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.integrations_new"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsModifying">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.integrations_edit"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.integrations_edit"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- warehouses -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-4">
+
+            <div class="card-header">
+                <h6>{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.WAREHOUSES' | translate }}</h6>
+            </div>
+
+
+            <div class="card-body">
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsListing">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.warehouses_read"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.warehouses_read"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.READ' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsWriting">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.warehouses_new"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.warehouses_new"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.WRITE' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="integrationsModifying">
+                                <i class="fas fa-check-circle text-success" *ngIf="user_privileges.warehouses_edit"></i>
+                                <i class="fas fa-times-circle text-danger" *ngIf="!user_privileges.warehouses_edit"></i>
+                                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.PRIVILEGES_ACTIONS.MODIFY' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>

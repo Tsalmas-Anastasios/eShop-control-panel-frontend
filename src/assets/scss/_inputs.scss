@@ -1,0 +1,130 @@
+@import './colors';
+
+
+input {
+    background-color: $input-background-color !important;
+    border-color: $input-background-color !important;
+    color: $input-letters-color !important;
+
+    &:focus,
+    &:active {
+        box-shadow: 0 0 0 3px $input-border-color !important;
+    }
+}
+
+
+input[type=search] {
+    outline: none;
+}
+
+// input[type=search]:focus,
+// input[type=search]:active {
+//     border-color: $navbar-blue;
+//     // box-shadow: 0 0 0 0.25rem adjust-color($color: $navbar-blue, $lightness: 40%);
+// }
+
+
+::placeholder {
+    color: $input-placeholder-color !important;
+}
+
+::-ms-input-placeholder {
+    /* Edge 12-18 */
+    color: $input-placeholder-color !important;
+}
+
+
+
+
+
+
+
+
+
+// ng-select
+.ng-select-container {
+
+    background-color: $input-background-color !important;
+    border-color: $input-background-color !important;
+
+    .ng-value-container {
+
+        border-color: $input-background-color !important;
+
+        .ng-input {
+
+            border-color: $input-background-color !important;
+
+            input[type="text"] {
+                background-color: transparent !important;
+
+                &:active,
+                &:focus {
+                    box-shadow: none !important;
+                }
+            }
+
+        }
+
+    }
+
+}
+
+.ng-dropdown-panel {
+    border-color: $ng-select-menu-border-color !important;
+}
+
+.ng-dropdown-panel-items {
+
+    background-color: $input-background-color !important;
+
+    .ng-option {
+        background-color: $input-background-color !important;
+
+        &:hover {
+            background: linear-gradient(rgba(0, 0, 0, 0.2),
+                    rgba(0, 0, 0, 0.2));
+        }
+    }
+}
+
+
+
+
+
+// ngx-intl-tel-input
+.dropdown-menu.country-dropdown {
+    background-color: $input-background-color !important;
+    border-color: $ng-select-menu-border-color !important;
+
+    .search-container {
+
+        input {
+            outline: none;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            padding-left: 15px;
+            padding-right: 15px;
+            border-radius: 5px;
+            border: 1px solid $ng-select-menu-border-color;
+
+            &:active,
+            &:focus {
+                box-shadow: none !important;
+            }
+        }
+
+    }
+
+
+    .iti__country {
+        background-color: $input-background-color;
+        color: $input-letters-color;
+
+        &:hover {
+            background: linear-gradient(rgba(0, 0, 0, 0.2),
+                    rgba(0, 0, 0, 0.2));
+        }
+    }
+
+}

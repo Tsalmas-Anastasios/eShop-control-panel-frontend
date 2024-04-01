@@ -1,0 +1,585 @@
+<!-- create a new inventory -->
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+
+            <!-- text -->
+            <div class="col-12 col-sm-12 col-md-8 col-lg-9">
+                <div class="form-group">
+                    <p>
+                        {{ 'VIEWS.PRODUCTS_INVENTORIES.NEW_INVENTORY_TEXT' | translate }}
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- create inventory btn -->
+            <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                <div class="form-group w-100 h-100 d-flex align-items-center">
+
+                    <button type="button" class="btn btn-success w-100" id="newInventoryFile" data-toggle="modal" data-target="#newInventoryModal">
+                        <i class="fas fa-file-contract"></i>
+                        {{ 'VIEWS.PRODUCTS_INVENTORIES.ACTIONS.NEW_INVENTORY' | translate }}
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card mt-4">
+
+
+    <div class="card-header">
+        <h5>{{ 'VIEWS.PRODUCTS_INVENTORIES.TITLE' | translate }}</h5>
+    </div>
+
+
+
+
+    <div class="card-body">
+
+
+        <app-data-table-custom-module [columnHeaders]="columnHeaders" [data]="product_inventories" [options]="productsInventoriesTableOptions"
+            (endingPagesData)="getProductsInventory('extend', $event)">
+        </app-data-table-custom-module>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- inventory pdf section -->
+<div *ngIf="inventory?.inventory_id" #inventoryDetailsReport id="inventoryDetailsReport" class="p-5">
+
+
+    <div class="row">
+        <div class="col-12">
+            <h5 class="text-center" style="color: #000 !important">{{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.HEADER_TITLE' | translate }}</h5>
+        </div>
+    </div>
+
+
+
+    <div class="row mt-4">
+
+        <!-- inventory data -->
+        <div class="col-12 col-sm-12 col-md-6">
+            <div class="row">
+
+                <!-- inventory id -->
+                <div class="col-12">
+                    <div class="form-group d-flex align-items-center">
+
+                        <label for="inventoryId" class="mb-1 mt-2" style="color: #000 !important">
+                            {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.INVENTORY_ID' | translate }}
+                        </label>
+                        <p id="inventoryId" class="pb-0 mb-0 ml-3" style="color: #000 !important">
+                            {{ inventory.inventory_id }}
+                        </p>
+
+                    </div>
+                </div>
+
+                <!-- descriptive title -->
+                <div class="col-12">
+                    <div class="form-group d-flex align-items-center">
+
+                        <label for="descriptiveTitle" class="mb-1 mt-2" style="color: #000 !important">
+                            {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.DESCRIPTIVE_TITLE' | translate }}
+                        </label>
+                        <p id="descriptiveTitle" class="pb-0 mb-0 ml-3" style="color: #000 !important">
+                            {{ inventory.descriptive_title }}
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- created at date -->
+        <div class="col-12 col-sm-12 col-md-6">
+            <div class="form-group d-flex align-items-center">
+
+                <label for="createdAtDate" class="mb-1 mt-2" style="color: #000 !important">
+                    {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.CREATED_AT' | translate }}
+                </label>
+                <p id="createdAtDate" class="pb-0 mb-0 ml-3" style="color: #000 !important">
+                    <!-- {{ utilsService.moment(Number(inventory.created_at) / 1).format('MM - DD - YYYY') }} -->
+                    {{ utilsService.moment(+inventory.created_at / 1).format('MM - DD - YYYY HH:mm') }}
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- inventory manager data -->
+    <div class="row mt-4">
+        <div class="col-12">
+
+            <div class="form-group d-flex align-items-center">
+
+                <label for="inventoryId" class="mb-1 mt-2" style="color: #000 !important">
+                    {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.INVENTORY_MANAGER' | translate }}
+                </label>
+                <p id="inventoryId" class="pb-0 mb-0 ml-3" style="color: #000 !important">
+                    {{ inventory.created_by__first_name }} {{ inventory.created_by__last_name }}
+                    <small class="text-muted">
+                        ({{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.LEGAL_REPRESENTATIVE_OF_THE_COMPANY' | translate }})
+                    </small>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- explainer text -->
+        <div class="col-12">
+            <p class="mt-3" [innerHTML]="'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.INVENTORY_TEXT_EXPLAINER' | translate: {
+                    first_name: inventory.created_by__first_name,
+                    last_name: inventory.created_by__last_name,
+                    created_at: utilsService.moment(+inventory.created_at / 1).format('MM - DD - YYYY HH:mm')
+                }" style="color: #000 !important">
+            </p>
+        </div>
+    </div>
+
+
+
+    <div class="divider mt-5" style="border-color: #000 !important"></div>
+
+
+    <!-- products -->
+    <div class="row mt-5 mb-4">
+        <div class="col-12">
+
+
+            <!-- title -->
+            <div class="row">
+                <div class="col-12">
+                    <h6 class="text-center" style="color: #000 !important">{{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.INVENTORY_PRODUCTS' | translate }}</h6>
+                </div>
+            </div>
+
+
+
+            <!-- memo -->
+            <div class="row mt-4 mb-5">
+                <div class="col-12">
+                    <fieldset class="border rounded p-3" style="border-color: #000 !important">
+
+                        <legend class="w-auto" style="color: #000 !important">
+                            {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.MEMO' | translate }}
+                        </legend>
+
+
+
+                        <!-- title for registration codes -->
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="mb-1" style="color: #000 !important">
+                                    {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.REGISTRATION_CODES' | translate }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- registration codes -->
+                        <div class="row">
+
+                            <!-- prd - Product -->
+                            <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="color: #000 !important">
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.PRODUCT_MINIMIZE' | translate }}
+                                <span class="text-muted">
+                                    <i class="fas fa-long-arrow-alt-right"></i>
+                                </span>
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.NEW_PRODUCT' | translate }}
+                            </div>
+
+
+                            <!-- wrh - warehouse -->
+                            <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="color: #000 !important">
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.WAREHOUSE_MINIMIZE' | translate }}
+                                <span class="text-muted">
+                                    <i class="fas fa-long-arrow-alt-right"></i>
+                                </span>
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.NEW_WAREHOUSE' | translate }}
+                            </div>
+
+                            <!-- rnw - runway -->
+                            <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="color: #000 !important">
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.RUNWAY_MINIMIZE' | translate }}
+                                <span class="text-muted">
+                                    <i class="fas fa-long-arrow-alt-right"></i>
+                                </span>
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.NEW_RUNWAY' | translate }}
+                            </div>
+
+                            <!-- clm - column -->
+                            <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="color: #000 !important">
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.COLUMN_MINIMIZE' | translate }}
+                                <span class="text-muted">
+                                    <i class="fas fa-long-arrow-alt-right"></i>
+                                </span>
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.NEW_COLUMN' | translate }}
+                            </div>
+
+                            <!-- shl - shelf -->
+                            <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="color: #000 !important">
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.SHELF_MINIMIZE' | translate }}
+                                <span class="text-muted">
+                                    <i class="fas fa-long-arrow-alt-right"></i>
+                                </span>
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.NEW_SHELF' | translate }}
+                            </div>
+
+                            <!-- rnw - runway -->
+                            <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="color: #000 !important">
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.PIECES_MINIMIZE' | translate }}
+                                <span class="text-muted">
+                                    <i class="fas fa-long-arrow-alt-right"></i>
+                                </span>
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.PIECES' | translate }}
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+
+
+
+            <!-- products table -->
+            <div class="row mt-5 pt-5">
+                <div class="col-12">
+                    <table class="table table-sm" style="border-color: #000 !important; font-size: 0.6rem">
+
+                        <thead style="border-color: #000 !important">
+                            <tr style="border-color: #000 !important">
+
+                                <th class="text-center" style="color: #000 !important; border-color: #000 !important">
+                                    {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.STOCK_ANALYSIS' | translate }}
+                                </th>
+                                <th class="text-center" style="color: #000 !important; border-color: #000 !important">
+                                    {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.STOCK' | translate }}
+                                </th>
+
+                            </tr>
+                        </thead>
+
+
+                        <tbody style="border-color: #000 !important">
+
+                            <tr *ngFor="let product of inventory.products; let p = index;" style="border-color: #000 !important; color: #000 !important">
+                                <td class="pl-0 mb-0 pr-0 mr-0" colspan="2" style="border-color: #000 !important; color: #000 !important">
+
+                                    <table class="table table-borderless mb-0">
+                                        <tbody>
+
+                                            <tr>
+
+                                                <td class="d-flex">
+                                                    <small class="text-muted mr-2">
+                                                        {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.PRODUCT_MINIMIZE' | translate }}
+                                                    </small>
+                                                    <div style="color: #000 !important">
+                                                        ({{ product.product_code }}) - {{ product.product_headline }} /
+                                                        {{ product.product_brand }}-{{ product.product_model }}
+                                                    </div>
+                                                </td>
+                                                <td class="text-right" style="color: #000 !important">
+                                                    {{ product.inventory_product_stock }}
+                                                    <small class="text-muted">
+                                                        {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.PIECES_MINIMIZE' | translate }}
+                                                    </small>
+                                                </td>
+
+                                            </tr>
+
+
+                                            <!-- warehouses -->
+                                            <tr *ngFor="let warehouse of product.warehouses; let w = index;">
+                                                <td class="pl-0 mb-0 pr-0 mr-0 mb-0 mt-0 pb-0 pt-0" colspan="2">
+
+
+                                                    <table class="table table-borderless mb-0 mt-0">
+                                                        <tbody>
+
+                                                            <tr>
+
+                                                                <td class="d-flex pl-4">
+                                                                    <small class="text-muted mr-2">
+                                                                        {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.WAREHOUSE_MINIMIZE' | translate }}
+                                                                    </small>
+                                                                    <div style="color: #000 !important">
+                                                                        {{ warehouse.warehouse_code_name }} -
+                                                                        {{ warehouse.warehouse_distinctive_title }}
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-right" style="color: #000 !important">
+                                                                    {{ warehouse.warehouse_total_stock }}
+                                                                    <small class="text-muted">
+                                                                        {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.PIECES_MINIMIZE' | translate }}
+                                                                    </small>
+                                                                </td>
+
+                                                            </tr>
+
+
+                                                            <!-- runways -->
+                                                            <tr *ngFor="let runway of warehouse.runways; let r = index;">
+                                                                <td class="pl-0 mb-0 pr-0 mr-0 mb-0 mt-0 pb-0 pt-0" colspan="2">
+
+
+                                                                    <table class="table table-borderless mb-0 mt-0">
+                                                                        <tbody>
+
+                                                                            <tr>
+
+                                                                                <td class="d-flex pl-5">
+                                                                                    <span class="text-muted mr-2">
+                                                                                        {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.RUNWAY_MINIMIZE' | translate
+                                                                                        }}
+                                                                                    </span>
+                                                                                    <div style="color: #000 !important">
+                                                                                        {{ runway.runway_code }} - {{ runway.runway_name }}
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td class="text-right" style="color: #000 !important">
+                                                                                    {{ runway.runway_total_stock }}
+                                                                                    <small class="text-muted">
+                                                                                        {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.PIECES_MINIMIZE' | translate
+                                                                                        }}
+                                                                                    </small>
+                                                                                </td>
+
+                                                                            </tr>
+
+
+                                                                            <!-- columns -->
+                                                                            <tr *ngFor="let column of runway.columns; let c = index;">
+                                                                                <td class="pl-0 mb-0 pr-0 mb-0 mt-0 pb-0 pt-0" colspan="2">
+
+                                                                                    <table class="table table-borderless mb-0 mt-0">
+                                                                                        <tbody>
+
+                                                                                            <tr>
+
+                                                                                                <td class="d-flex pl-5">
+                                                                                                    <span class="text-muted mr-2 ml-3">
+                                                                                                        {{
+                                                                                                        'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.COLUMN_MINIMIZE'
+                                                                                                        | translate }}
+                                                                                                    </span>
+                                                                                                    <div style="color: #000 !important">
+                                                                                                        {{ column.column_code }} -
+                                                                                                        {{ column.column_name }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="text-right" style="color: #000 !important">
+                                                                                                    {{ column.column_total_stock }}
+                                                                                                    <small class="text-muted">
+                                                                                                        {{
+                                                                                                        'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.PIECES_MINIMIZE'
+                                                                                                        | translate }}
+                                                                                                    </small>
+                                                                                                </td>
+
+                                                                                            </tr>
+
+
+                                                                                            <tr *ngFor="let shelf of column.shelf">
+                                                                                                <td class="pl-0 mb-0 pr-0 mb-0 mt-0 pb-0 pt-0" colspan="2">
+
+                                                                                                    <table class="table table-borderless mb-0 mt-0">
+                                                                                                        <tbody>
+
+                                                                                                            <tr>
+
+                                                                                                                <td class="d-flex pl-5">
+                                                                                                                    <span class="text-muted mr-2 ml-5">
+                                                                                                                        {{
+                                                                                                                        'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.SHELF_MINIMIZE'
+                                                                                                                        | translate }}
+                                                                                                                    </span>
+                                                                                                                    <div style="color: #000 !important">
+                                                                                                                        {{ shelf.shelf_code }}
+                                                                                                                    </div>
+                                                                                                                </td>
+                                                                                                                <td class="text-right"
+                                                                                                                    style="color: #000 !important">
+                                                                                                                    {{ shelf.shelf_total_stock }}
+                                                                                                                    <small class="text-muted">
+                                                                                                                        {{
+                                                                                                                        'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.PIECES_MINIMIZE'
+                                                                                                                        | translate }}
+                                                                                                                    </small>
+                                                                                                                </td>
+
+                                                                                                            </tr>
+
+                                                                                                        </tbody>
+                                                                                                    </table>
+
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                        </tbody>
+                                                                                    </table>
+
+                                                                                </td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+
+
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+
+
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+    <!-- signatures -->
+    <div class="row mt-5 mb-5">
+
+
+        <!-- company's signature -->
+        <div class="col-6">
+            <p style="color: #000 !important">
+                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.COMPANY_MANAGER' | translate }}
+            </p>
+        </div>
+
+
+        <!-- inventory manager's signature -->
+        <div class="col-6">
+            <p class="text-right" style="color: #000 !important">
+                {{ 'VIEWS.PRODUCTS_INVENTORIES.PDF_FILE.INVENTORY_MANAGER' | translate }}
+            </p>
+        </div>
+
+
+    </div>
+
+
+
+
+    <!-- powered by footer -->
+    <div class="row mt-5 pt-5">
+        <div class="col-12 text-center mt-5" style="color: #000 !important">
+            <em>powered by </em>
+            <img src="../../../../assets/logo/logo.png" alt="e-Commerce Control Panel Bizyhive logo" style="width: 100px;" class="ml-3" />
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<!-- new inventory modal -->
+<div class="modal fade" id="newInventoryModal" aria-labelledby="newInventoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newInventoryModalLabel">
+                    {{ 'VIEWS.PRODUCTS_INVENTORIES.NEW_PRODUCTS_INVENTORY' | translate }}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+
+                <!-- info text -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <p>
+                                <i class="fas fa-info-circle"></i>
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.CREATE_DESCRIPTIVE_TITLE_TEXT' | translate }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- text -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+
+                            <label for="descriptiveTitleLabel" class="mb-1">
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.DESCRIPTIVE_TITLE' | translate }}
+                            </label>
+
+                            <input type="text" name="descriptiveTitle" id="descriptiveTitle" class="form-control"
+                                placeholder="{{ 'VIEWS.PRODUCTS_INVENTORIES.DESCRIPTIVE_TITLE' | translate }}" [(ngModel)]="inventory_descriptive_title"
+                                #descriptiveTitle="ngModel" aria-describedby="descriptiveTitleHelp" required />
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    {{ 'GENERIC.ACTIONS.CLOSE' | translate }}
+                </button>
+                <button type="button" class="btn btn-primary" (click)="createNewInventory();" data-dismiss="modal">
+                    {{ 'VIEWS.PRODUCTS_INVENTORIES.ACTIONS.SAVE_NEW_INVENTORY' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

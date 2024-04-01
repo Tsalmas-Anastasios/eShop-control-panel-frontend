@@ -1,0 +1,280 @@
+<div class="row">
+
+    <div class="col-12">
+        <h3>{{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.TITLE' | translate }}</h3>
+    </div>
+
+    <div class="col-12">
+
+        <i class="fas fa-info-circle"></i>
+        {{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.EXPLAINER_TEXT' | translate }}
+
+    </div>
+
+</div>
+
+
+
+
+<!-- generate automatically reports -->
+<!-- general company data -->
+<nb-accordion class="mt-5">
+
+    <nb-accordion-item [collapsed]="false" [expanded]="true">
+
+
+        <nb-accordion-item-header>
+            <h5>{{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.AUTOMATIC_GENERATION_OF_INVENTORIES' | translate }}</h5>
+        </nb-accordion-item-header>
+
+        <nb-accordion-item-body>
+
+
+            <div class="row mb-4">
+                <div class="col-12">
+                    <i class="fas fa-info-circle"></i>
+                    {{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.AUTOMATIC_GENERATION_OF_INVENTORIES_EXPLAINER' | translate }}
+                </div>
+            </div>
+
+
+
+
+            <div class="row mt-5">
+
+                <!-- specific date -->
+                <div class="col-12 col-sm-12 col-md-6">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>{{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.SPECIFIC_DATE_SETTING' | translate }}</h6>
+                        </div>
+                        <div class="col-12">
+                            <p class="text-muted">
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.SPECIFIC_DATE_SETTING_EXPLAINER' | translate }}
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <!-- date fields -->
+                    <div class="row mb-4">
+
+
+                        <!-- month -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+
+                                <label for="specificDateMonth" class="mb-1">
+                                    {{ 'GENERIC.LABELS.MONTH' | translate }}
+                                </label>
+
+
+                                <ng-select id="specificDateMonth" name="specificDateMonth" placeholder="{{ 'GENERIC.LABELS.SELECT_MONTH' | translate }}"
+                                    [items]="months" [multiple]="false" bindLabel="label" bindValue="numeric_value" [closeOnSelect]="true"
+                                    [dropdownPosition]="'top'" [minTermLength]="3" [disabled]="false" ng-required="true" [searchable]="true"
+                                    [(ngModel)]="inventory_settings.auto_generation_timeline.setting_auto_generate_date__month"
+                                    aria-describedby="specificDateMonthHelp" (change)="autoGenerateSectionSpecificDateMonthChange();">
+                                </ng-select>
+
+                            </div>
+                        </div>
+
+
+
+                        <!-- day -->
+                        <div class="col-12 col-sm-12 col-md-3">
+                            <div class="form-group">
+
+                                <label for="specificDateDay" class="mb-1" [ngClass]="{ 'text-muted': selected_month_days_auto_gen_specific_date.length <= 0 }">
+                                    {{ 'GENERIC.LABELS.DAY' | translate }}
+                                </label>
+
+                                <ng-select id="specifricDateDay" name="specifricDateDay" placeholder="{{ 'GENERIC.LABELS.SELECT_DAY' | translate }}"
+                                    [items]="selected_month_days_auto_gen_specific_date" [multiple]="false" bindLabel="label" bindValue="value"
+                                    [closeOnSelect]="true" [dropdownPosition]="'top'" [minTermLength]="3" [disabled]="false" ng-required="true"
+                                    [searchable]="true" [(ngModel)]="inventory_settings.auto_generation_timeline.setting_auto_generate_date__day"
+                                    [disabled]="selected_month_days_auto_gen_specific_date.length <= 0" aria-describedby="specifricDateDayHelp">
+                                </ng-select>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- specific time period -->
+                <div class="col-12 col-sm-12 col-md-6">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>{{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.SPECIFIC_TIME_PERIOD_SETTING' | translate }}</h6>
+                        </div>
+                        <div class="col-12">
+                            <p class="text-muted">
+                                {{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.SPECIFIC_TIME_PERIOD_SETTING_EXPLAINER' | translate }}
+                            </p>
+                        </div>
+                    </div>
+
+
+
+                    <!-- time period -->
+                    <div class="row">
+
+
+                        <!-- time period -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+
+                                <label for="specificTimePeriod" class="mb-1">
+                                    {{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.TIME_PERIOD' | translate }}
+                                </label>
+
+                                <ng-select id="specificTimePeriod" name="specificTimePeriod"
+                                    placeholder="{{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.SELECT_TIME_PERIOD' | translate }}"
+                                    [items]="time_periods_automatically_generate_inventories" [multiple]="false" bindLabel="label" bindValue="value"
+                                    [closeOnSelect]="true" [dropdownPosition]="'top'" [minTermLength]="3" [disabled]="false" ng-required="true"
+                                    [searchable]="true" [(ngModel)]="inventory_settings.auto_generation_timeline.setting_auto_generate_date_frequency"
+                                    aria-describedby="specificTimePeriodHelp" (change)="autoGenerateSectionSpecificTimePeriodChange();">
+                                </ng-select>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- time period === 'yearly '-->
+                    <div class="row" *ngIf="inventory_settings.auto_generation_timeline.setting_auto_generate_date_frequency === 'yearly'">
+
+
+                        <!-- month -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+
+                                <label for="specificTimePeriodMonth" class="mb-1">
+                                    {{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.CREATE_INVENTORY_EACH' | translate }}
+                                </label>
+
+                                <ng-select id="specificTimePeriodMonth" name="specificTimePeriodMonth"
+                                    placeholder="{{ 'GENERIC.LABELS.SELECT_MONTH' | translate }}" [items]="months" [multiple]="false" bindLabel="label"
+                                    bindValue="numeric_value" [closeOnSelect]="true" [dropdownPosition]="'top'" [minTermLength]="3" [disabled]="false"
+                                    ng-required="true" [searchable]="true"
+                                    [(ngModel)]="inventory_settings.auto_generation_timeline.setting_auto_generate_date_frequency__month"
+                                    aria-describedby="specificTimePeriodMonthHelp" (change)="autoGenerateSectionSpecificTimePeriodYearlyMonthChange();">
+                                </ng-select>
+
+                            </div>
+                        </div>
+
+
+                        <!-- day -->
+                        <div class="col-12 col-sm-12 col-md-3">
+                            <div class="form-group">
+
+                                <label for="specificTimePeriodDateDay" class="mb-1"
+                                    [ngClass]="{ 'text-muted': selected_month_days_auto_gen_yearly_time_period.length <= 0 }">
+                                    {{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.AND_DAY' | translate }}
+                                </label>
+
+                                <ng-select id="specificTimePeriodDateDay" name="specificTimePeriodDateDay"
+                                    placeholder="{{ 'GENERIC.LABELS.SELECT_DAY' | translate }}" [items]="selected_month_days_auto_gen_yearly_time_period"
+                                    [multiple]="false" bindLabel="label" bindValue="value" [closeOnSelect]="true" [dropdownPosition]="'top'" [minTermLength]="3"
+                                    [disabled]="false" ng-required="true" [searchable]="true"
+                                    [(ngModel)]="inventory_settings.auto_generation_timeline.setting_auto_generate_date_frequency__day"
+                                    [disabled]="selected_month_days_auto_gen_yearly_time_period.length <= 0" aria-describedby="specificTimePeriodDateDayHelp">
+                                </ng-select>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- time period === 'monthly' -->
+                    <div class="row" *ngIf="inventory_settings.auto_generation_timeline.setting_auto_generate_date_frequency === 'monthly'">
+
+
+                        <!-- day -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+
+                                <label for="specificTimePeriodDay" class="mb-1">
+                                    {{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.CREATE_INVENTORY_EACH' | translate }}
+                                </label>
+
+                                <ng-select id="specificTimePeriodDay" name="specificTimePeriodDay" placeholder="{{ 'GENERIC.LABELS.SELECT_DAY' | translate }}"
+                                    [items]="month_days" [multiple]="false" bindLabel="label" bindValue="value" [closeOnSelect]="true"
+                                    [dropdownPosition]="'top'" [minTermLength]="3" [disabled]="false" ng-required="true" [searchable]="true"
+                                    [(ngModel)]="inventory_settings.auto_generation_timeline.setting_auto_generate_date_frequency__day"
+                                    aria-describedby="specificTimePeriodDayHelp">
+                                </ng-select>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- time period === 'weekly' -->
+                    <div class="row" *ngIf="inventory_settings.auto_generation_timeline.setting_auto_generate_date_frequency === 'weekly'">
+
+
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+
+
+                                <label for="specificTimePeriodDay" class="mb-1">
+                                    {{ 'VIEWS.PRODUCTS_INVENTORIES.SETTINGS.CREATE_INVENTORY_EACH' | translate }}
+                                </label>
+
+                                <ng-select id="specificTimePeriodDay" name="specificTimePeriodDay" placeholder="{{ 'GENERIC.LABELS.SELECT_DAY' | translate }}"
+                                    [items]="weekly_days" [multiple]="false" bindLabel="label" bindValue="week_numeric" [closeOnSelect]="true"
+                                    [dropdownPosition]="'top'" [minTermLength]="3" [disabled]="false" ng-required="true" [searchable]="true"
+                                    [(ngModel)]="inventory_settings.auto_generation_timeline.setting_auto_generate_date_frequency__day"
+                                    aria-describedby="specificTimePeriodDayHelp">
+                                </ng-select>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- submit btn -->
+            <div class="row mt-4">
+                <div class="col-12">
+
+                    <button type="button" class="btn btn-primary" id="update-setting-auto-generate-inventories" [ladda]="isUpdatingAutoGeneratingInventories"
+                        (click)="updateSettingAutoGenerateInventories();">
+                        <i class="fas fa-sync-alt"></i>
+                        {{ 'GENERIC.ACTIONS.UPDATE' | translate }}
+                    </button>
+
+                </div>
+            </div>
+
+
+        </nb-accordion-item-body>
+
+
+    </nb-accordion-item>
+
+</nb-accordion>

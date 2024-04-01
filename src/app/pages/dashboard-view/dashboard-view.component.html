@@ -1,0 +1,504 @@
+<!-- messages area -->
+
+<!-- warning for company data -->
+<nb-alert status="warning" *ngIf="alerts.company_data" closable (close)="alertOnClose('company_data')">
+    <span [innerHTML]="'VIEWS.HOME.ALERTS.COMPANY_DATA_MISSING' | translate"></span>
+</nb-alert>
+
+
+
+
+
+
+<div class="row gx-5 d-flex">
+
+
+
+
+    <div class="col col-sm col-md col-lg-8 col-xl-9 d-block pr-10">
+
+        <div class="row">
+
+            <div class="col col-sm col-md-5 col-lg-4">
+
+                <nb-card class="total-sales-card-summary">
+                    <nb-card-header>
+                        <i class="fas fa-money-check-alt"></i>
+                        {{ 'VIEWS.HOME.TOTAL_SALES' | translate }}
+                        <small>({{ 'VIEWS.HOME.MONTHLY' | translate | lowercase }})</small>
+                    </nb-card-header>
+
+                    <nb-card-body>
+                        {{ user?.company_data?.coin_symbol || '€' }} {{ stats?.stats?.incomes?.current_month || 0 }}
+                    </nb-card-body>
+
+                    <nb-card-footer
+                        [ngClass]="{ 'success-text-color-green': stats?.stats?.incomes?.difference?.total_sales_reduce_up_or_down === 'up', 'unsuccess-text-color-red': stats?.stats?.incomes?.difference?.total_sales_reduce_up_or_down === 'down', 'static-text-color-white': stats?.stats?.incomes?.difference?.total_sales_reduce_up_or_down === 'static' }">
+
+                        <i class="fas fa-long-arrow-alt-up"
+                            *ngIf="stats?.stats?.incomes?.difference?.total_sales_reduce_up_or_down === 'up'"></i>
+                        <i class="fas fa-long-arrow-alt-down"
+                            *ngIf="stats?.stats?.incomes?.difference?.total_sales_reduce_up_or_down === 'down'"></i>
+                        <i class="fas fa-circle"
+                            *ngIf="stats?.stats?.incomes?.difference?.total_sales_reduce_up_or_down === 'static'"></i>
+
+                        {{ stats?.stats?.incomes?.difference?.total_sales_reduce_month || [ 'GENERIC.LABELS.N_A' |
+                        translate ]
+                        }}
+                        <small *ngIf="stats?.stats?.incomes?.difference?.total_sales_reduce_up_or_down !== 'static'">
+                            {{ 'VIEWS.HOME.THIS_MONTH' | translate | lowercase }}
+                        </small>
+
+                    </nb-card-footer>
+                </nb-card>
+
+            </div>
+
+
+            <div class="col col-sm col-md-7 col-lg-8 d-flex order-summary-container">
+
+                <nb-card class="total-orders-card-summary">
+                    <nb-card-header>
+                        <i class="fas fa-money-check-alt"></i>
+                        {{ 'VIEWS.HOME.ORDERS' | translate }}
+                        <small>({{ 'VIEWS.HOME.MONTHLY' | translate | lowercase }})</small>
+                    </nb-card-header>
+
+                    <nb-card-body>
+                        {{ stats?.stats?.orders?.current_month || 0 }}
+                    </nb-card-body>
+
+                    <nb-card-footer
+                        [ngClass]="{ 'success-text-color-green': stats?.stats?.orders?.difference?.orders_summary_reduce_up_or_down === 'up', 'unsuccess-text-color-red': stats?.stats?.orders?.difference?.orders_summary_reduce_up_or_down === 'down', 'static-text-color-white': stats?.stats?.orders?.difference?.orders_summary_reduce_up_or_down === 'static' }">
+
+                        <i class="fas fa-long-arrow-alt-up"
+                            *ngIf="stats?.stats?.orders?.difference?.orders_summary_reduce_up_or_down === 'up'"></i>
+                        <i class="fas fa-long-arrow-alt-down"
+                            *ngIf="stats?.stats?.orders?.difference?.orders_summary_reduce_up_or_down === 'down'"></i>
+                        <i class="fas fa-circle"
+                            *ngIf="stats?.stats?.orders?.difference?.orders_summary_reduce_up_or_down === 'static'"></i>
+
+                        {{ stats?.stats?.orders?.difference?.orders_summary_reduce_month || [ 'GENERIC.LABELS.N_A' |
+                        translate
+                        ] }}
+
+                        <small *ngIf="stats?.stats?.orders?.difference?.orders_summary_reduce_up_or_down !== 'static'">
+                            {{ 'VIEWS.HOME.THIS_MONTH' | translate | lowercase }}
+                        </small>
+
+                    </nb-card-footer>
+                </nb-card>
+
+
+
+                <nb-card class="order-list-summary-container">
+                    <nb-card-body>
+
+                        <table>
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-spinner"></i>
+                                        {{ 'VIEWS.HOME.PENDING' | translate }}
+                                    </td>
+                                    <td>{{ stats?.stats?.orders?.monthly_by_status?.confirmed_orders || 0 }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-paper-plane"></i>
+                                        {{ 'VIEWS.HOME.SENT' | translate }}
+                                    </td>
+                                    <td>{{ stats?.stats?.orders?.monthly_by_status?.sent_orders || 0 }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-check-circle"></i>
+                                        {{ 'VIEWS.HOME.COMPLETED' | translate }}
+                                    </td>
+                                    <td>{{ stats?.stats?.orders?.monthly_by_status?.completed_orders || 0 }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-times-circle"></i>
+                                        {{ 'VIEWS.HOME.CANCELLED' | translate }}
+                                    </td>
+                                    <td>{{ stats?.stats?.orders?.monthly_by_status?.archived_orders || 0 }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-exchange-alt"></i>
+                                        {{ 'VIEWS.HOME.RETURNED' | translate }}
+                                    </td>
+                                    <td>{{ stats?.stats?.orders?.monthly_by_status?.returned_orders || 0 }}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </nb-card-body>
+                </nb-card>
+
+
+                <nb-card class="actions-card-summary-orders">
+                    <nb-card-body>
+
+                        <div>
+
+                            <button type="button" class="button-action add-new-order" id="add-new-order-btn"
+                                (click)="redirectToLink('/dashboard/cash-register')"
+                                *ngIf="user_privileges?.orders_new">
+                                <i class="fas fa-plus"></i>
+                            </button>
+
+                            <button type="button" class="button-action see-orders-list" id="see-orders-list"
+                                (click)="redirectToLink('/dashboard/orders')"
+                                *ngIf="user_privileges?.orders_read || user_privileges?.orders_edit">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+
+                        </div>
+
+                    </nb-card-body>
+                </nb-card>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="row charts-area-row-dash">
+
+
+
+
+
+
+
+            <nb-reveal-card>
+
+                <nb-card-front>
+                    <nb-card>
+
+                        <nb-card-header>
+                            {{ 'VIEWS.HOME.ORDERS' | translate }}
+                        </nb-card-header>
+
+                        <nb-card-body>
+
+                            <div class="chart-specific-divider-res">
+                                <ngx-charts-line-chart #ordersChartSummaryMonths [scheme]="chart_data.scheme"
+                                    [results]="orders_stats_graph" [gradient]="chart_data.gradient"
+                                    [xAxis]="chart_data.showXAxis" [yAxis]="chart_data.showYAxis"
+                                    [legend]="chart_data.showLegend" [legendTitle]="chart_data.legendTitle"
+                                    [showXAxisLabel]="chart_data.showXAxisLabel"
+                                    [showYAxisLabel]="chart_data.showYAxisLabel" [xAxisLabel]="chart_data.xAxisLabel"
+                                    [yAxisLabel]="chart_data.yAxisLabel" [autoScale]="chart_data.autoScale">
+                                </ngx-charts-line-chart>
+                            </div>
+                        </nb-card-body>
+
+                    </nb-card>
+
+                </nb-card-front>
+
+                <nb-card-back>
+                    <nb-card>
+
+                        <nb-card-header>
+                            {{ 'VIEWS.HOME.MONTHLY_SALES' | translate }}
+                        </nb-card-header>
+
+                        <nb-card-body>
+
+                            <div class="chart-specific-divider-res">
+                                <ngx-charts-line-chart #ordersChartSummaryMonths [scheme]="chart_data_SALES.scheme"
+                                    [results]="data_SALES_graph" [gradient]="chart_data_SALES.gradient"
+                                    [xAxis]="chart_data_SALES.showXAxis" [yAxis]="chart_data_SALES.showYAxis"
+                                    [legend]="chart_data_SALES.showLegend"
+                                    [showXAxisLabel]="chart_data_SALES.showXAxisLabel"
+                                    [showYAxisLabel]="chart_data_SALES.showYAxisLabel"
+                                    [xAxisLabel]="chart_data_SALES.xAxisLabel"
+                                    [yAxisLabel]="chart_data_SALES.yAxisLabel" [autoScale]="chart_data_SALES.autoScale">
+                                </ngx-charts-line-chart>
+                            </div>
+                        </nb-card-body>
+
+                    </nb-card>
+                </nb-card-back>
+
+            </nb-reveal-card>
+
+
+        </div>
+
+
+
+        <div class="row top-famous-products-carousel">
+
+            <div class="col">
+
+                <div class="title">
+                    <div class="header-left-title">
+                        {{ 'VIEWS.HOME.TOP_PRODUCTS' | translate }}
+                    </div>
+
+                    <!-- <div>
+                        <input type="text" name="dateRangePickerDemoInput" id="dateRangePickerDemoInput"
+                            class="form-control header-right-date" daterangepicker [options]="dateRangePicker_options"
+                            (selected)="carouselDateRangePickerTopProducts($event)"
+                            placeholder="{{ 'VIEWS.HOME.PLACEHOLDERS.DATE_RANGE' | translate }}">
+                    </div> -->
+                </div>
+
+                <owl-carousel-o [options]="customOptions"
+                    *ngIf="products.length > 0 && !loaders?.famous_products_carousel">
+
+                    <ng-container *ngFor="let product of products; let i = index;">
+                        <ng-template carouselSlide>
+
+                            <div class="row carousel-item-custom">
+
+                                <div class="item img col-4" *ngFor="let image of product.images">
+                                    <img src="image.url" alt="{{ product.headline }} - {{ product.product_brand }}"
+                                        *ngIf="image.main_image" />
+                                </div>
+
+
+                                <div class="item description col-8">
+                                    <div class="title">
+                                        {{ product.headline }} - {{ product.product_brand }}
+                                    </div>
+                                    <div class="price">
+                                        {{ product.clear_price + product.fees }} {{ user?.company_data?.coin_symbol ||
+                                        '€' }}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </ng-template>
+                    </ng-container>
+
+                </owl-carousel-o>
+
+
+                <div class="no-products-carousel-found"
+                    *ngIf="products.length <= 0 && !loaders?.famous_products_carousel">
+                    {{ 'VIEWS.HOME.NO_PRODUCTS_AVAILABLE' | translate }}
+                </div>
+
+
+
+
+                <!-- loader -->
+                <div class="row" *ngIf="loaders?.famous_products_carousel">
+
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+
+                        <div class="row">
+
+                            <div class="col-5">
+                                <ngx-skeleton-loader animation="pulse" appearance="circle"
+                                    [theme]="{height: '100px', width: '100px', background: '#4d4d4d'}">
+                                </ngx-skeleton-loader>
+                            </div>
+
+                            <div class="col-7">
+
+                                <div class="pt-4">
+                                    <ngx-skeleton-loader count="2" appearance="line"
+                                        [theme]="{background: '#4d4d4d','border-radius': '50px', height: '10px'}"
+                                        animation="pulse">
+                                    </ngx-skeleton-loader>
+
+                                    <div class="row">
+
+                                        <div class="col-7">
+                                            <ngx-skeleton-loader count="1" appearance="line"
+                                                [theme]="{background: '#4d4d4d','border-radius': '50px', height: '10px'}"
+                                                animation="pulse">
+                                            </ngx-skeleton-loader>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="col col-sm col-md col-lg-4 col-xl-3 d-flex mh-100 pl-4">
+
+        <div class="products-list-summary overflow-auto h-100 w-100 p-3 ">
+
+            <div class="row">
+
+                <div class="col">
+
+                    <div class="title">
+                        <i class="fas fa-tags"></i>
+                        {{ 'VIEWS.HOME.HALL_OF_FAME' | translate }}
+                    </div>
+
+
+
+
+                    <div *ngIf="products_per_category.length > 0 && !loaders?.famous_products_col">
+
+                        <div *ngFor="let category of products_per_category; let i = index;">
+                            <div class="category-title" data-toggle="collapse" data-target="#category1Collapse"
+                                aria-expanded="true" aria-controls="category1Collapse">
+                                {{ category?.product_category_label || [ 'VIEWS.HOME.CATEGORY_NAME_NOT_FOUND' |
+                                translate ] }}
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="collapse show active product-list-summary-hall" id="category1Collapse">
+
+                                <table class="table">
+                                    <tbody>
+
+                                        <tr *ngFor="let product of category.products">
+                                            <td class="w-50">{{ product.headline }} - {{ product.product_brand }}</td>
+                                            <td class="w-50">{{ product.clear_price + product.fees }} {{
+                                                user?.company_data?.coin_symbol || '€' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="no-products-carousel-found"
+                        *ngIf="products_per_category.length <= 0 && !loaders?.famous_products_col">
+                        {{ 'VIEWS.HOME.NO_PRODUCTS_AVAILABLE' | translate }}
+                    </div>
+
+
+
+
+                    <div *ngIf="loaders?.famous_products_col">
+
+                        <div class="row" *ngFor="let j of [0, 1]">
+
+                            <div class="col-7 mt-5 mb-3">
+                                <ngx-skeleton-loader count="1" appearance="line"
+                                    [theme]="{background: '#4d4d4d','border-radius': '50px', height: '10px'}"
+                                    animation="pulse">
+                                </ngx-skeleton-loader>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row">
+
+                                    <div class="col-6" *ngFor="let i of [0, 1, 2, 3, 4, 5]">
+                                        <ngx-skeleton-loader count="1" appearance="line"
+                                            [theme]="{background: '#4d4d4d','border-radius': '50px', height: '10px'}"
+                                            animation="pulse">
+                                        </ngx-skeleton-loader>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+    <div class="row">
+
+        <div class="col">
+
+            <div class="title">
+                <i class="fas fa-tags"></i>
+                {{ 'VIEWS.HOME.HALL_OF_FAME' | translate }}
+            </div>
+
+            <div *ngIf="products_per_category.length > 0">
+                <div *ngFor="let product_per_category of products_per_category; let i = index;">
+                    <div class="category-title" data-toggle="collapse" data-target="#category1Collapse"
+                        aria-expanded="true" aria-controls="category1Collapse">
+                        {{ product_per_category?.category_name || [ 'VIEWS.HOME.CATEGORY_NAME_NOT_FOUND' |
+                        translate ] }}
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="collapse show active product-list-summary-hall" id="category1Collapse">
+
+                        <table class="table">
+                            <tbody>
+
+                                <tr *ngFor="let product of product_per_category.products">
+                                    <td>{{ product.headline }} - {{ product.product_brand }}</td>
+                                    <td>{{ product.clear_price + product.fees }} {{
+                                        user?.company_data?.coin_symbol || '€' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="no-products-carousel-found" *ngIf="products_per_category.length <= 0">
+                {{ 'VIEWS.HOME.NO_PRODUCTS_AVAILABLE' | translate }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div> -->

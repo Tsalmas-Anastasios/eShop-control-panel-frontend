@@ -1,0 +1,219 @@
+$sidebar-blue: #02133E;
+$navbar-blue: #506FDE;
+$navbar-blue-lighter: #a4b4ef;
+$navbar-blue-lighter-2: #f0f3fc;
+$success-button-green: #229D18;
+$success-highlighter-button-green: #11cc00;
+$unsuccess-button-red: #cc0000;
+$yellow-dark: #8A5A38;
+$orange-light: rgb(255, 204, 0);
+
+$adorithm-blue: #011645;
+$adorithm-green: #10C287;
+
+// navbar - sidebar
+$blue-active-link: #00004d;
+$nav-sidebar-background: #fff;
+$simple-links-color: #495057;
+
+// main
+$main-background: #D9D9D9;
+$second-grey-background: #f9f9f9;
+
+// grey
+$grey-light-1: #ccc;
+$grey-light-2: #a8a8a8;
+$grey-light-3: #878787;
+
+
+// forms
+$google-form-template-background-light-1: #f9f9f9;
+
+// tooltip
+$tooltip-color: #333;
+
+
+
+
+
+
+
+/*************************************************** new theming (dark) ************************************************************/
+$main-background-header-sidebar: #0E0B0B;
+$menu-active-color: #E6AF00;
+$menu-active-background-color: #1E1E1E;
+$menu-hover-background-color: #515151;
+$context-menu-background-color: #1E1E1E;
+
+$footer-text-color: #515151;
+
+
+$breadcrumb-color-non-active-link: #E6AF00;
+
+
+
+
+// button colors
+$btn-primary-color: #E6AF00;
+$btn-primary-box-shadow-color: #edcf6f;
+$btn-primary-letters-color: #0f0b0b;
+$btn-primary-secondary-color: #D8560E;
+$btn-primary-secondary-box-shadow-color: #d5916d;
+
+$border-btn-group-right: #1E1E1E;
+
+
+// text-typography
+$text-secondary-primary-color: #D8560E;
+
+
+
+// dropdown menu
+$btn-menu-dropdown-link-color: #ccc;
+$btn-menu-dropdown-link-color-hover: #0E0B0B;
+$dropdown-menu-background-color: #1E1E1E;
+$dropdown-menu-border-color: #0E0B0B;
+
+
+// labels
+$label-color: #ccc;
+$headers-color: #edcf6f;
+
+// links
+$link-color: #E6AF00;
+
+// entire body
+$entire-body-color: #ccc;
+
+
+
+// cards
+$card-background-color: #1E1E1E;
+$accordion-header-text-color: #edcf6f;
+$accordion-header-disabled-text-color: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+
+
+
+
+// inputs
+$input-background-color: #7a7a7a;
+$input-border-color: #edcf6f;
+$input-letters-color: #e8e8e8;
+$input-placeholder-color: #adadad;
+$ng-select-menu-border-color: #0E0B0B;
+$ngx-dropzone-preview-background: #0E0B0B;
+
+
+
+// ckeditor
+$ckeditor-editable-border: #7a7a7a;
+$ckeditor-editable-background: #7a7a7a;
+$ckeditor-editable-border-active: #0E0B0B;
+$ckeditor-toolbar-background: #0E0B0B;
+$ckeditor-toolbar-buttons-color: #ccc;
+$ckeditor-toolbar-buttons-color-active: #8a8a8a;
+
+
+
+// pills
+$pills-default-color: #ccc;
+$pills-active-background: #1E1E1E;
+$pills-active-color: #ccc;
+$vertical-pills-default-color: #ccc;
+$vertical-pills-active-color: #1E1E1E;
+$vertical-pills-active-background-color: #E6AF00;
+$modal-pills-active-background: #E6AF00;
+$modal-pills-active-color: #1E1E1E;
+
+
+
+// selection
+$selection-background-color: #f9c416;
+$selection-letters-color: #7a7a7a;
+
+
+// global search
+$global-search-area-background: #1E1E1E;
+$global-search-area-border: #0E0B0B;
+
+
+// dtTables module
+$dtTables-pagination-active-button-background: #E6AF00;
+$dtTables-pagination-active-button-color: #1E1E1E;
+$dtTables-pagination-button-color: #ccc;
+
+
+
+
+// dashboard view page
+$dashboard-view-page-yellow: #E6AF00;
+$dashboard-view-page-soft-dark: #1E1E1E;
+
+
+// global-search-area
+$global-search-area-components-background: #7a7a7a;
+
+
+// modals
+$modal-background-color: #1E1E1E;
+
+
+// sweet alert
+$sweet-alert-background-color: #1E1E1E;
+$sweet-alert-border-color: #0E0B0B;
+$sweet-alert-html-container-text-color: #ccc;
+
+
+
+// alerts
+$alert-warning-text-color: #856404;
+$alert-warning-background-color: #fff3cd;
+$alert-warning-border-color: #ffeeba;
+$sweet-alert-confirm-button-background: #E6AF00;
+$sweet-alert-confirm-button-letters-control: #1E1E1E;
+
+
+// tables
+$letters-table-color: #ccc;
+
+
+// nb-tag
+$tag-filled-basic-background-color: #7a7a7a;
+$tag-filled-basic-border-color: #7a7a7a;
+$tag-filled-basic-text-color: #1E1E1E;
+$tag-filled-basic-active-background-color: #7a7a7a;
+$tag-filled-basic-active-border-color: #7a7a7a;
+$tag-filled-basic-hover-background-color: #7a7a7a;
+$tag-filled-basic-hover-border-color: #7a7a7a;
+
+
+// progress bar
+$indeterminate-progress-bar-background-color: rgba(230, 175, 0, 0.2);
+$indeterminate-progress-bar-color: #E6AF00;
+
+
+// tooltips
+$tooltip-background-color: #7a7a7a;
+$tooltip-letters-color: #1E1E1E;
+
+
+
+// datepicker
+$datepicker-background-color: #363636;
+
+
+
+// dividers
+$simple-divider-color: #ccc;
+
+
+
+
+
+
+
+// general colors
+$white: #fff;
+$red: #cc0000;
+$blue: #000066;
+$black: #000;

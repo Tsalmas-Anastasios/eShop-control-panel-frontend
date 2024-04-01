@@ -1,0 +1,267 @@
+<div class="row">
+
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4" id="simpleSearchArea">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="orderNumberSearch" class="mb-1">
+                        {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.SEARCH_ORDER_BY_NUMBER' | translate }}
+                    </label>
+                    <input type="text" name="orderNumberSearch" id="orderNumberSearch" class="form-control"
+                        placeholder="{{ 'VIEWS.ORDERS_GLOBAL_SEARCH.ORDER_NUMBER' | translate }}"
+                        [(ngModel)]="searchers.order_number.value" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 ">
+                <button type="button" class="btn btn-primary float-right" id="submitSimpleSearch"
+                    [disabled]="searchers.order_number.value === null || searchers.order_number.value === '' || searchers.order_number.value.length < 2"
+                    (click)="submitSearch('simple_search')">
+                    {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.SEARCH' | translate }}
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="col-12 col-sm-12 col-mg-6 col-lg-8" id="advancedSearchArea">
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="float-left">
+                    {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.ADVANCED_SEARCH' | translate }}
+                </h2>
+
+                <button type="button" class="btn btn-primary float-right" id="submitSimpleSearch"
+                    [disabled]="!checkAdvancedRequiredFields()" (click)="submitSearch('advanced_search')">
+                    {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.SEARCH' | translate }}
+                    <i class="fas fa-search"></i>
+                </button>
+
+                <button type="button" class="btn btn-secondary float-right mr-3" id="clearAdvancedSearch"
+                    (click)="clearAdvancedFormData()">
+                    {{ 'GENERIC.ACTIONS.CLEAR' | translate }}
+                    <i class="fas fa-eraser"></i>
+                </button>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="phoneNumber" class="mb-1">
+                                {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.PHONE_NUMBER' | translate }}
+                            </label>
+                            <input type="text" name="phoneNumber" id="phoneNumber" class="form-control"
+                                placeholder="{{ 'VIEWS.ORDERS_GLOBAL_SEARCH.ORDER_PHONE_NUMBER' | translate }}"
+                                [(ngModel)]="searchers.phone_number.value" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="emailAddress" class="mb-1">
+                                {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.EMAIL_ADDRESS' | translate }}
+                            </label>
+                            <input type="tel" name="emailAddress" id="emailAddress" class="form-control"
+                                placeholder="{{ 'VIEWS.ORDERS_GLOBAL_SEARCH.ORDER_EMAIL_ADDRESS' | translate }}"
+                                [(ngModel)]="searchers.email_address.value" />
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+
+                        <div class="row">
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="firstName" class="mb-1">
+                                        {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.FIRST_NAME' | translate }}
+                                    </label>
+                                    <input type="text" name="firstName" id="firstName" class="form-control"
+                                        placeholder="{{ 'VIEWS.ORDERS_GLOBAL_SEARCH.FIRST_NAME' | translate }}"
+                                        [(ngModel)]="searchers.first_name.value" />
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="lastName" class="mb-1">
+                                        {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.LAST_NAME' | translate }}
+                                    </label>
+                                    <input type="text" name="lastName" id="lastName" class="form-control"
+                                        placeholder="{{ 'VIEWS.ORDERS_GLOBAL_SEARCH.LAST_NAME' | translate }}"
+                                        [(ngModel)]="searchers.last_name.value" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+
+                        <div class="form-group">
+                            <label for="orderId" class="mb-1">
+                                {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.ORDER_ID' | translate }}
+                            </label>
+                            <input type="text" name="orderId" id="orderId" class="form-control"
+                                placeholder="{{ 'VIEWS.ORDERS_GLOBAL_SEARCH.ORDER_ID' | translate }}"
+                                [(ngModel)]="searchers.order_id.value" />
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+
+    <div class="col-12 mt-5" *ngIf="orders.length <= 0">
+        <h1 class="text-muted text-center">
+            {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.NO_ORDERS_FOUND_YET' | translate }}
+        </h1>
+    </div>
+
+
+
+    <!-- orders list -->
+    <div class="col-12 mt-5" *ngIf="orders.length > 0">
+
+        <div class="row" *ngFor="let order of orders; let i = index">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                <h5>{{ order.order_number }}</h5>
+                                <div class="text-muted">{{ order.order_id }}</div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6>
+                                            {{ order.first_name }} {{ order.last_name }}
+                                        </h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-6">
+                                        <a href="tel:{{ order.phone }}">
+                                            <i class="fas fa-phone"></i>
+                                            {{ order.phone }}
+                                        </a>
+                                    </div>
+
+                                    <div class="col-6 d-inline-block text-truncate">
+                                        <a href="email:{{ order.email }}">
+                                            <i class="fas fa-envelope"></i>
+                                            {{ order.email }}
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-6 text-muted">
+                                        <small>{{ order.confirm_date | date: 'short' }}</small>
+                                    </div>
+
+                                    <div class="col-6 text-right">
+                                        {{ order.order_total }} {{ user?.company_data?.coin_symbol || '€' }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row mt-5">
+                            <div class="col-12">
+
+                                <button type="button" class="btn btn-primary float-right" id="seeMore_{{ i }}"
+                                    [routerLink]="['/dashboard/orders', order.order_id]">
+                                    {{ 'GENERIC.ACTIONS.SEE_MORE_DOTS' | translate }}
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div class="row mt-5 w-100" *ngIf="orders.length > 0 && orders.length % 10 === 0">
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center">
+            <button type="button" class="btn btn-secondary-primary mx-auto" id="loadMoreResultsWithCurrentSearchers"
+                (click)="loadMoreOrdersData()">
+                {{ 'GENERIC.ACTIONS.LOAD_MORE' | translate }}
+                <i class="fas fa-arrow-down"></i>
+            </button>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<ngx-spinner size="medium" type="square-jelly-box" [fullScreen]="true" color="#E6AF00" bdColor="rgba(0, 0, 0, 0.8)">
+    <p style="color: #fff"> {{ 'GENERIC.LABELS.LOADING' | translate }}... </p>
+</ngx-spinner>

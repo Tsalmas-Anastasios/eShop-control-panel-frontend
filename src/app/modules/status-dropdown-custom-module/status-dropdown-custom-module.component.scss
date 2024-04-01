@@ -1,0 +1,42 @@
+.dropdown-menu {
+    padding: 0;
+}
+
+.status-badge {
+    font-family: 'Times New Roman', Times, serif;
+    border: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 15px;
+    border-radius: 50px;
+    font-size: 13px;
+    position: relative;
+    transition: 0.4s;
+
+    &::before {
+        content: '\2022';
+        font-size: 24px;
+        line-height: 0px;
+        padding-top: 0;
+        vertical-align: middle;
+        margin-right: 2px;
+        background-color: #000;
+        position: absolute;
+        top: 50%;
+        left: 17px;
+        transform: translate(-50%, -50%);
+    }
+
+    &:hover {
+        background: linear-gradient(rgba(0, 0, 0, 0.2),
+                rgba(0, 0, 0, 0.2));
+    }
+}
+
+
+
+
+.status-badge-item {
+    padding: 7px 10px;
+}

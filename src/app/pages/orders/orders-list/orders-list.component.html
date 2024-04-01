@@ -1,0 +1,335 @@
+<ul class="nav nav-pills nav-fill">
+
+    <li class="nav-item">
+        <a href="javascript:void(0)" routerLinkActive="active" class="nav-link"
+            [ngClass]="{ 'active': orders_condition === 'all_orders' }" aria-current="page"
+            (click)="changeDisplayedOrderStatus('all_orders')">
+            <i class="fas fa-list-ul"></i>
+            {{ 'VIEWS.ORDERS_LIST.ALL_ORDERS' | translate }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="javascript:void(0)" routerLinkActive="active" class="nav-link"
+            [ngClass]="{ 'active': orders_condition === 'in_progress' }"
+            (click)="changeDisplayedOrderStatus('in_progress')">
+            <i class="fas fa-clock"></i>
+            {{ 'VIEWS.ORDERS_LIST.IN_PROGRESS' | translate }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="javascript:void(0)" routerLinkActive="active" class="nav-link"
+            [ngClass]="{ 'active': orders_condition === 'sent' }" (click)="changeDisplayedOrderStatus('sent')">
+            <i class="fas fa-truck"></i>
+            {{ 'VIEWS.ORDERS_LIST.SENT' | translate }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="javascript:void(0)" routerLinkActive="active" class="nav-link"
+            [ngClass]="{ 'active': orders_condition === 'completed' }"
+            (click)="changeDisplayedOrderStatus('completed')">
+            <i class="far fa-check-circle"></i>
+            {{ 'VIEWS.ORDERS_LIST.COMPLETED' | translate }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="javascript:void(0)" routerLinkActive="active" class="nav-link"
+            [ngClass]="{ 'active': orders_condition === 'returned' }" (click)="changeDisplayedOrderStatus('returned')">
+            <i class="fas fa-exchange-alt"></i>
+            {{ 'VIEWS.ORDERS_LIST.RETURNED' | translate }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="javascript:void(0)" routerLinkActive="active" class="nav-link"
+            [ngClass]="{ 'active': orders_condition === 'cancelled' }"
+            (click)="changeDisplayedOrderStatus('cancelled')">
+            <i class="far fa-times-circle"></i>
+            {{ 'VIEWS.ORDERS_LIST.CANCELLED' | translate }}
+        </a>
+    </li>
+
+</ul>
+
+
+
+
+
+<div class="row">
+
+    <div class="col">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h2 [ngStyle]="{ 'color': orders_condition === 'in_progress' ? '#506FDE' : 
+                                orders_condition === 'sent' ? 'rgb(204, 163, 0)' : 
+                                orders_condition === 'completed' ? '#229D18' : 
+                                orders_condition === 'cancelled' ? '#cc0000' : null }">
+
+                    <i class="fas fa-list-ul" *ngIf="orders_condition === 'all_orders'"></i>
+                    <i class="fas fa-clock" *ngIf="orders_condition === 'in_progress'"></i>
+                    <i class="fas fa-truck" *ngIf="orders_condition === 'sent'"></i>
+                    <i class="far fa-check-circle" *ngIf="orders_condition === 'completed'"></i>
+                    <i class="fas fa-exchange-alt" *ngIf="orders_condition === 'returned'"></i>
+                    <i class="far fa-times-circle" *ngIf="orders_condition === 'cancelled'"></i>
+                    &nbsp;{{ title_list[orders_condition] }}
+
+                </h2>
+            </div>
+
+            <div class="card-body">
+
+                <app-data-table-custom-module [columnHeaders]="columnHeaders" [data]="orders_list"
+                    [options]="ordersTableOptions" [statuses]="statuses" [statuses_options]="status_dropdown_options"
+                    (endingPagesData)="loadOrdersData($event);" (statusChange)="orderStatusChange($event);">
+                </app-data-table-custom-module>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- order preview modal -->
+<div class="modal fade" role="dialog" aria-labelledby="orderPreview" aria-hidden="true" id="orderPreview" #orderPreview
+    [ngClass]="{ 'show': previewModalShow }" [ngStyle]="{ 'display': previewModalShow ? 'block' : 'none' }"
+    aria-modal="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span class="text-muted">{{ 'VIEWS.ORDERS_LIST.ORDER_NUMBER' | translate }}:</span>
+                    {{ order?.order_number || '---' }}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="closeModal('preview')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <app-order-preview [order]="order"></app-order-preview>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal('preview')">
+                    {{ 'GENERIC.ACTIONS.CLOSE' | translate }}
+                </button>
+
+
+
+
+                <div class="btn-group dropup">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        (click)="closeModal('preview');quickActions_printOrder({order_id: order.order_id})">
+                        <i class="fas fa-print"></i>
+                        {{ 'GENERIC.ACTIONS.PRINT' | translate }}
+                    </button>
+                    <button class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-left-border-1px-grey"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">
+                            {{ 'GENERIC.ACTIONS.TOGGLE_DROPDOWN' | translate }}
+                        </span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right orders-preview-actions-menu">
+
+                        <!-- dropdown menu links -->
+
+                        <a href="javascript:void(0)" class="text-danger" (click)="archiveOrder(order.order_id)">
+                            <i class="fas fa-trash"></i>
+                            {{ 'VIEWS.ORDER_PREVIEW.CANCEL_ORDER' | translate }}
+                        </a>
+
+                        <a href="javascript:void(0)" (click)="quickActions_completeOrder({order_id: order.order_id})">
+                            <i class="fas fa-check-circle"></i>
+                            {{ 'GENERIC.ACTIONS.COMPLETE' | translate }}
+                        </a>
+
+                        <a href="javascript:void(0)">
+                            <i class="fas fa-truck"></i>
+                            {{ 'VIEWS.ORDER_PREVIEW.SEND_ORDER' | translate }}
+                        </a>
+
+                        <a href="javascript:void(0)" class="text-success"
+                            [routerLink]="['/dashboard/orders', order.order_id]" [queryParams]="{mode: 'edit'}"
+                            *ngIf="order?.order_id">
+                            <i class="fas fa-edit"></i>
+                            {{ 'VIEWS.ORDER_PREVIEW.EDIT_ORDER' | translate }}
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- print options for the order  -->
+<div class="modal fade" role="dialog" aria-labelledby="printOrderModalDialog" aria-hidden="true"
+    id="printOrderModalDialog" #printOrderModalDialog [ngClass]="{ 'show': printOrderModalShow }"
+    [ngStyle]="{ 'display': printOrderModalShow ? 'block' : 'none' }">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    {{ 'VIEWS.ORDERS_LIST.PRINT_OPTIONS' | translate }}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="closeModal('print')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="text-muted mt-2 mb-3">
+                    {{ 'VIEWS.ORDERS_LIST.SELECT_PRINT_OPTION_EXPLANATION' | translate }}.
+                </div>
+
+
+                <!-- options here -->
+                <button type="button" class="btn btn-secondary-primary w-100" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                    order: order,
+                    type: 'single',
+                    single_document_title: 'proof_of_order'
+                })">
+                    {{ 'VIEWS.ORDERS_LIST.PROOF_OF_ORDER' | translate }}
+                </button>
+
+                <button type="button" class="btn btn-secondary-primary w-100 mt-2" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                    order: order,
+                    type: 'single',
+                    single_document_title: 'invoice_receipt'
+                })">
+                    {{ 'VIEWS.ORDERS_LIST.ORDER_DOCUMENT' | translate }}
+                </button>
+
+                <button type="button" class="btn btn-secondary-primary w-100 mt-2" [disabled]="!order?.tracking_number"
+                    (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                    order: order,
+                    type: 'single',
+                    single_document_title: 'dispatch_form'
+                })">
+                    {{ 'VIEWS.ORDERS_LIST.ORDER_DISPATCH_FORM' | translate }}
+                </button>
+
+                <button type="button" class="btn btn-secondary-primary w-100 mt-2" [disabled]="!order?.tracking_number"
+                    (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                    order: order,
+                    type: 'single',
+                    single_document_title: 'tracking_number'
+                })">
+                    {{ 'VIEWS.ORDERS_LIST.TRACKING_NUMBER' | translate }}
+                </button>
+
+
+                <button type="button" class="btn btn-secondary-primary w-100 mt-4" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                    order: order,
+                    type: 'all'
+                })">
+                    <span *ngIf="!order?.tracking_number">
+                        {{ 'VIEWS.ORDERS_LIST.ALL_AVAILABLE_ORDER_DOCUMENTS' | translate }}
+                    </span>
+
+                    <span *ngIf="order?.tracking_number">
+                        {{ 'VIEWS.ORDERS_LIST.ALL_ORDER_DOCUMENTS' | translate }}
+                    </span>
+                </button>
+
+
+
+                <div class="divider d-flex align-items-center my-4">
+                    <p class="text-center fw-bold mx-3 mb-0">
+                        {{ 'GENERIC.LABELS.OR' | translate }}
+                    </p>
+                </div>
+
+
+                <div class="text-muted mb-1">
+                    {{ 'VIEWS.ORDERS_LIST.CUSTOM_CHOICES_FOR_PRINTING' | translate }}.
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-6">
+
+                        <div class="form-group">
+                            <input type="checkbox" name="proofOfOrder" id="proofOfOrder" #proofOfOrder
+                                [(ngModel)]="orderPrintOptions.proof_of_order" />
+                            <label for="proofOfOrder" class="mb-1 ml-2">
+                                {{ 'VIEWS.ORDERS_LIST.PROOF_OF_ORDER' | translate }}
+                            </label>
+                        </div>
+
+                        <div class="form-group d-flex">
+                            <input type="checkbox" name="orderDocument" id="orderDocument" #orderDocument
+                                [(ngModel)]="orderPrintOptions.order_document" />
+                            <label for="orderDocument" class="mb-1 ml-2">
+                                {{ 'VIEWS.ORDERS_LIST.ORDER_DOCUMENT' | translate }}
+                            </label>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-6">
+
+                        <div class="form-group">
+                            <input type="checkbox" name="orderDispatchForm" id="orderDispatchForm" #orderDispatchForm
+                                [disabled]="!order?.tracking_number"
+                                [(ngModel)]="orderPrintOptions.order_dispatch_form" />
+                            <label for="orderDispatchForm" class="mb-1 ml-2">
+                                {{ 'VIEWS.ORDERS_LIST.ORDER_DISPATCH_FORM' | translate }}
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="checkbox" name="trackingNumber" id="trackingNumber" #trackingNumber
+                                [disabled]="!order?.tracking_number" [(ngModel)]="orderPrintOptions.tracking_number" />
+                            <label for="trackingNumber" class="mb-1 ml-2">
+                                {{ 'VIEWS.ORDERS_LIST.TRACKING_NUMBER' | translate }}
+                            </label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-12">
+                        <button type="button" class="btn btn-secondary-primary mt-2"
+                            [disabled]="!printOptionsSelected()" (click)="orderDocumentsCreateService.printableDocumentsCreatePrinting({
+                                order: order,
+                                type: 'custom',
+                                custom_print_options: orderPrintOptions
+                            })">
+                            {{ 'GENERIC.ACTIONS.PRINT' | translate }}
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal('print')">
+                    {{ 'GENERIC.ACTIONS.CLOSE' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

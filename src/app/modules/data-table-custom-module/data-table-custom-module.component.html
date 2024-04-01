@@ -1,0 +1,411 @@
+<!--
+
+    Tsalmas Anastasios Credits.
+    Created by Tsalmas Anastasios, © Tsalmas Anastasios.
+    Used by Adorithm only for development and not for commercial use, implying the sale of code or a functional element.
+
+    The present module was granted by Anastasios to the company Adorithm Ltd for the better and easier development of
+    software aimed at commercial use and belonging to the company.
+
+    Tsalmas Anastasios ©, 21 Oct 2023 - 2[0-9][0-9][0-9], All rights reserved.
+    DataTable functional usage and software development.
+
+
+-->
+
+
+
+
+
+
+
+
+<div class="item" *ngIf="preLoader">
+    <ngx-skeleton-loader count="5" appearance="line" [theme]="{background: '#a8a8a8','border-radius': '50px'}" animation="pulse"></ngx-skeleton-loader>
+</div>
+
+
+<div [ngStyle]="{ 'background-color': options?.background_color || null, 'font-family': options?.font_family || null }" *ngIf="have_data">
+
+
+
+
+
+
+    <div class="row mb-3" [ngStyle]="{ 'color': options?.header_color || null }">
+        <div class="col d-flex search-area justify-content-between">
+
+            <div class="records-select-count d-flex align-items-center">
+                <div style="padding-right: 10px;">
+                    {{ 'MODULES.DATA_TABLE.SHOW' | translate }}
+                </div>
+
+                <div style="width: 60px;">
+                    <!-- <ng-select class="select-box" name="showEntriesNumber" id="showEntriesNumber" placeholder=""
+                    [items]="showEntriesList" #showEntriesNumber [multiple]="false" bindLabel="label" bindValue="value"
+                    [closeOnSelect]="true" [dropdownPosition]="'bottom'" [(ngModel)]="showEntriesInputValue"
+                    [minTermLength]="3" [maxTermLength]="3" [disabled]="false" ng-required="false" [searchable]="false">
+
+                    <ng-template ng-option-tmp let-item="item">
+                        {{ item.label }}
+                    </ng-template>
+                </ng-select> -->
+
+                    <select name="showEntriesNumber" id="showEntriesNumber" class="form-select" #showEntriesNumber aria-label=""
+                        [(ngModel)]="showEntriesInputValue" (change)="initializeTablePagination(false, null);">
+                        <option *ngFor="let item of showEntriesList;let i = index;" value="{{ item.value }}" [selected]="item.selected">
+                            {{ item.label }}
+                        </option>
+                    </select>
+                </div>
+
+                <div style="padding-left: 10px;">
+                    {{ 'MODULES.DATA_TABLE.ENTRIES' | translate | lowercase }}
+                </div>
+            </div>
+
+
+            <div class="d-flex align-items-center">
+
+                <div class="pt-2">
+                    <label for="searchField" class=" mr-2">
+                        {{ 'MODULES.DATA_TABLE.SEARCH' | translate }}:
+                    </label>
+                </div>
+                <div>
+                    <input type="text" name="searchField" id="searchField" class="form-control form-control-sm"
+                        placeholder="{{ 'MODULES.DATA_TABLE.PLACEHOLDERS.SEARCH_TERM' | translate }}" #searchField [(ngModel)]="searchFieldValue" minlength="1"
+                        (keyup)="searchRecord();" (change)="searchRecord();" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- <div class="pre-loader">
+            {{ 'MODULES.DATA_TABLE.LOADING' | translate }}...
+        </div> -->
+
+
+
+    <table class="table border-top-none row-hover" [ngClass]="options?.custom_table_classes || null" [ngStyle]="{ 'color': options?.color || null }">
+
+        <thead>
+            <tr>
+                <th [ngClass]="options?.header_text_align_class || header?.header_text_align || null" [ngStyle]="{ 'width': header?.width || null }"
+                    *ngFor="let header of columnHeaders; let i = index" (click)="sortingRecordsByField(i)">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            {{ header.title }}
+                        </div>
+
+                        <div>
+                            <!--
+                            <i class="fas fa-sort-amount-up-alt"></i>
+                            <i class="fas fa-sort-amount-down"></i>
+                            -->
+
+
+                            <i class="fas fa-sort-up" *ngIf="header.sorting === 'asc'"></i>
+                            <i class="fas fa-sort-down" *ngIf="header.sorting === 'desc'"></i>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody id="table-body">
+
+            <div class="pre-loader" [ngStyle]="{ 'display': preLoader ? 'block' : 'none' }">
+                {{ 'MODULES.DATA_TABLE.LOADING' | translate }}...
+            </div>
+
+            <div class="pre-loader" [ngStyle]="{ 'display': noDataFound ? 'block' : 'none' }">
+                {{ 'MODULES.DATA_TABLE.NO_DATA_FOUND' | translate }}...
+            </div>
+
+
+
+            <tr *ngFor="let row of public_data; let i = index">
+
+                <td *ngFor="let column of column_count; let j = index"
+                    [ngStyle]="{ 'width': columnHeaders[j]?.width || 'auto', 'text-align': columnHeaders[j]?.header_text_fields_text_align || columnHeaders[j]?.text_align || null }"
+                    [ngClass]="{ 'font-weight-bold': options?.make_records_bold ? row[options.make_records_bold__field] === options.make_records_bold__field_value_equal : false }">
+
+
+                    <!-- general field-->
+                    <span [innerHTML]="row[columnHeaders[j].field] || '---'" *ngIf="!row[columnHeaders[j].field]?.routerLink && !row[columnHeaders[j].field]?.queryParams
+                                && !row[columnHeaders[j].field]?.run_function && !columnHeaders[j]?.specify_field"></span>
+
+
+                    <!-- routing configuration-->
+                    <span *ngIf="row[columnHeaders[j].field]?.routerLink || row[columnHeaders[j].field]?.queryParams && !columnHeaders[j]?.specify_field">
+
+                        <!-- link with router & parameters -->
+                        <a href="javascript:void(0)" [routerLink]="row[columnHeaders[j].field].routerLink"
+                            [queryParams]="row[columnHeaders[j].field].queryParams" [innerHTML]="row[columnHeaders[j].field].label"
+                            [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" *ngIf="row[columnHeaders[j].field]?.routerLink
+                                    && row[columnHeaders[j].field]?.queryParams
+                                    && row[columnHeaders[j].field].label.split(' ').length <= 1"></a>
+
+                        <span *ngIf="row[columnHeaders[j].field].label.split(' ').length > 1">
+
+                            <a href="javascript:void(0)" [routerLink]="row[columnHeaders[j].field].routerLink"
+                                [queryParams]="row[columnHeaders[j].field].queryParams" [innerHTML]="row[columnHeaders[j].field].label"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" *ngIf="row[columnHeaders[j].field]?.routerLink
+                                    && row[columnHeaders[j].field]?.queryParams
+                                    && row[columnHeaders[j].field].label.split(' ')[0].toString() !== 'field'"></a>
+
+
+                            <a href="javascript:void(0)" [routerLink]="row[columnHeaders[j].field].routerLink"
+                                [queryParams]="row[columnHeaders[j].field].queryParams"
+                                [innerHTML]="row[row[columnHeaders[j].field].label.split(' ')[1].toString()] || '---'"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" *ngIf="row[columnHeaders[j].field]?.routerLink
+                                    && row[columnHeaders[j].field]?.queryParams
+                                    && row[columnHeaders[j].field].label.split(' ').length <= 1"></a>
+
+                        </span>
+
+
+
+                        <!-- link with router only-->
+                        <a href="javascript:void(0)" [routerLink]="row[columnHeaders[j].field].routerLink" [innerHTML]="row[columnHeaders[j].field].label"
+                            [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" *ngIf="row[columnHeaders[j].field]?.routerLink
+                                    && !row[columnHeaders[j].field]?.queryParams
+                                    && row[columnHeaders[j].field].label.split(' ').length <= 1"></a>
+
+                        <span *ngIf="row[columnHeaders[j].field].label.split(' ').length > 1">
+
+                            <a href="javascript:void(0)" [routerLink]="row[columnHeaders[j].field].routerLink" [innerHTML]="row[columnHeaders[j].field].label"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" *ngIf="row[columnHeaders[j].field]?.routerLink
+                                    && !row[columnHeaders[j].field]?.queryParams
+                                    && row[columnHeaders[j].field].label.split(' ')[0].toString() !== 'field'"></a>
+
+                            <a href="javascript:void(0)" [routerLink]="row[columnHeaders[j].field].routerLink"
+                                [innerHTML]="row[row[columnHeaders[j].field].label.split(' ')[1].toString()] || '---'"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" *ngIf="row[columnHeaders[j].field]?.routerLink
+                                    && !row[columnHeaders[j].field]?.queryParams
+                                    && row[columnHeaders[j].field].label.split(' ')[0].toString() === 'field'"></a>
+
+                        </span>
+
+
+
+
+                        <!-- link with parameters only-->
+                        <a href="javascript:void(0)" [routerLink]="current_routerLink" [queryParams]="row[columnHeaders[j].field].queryParams"
+                            [innerHTML]="row[columnHeaders[j].field].label" [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" *ngIf="!row[columnHeaders[j].field]?.routerLink
+                                    && row[columnHeaders[j].field]?.queryParams
+                                    && row[columnHeaders[j].field].label.split(' ').length <= 1"></a>
+
+                        <span *ngIf="row[columnHeaders[j].field].label.split(' ').length > 1">
+
+                            <a href="javascript:void(0)" [routerLink]="current_routerLink" [queryParams]="row[columnHeaders[j].field].queryParams"
+                                [innerHTML]="row[columnHeaders[j].field].label" [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }"
+                                *ngIf="!row[columnHeaders[j].field]?.routerLink
+                                    && row[columnHeaders[j].field]?.queryParams
+                                    && row[columnHeaders[j].field].label.split(' ')[0].toString() !== 'field'"></a>
+
+                            <a href="javascript:void(0)" [routerLink]="current_routerLink" [queryParams]="row[columnHeaders[j].field].queryParams"
+                                [innerHTML]="row[row[columnHeaders[j].field].label.split(' ')[1].toString()] || '---'"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" *ngIf="!row[columnHeaders[j].field]?.routerLink
+                                            && row[columnHeaders[j].field]?.queryParams
+                                            && row[columnHeaders[j].field].label.split(' ')[0].toString() === 'field'"></a>
+
+                        </span>
+
+
+
+                    </span>
+
+
+                    <!-- function handling -->
+                    <span *ngIf="row[columnHeaders[j].field]?.run_function && !columnHeaders[j]?.specify_field">
+
+                        <!-- Click event -->
+
+                        <!-- function without parameters  -->
+                        <a href="javascript:void(0)" (click)="row[columnHeaders[j].field].run_function()" *ngIf="!row[columnHeaders[j].field]?.parameters
+                                    && row[columnHeaders[j].field]?.event === 'click'
+                                    && row[columnHeaders[j].field].label.split(' ').length <= 1
+                                    && !row[columnHeaders[j].field]?.parameters" [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }"
+                            [innerHTML]="row[columnHeaders[j].field].label"></a>
+
+                        <!-- function with parameters -->
+                        <span *ngIf="row[columnHeaders[j].field].label.split(' ').length > 1 || row[columnHeaders[j].field]?.parameters">
+
+                            <a href="javascript:void(0)" (click)="row[columnHeaders[j].field].run_function(row[columnHeaders[j].field].parameters)" *ngIf="row[columnHeaders[j].field]?.parameters
+                                    && row[columnHeaders[j].field]?.event === 'click'
+                                    && row[columnHeaders[j].field].label.split(' ')[0].toString() !== 'field'"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }"
+                                [innerHTML]="row[columnHeaders[j].field].label || '---'"></a>
+
+
+                            <a href="javascript:void(0)" (click)="row[columnHeaders[j].field].run_function(row[columnHeaders[j].field].parameters)" *ngIf="row[columnHeaders[j].field]?.parameters
+                                    && row[columnHeaders[j].field]?.event === 'click'
+                                    && row[columnHeaders[j].field].label.split(' ')[0].toString() === 'field'"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" style="font-size: 0.9rem"
+                                [innerHTML]="row[row[columnHeaders[j].field].label.split(' ')[1].toString()] || '---'"></a>
+
+                        </span>
+
+
+
+
+
+                        <!-- keyup event -->
+
+                        <!-- function without parameters  -->
+                        <a href="javascript:void(0)" (keyup)="row[columnHeaders[j].field].run_function()" *ngIf="!row[columnHeaders[j].field]?.parameters
+                                    && row[columnHeaders[j].field]?.event === 'keyup'
+                                    && row[columnHeaders[j].field].label.split(' ').length <= 1"
+                            [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" [innerHTML]="row[columnHeaders[j].field].label"></a>
+
+                        <!-- function with parameters -->
+                        <span *ngIf="row[columnHeaders[j].field].label.split(' ').length > 1">
+
+                            <a href="javascript:void(0)" (keyup)="row[columnHeaders[j].field].run_function(row[columnHeaders[j].field].parameters)" *ngIf="row[columnHeaders[j].field]?.parameters
+                                    && row[columnHeaders[j].field]?.event === 'keyup'
+                                    && row[columnHeaders[j].field].label.split(' ')[0].toString() !== 'field'"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" [innerHTML]="row[columnHeaders[j].field].label"></a>
+
+
+                            <a href="javascript:void(0)" (keyup)="row[columnHeaders[j].field].run_function(row[columnHeaders[j].field].parameters)" *ngIf="row[columnHeaders[j].field]?.parameters
+                                    && row[columnHeaders[j].field]?.event === 'keyup'
+                                    && row[columnHeaders[j].field].label.split(' ')[0].toString() === 'field'"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" style="font-size: 0.9rem"
+                                [innerHTML]="row[row[columnHeaders[j].field].label.split(' ')[1].toString()] || '---'"></a>
+
+                        </span>
+
+
+
+
+
+                        <!-- Change event -->
+
+                        <!-- function without parameters  -->
+                        <a href="javascript:void(0)" (change)="row[columnHeaders[j].field].run_function()" *ngIf="!row[columnHeaders[j].field]?.parameters
+                                    && row[columnHeaders[j].field]?.event === 'change'
+                                    && row[columnHeaders[j].field].label.split(' ').length <= 1"
+                            [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" [innerHTML]="row[columnHeaders[j].field].label"></a>
+
+                        <!-- function with parameters -->
+                        <span *ngIf="row[columnHeaders[j].field].label.split(' ').length > 1">
+
+                            <a href="javascript:void(0)" (change)="row[columnHeaders[j].field].run_function(row[columnHeaders[j].field].parameters)" *ngIf="row[columnHeaders[j].field]?.parameters
+                                    && row[columnHeaders[j].field]?.event === 'change'
+                                    && row[columnHeaders[j].field].label.split(' ')[0].toString() !== 'field'"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" [innerHTML]="row[columnHeaders[j].field].label"></a>
+
+
+                            <a href="javascript:void(0)" (change)="row[columnHeaders[j].field].run_function(row[columnHeaders[j].field].parameters)" *ngIf="row[columnHeaders[j].field]?.parameters
+                                    && row[columnHeaders[j].field]?.event === 'change'
+                                    && row[columnHeaders[j].field].label.split(' ')[0].toString() === 'field'"
+                                [ngStyle]="{ 'color': row[columnHeaders[j].field]?.letters_color || null }" style="font-size: 0.9rem"
+                                [innerHTML]="row[row[columnHeaders[j].field].label.split(' ')[1].toString()] || '---'"></a>
+
+                        </span>
+
+
+                    </span>
+
+
+
+                    <!-- one field... -->
+                    <span *ngIf="columnHeaders[j]?.specify_field">
+
+                        <!-- status change dropdown -->
+                        <app-status-dropdown-custom-module [statuses]="statuses" [current_status_value]="row[columnHeaders[j].field]"
+                            [options]="statuses_options" (statusChange)="onStatusChangeFromModuleStatusChangeDropdown($event, row[identifier_header_column])">
+                        </app-status-dropdown-custom-module>
+                        <!-- *ngIf="!columnHeaders[j]?.specify_field === 'status_dropdown'"  -->
+
+                    </span>
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+
+
+
+    <div class="row mt-3" [ngStyle]="{ 'color': options?.footer_color || null }">
+        <div class="col d-flex search-area justify-content-between mt-3 mb-1">
+
+            <div>
+                {{ 'MODULES.DATA_TABLE.SHOWING_RECORDS' | translate: {start: startPagePagination + 1, end:
+                endPagePagination + 1, length: data.length} }}
+            </div>
+
+
+
+            <div class="pagination-area">
+
+                <nav aria-label="" *ngIf="pagesPagination > 0">
+                    <ul class="pagination" id="table-pagination-datatable">
+                        <li class="page-item">
+                            <button type="button" class="page-link previous" href="javascript:void(0)"
+                                (click)="initializeTablePagination(sortedData, pagePagination - 1)" *ngIf="pagePagination - 1 >= 1">
+                                {{ 'MODULES.DATA_TABLE.PREVIOUS' | translate }}
+                            </button>
+                        </li>
+
+                        <li class="page-item">
+                            <button type="button" class="page-link previous" href="javascript:void(0)" *ngIf="pagePagination - 1 < 1" disabled>
+                                {{ 'MODULES.DATA_TABLE.PREVIOUS' | translate }}
+                            </button>
+                        </li>
+
+                        <li class="page-item" *ngFor="let page of pagesPaginationCollection;">
+                            <button type="button" class="page-link" href="javascript:void(0)" [ngClass]="{ 'active': pagePagination === page }"
+                                [disabled]="pagePagination === page" (click)="initializeTablePagination(sortedData, page);">
+                                {{ page }}
+                            </button>
+                        </li>
+
+                        <li class="page-item">
+                            <button type="button" class="page-link next" href="javascript:void(0)"
+                                (click)="initializeTablePagination(sortedData, pagePagination + 1)"
+                                *ngIf="pagePagination < data.length / showEntriesInputValue">
+                                {{ 'MODULES.DATA_TABLE.NEXT' | translate }}
+                            </button>
+                        </li>
+
+                        <li class="page-item">
+                            <button type="button" class="page-link next" href="javascript:void(0)" *ngIf="pagePagination >= data.length / showEntriesInputValue"
+                                disabled>
+                                {{ 'MODULES.DATA_TABLE.NEXT' | translate }}
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+<div class="row mt-4 mb-4" *ngIf="have_data === false">
+
+    <div class="col text-center">
+        <h3 class="text-muted">
+            {{ 'MODULES.DATA_TABLE.NO_DATA_TO_BE_DISPLAYED' | translate }}
+        </h3>
+    </div>
+
+</div>

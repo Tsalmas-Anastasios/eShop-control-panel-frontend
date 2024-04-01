@@ -1,0 +1,42 @@
+<nb-layout>
+    <nb-layout-header [fixed]="true">
+        <app-navbar-dashboard style="width: 100%;"></app-navbar-dashboard>
+    </nb-layout-header>
+
+    <nb-layout-footer [fixed]="false" style="margin-top: 20px;">
+        <app-footer-dashboard></app-footer-dashboard>
+    </nb-layout-footer>
+
+    <nb-layout-column style="position: relative;">
+        <div class="global-search" *ngIf="(user_privileges?.orders_read || user_privileges?.products_read) && show_search_area">
+            <app-orders-global-search *ngIf="user_privileges?.orders_read"></app-orders-global-search>
+            <app-products-global-search *ngIf="user_privileges?.products_read"></app-products-global-search>
+        </div>
+
+        <button type="button" class="global-search-bubble" (click)="show_search_area = !show_search_area">
+            <i class="fas fa-search" *ngIf="!show_search_area"></i>
+            <i class="fas fa-times" *ngIf="show_search_area"></i>
+        </button>
+
+
+
+        <div class="router-outlet-area">
+            <router-outlet></router-outlet>
+        </div>
+    </nb-layout-column>
+
+    <nb-sidebar tag="app-sidebar-dashboard" left="true" responsive="true" state="expanded" collapsedBreakpoints="['xs', 'is']"
+        compactedBreakpoints="['xs', 'is', 'sm', 'md', 'lg']" (stateChange)="hideSidebarLabelElements('app-sidebar-dashboard')">
+        <app-sidebar-dashboard></app-sidebar-dashboard>
+    </nb-sidebar>
+</nb-layout>
+
+
+
+
+
+
+
+<ngx-spinner size="medium" type="square-jelly-box" [fullScreen]="true" color="#E6AF00" bdColor="rgba(0, 0, 0, 0.9)">
+    <p style="color: #fff"> {{ 'GENERIC.LABELS.LOADING' | translate }}... </p>
+</ngx-spinner>

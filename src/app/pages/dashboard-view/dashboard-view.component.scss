@@ -1,0 +1,421 @@
+@import '../../../assets/scss/colors';
+
+
+
+nb-card.total-sales-card-summary {
+
+    background-color: $dashboard-view-page-yellow;
+    border-radius: 10px;
+    border: none;
+    height: 100%;
+
+    nb-card-header {
+        text-align: center;
+        color: $dashboard-view-page-soft-dark;
+        font-size: 1.5rem;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    nb-card-body {
+        text-align: center;
+        color: $dashboard-view-page-soft-dark;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    nb-card-footer {
+        text-align: center;
+        font-size: 1rem;
+    }
+
+}
+
+
+
+.order-summary-container {
+
+    background-color: $dashboard-view-page-soft-dark;
+    border-radius: 10px;
+    width: calc(100% - 45%);
+    justify-content: space-between;
+
+    .total-orders-card-summary {
+        background-color: transparent;
+        border-radius: 10px;
+        border: none;
+        height: 100%;
+
+        nb-card-header {
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            color: $white;
+            font-size: 1.5rem;
+        }
+
+        nb-card-body {
+            text-align: center;
+            color: $white;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nb-card-footer {
+            text-align: center;
+            font-size: 1rem;
+        }
+    }
+
+
+    .order-list-summary-container {
+        height: calc(100% - 20px);
+        border: none;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 20px;
+        border-radius: 10px;
+        padding: 7px 12px;
+        width: calc(100% - 50%);
+        background-color: $grey-light-2;
+        color: $white;
+
+        nb-card-body {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+
+                tr {
+                    &:not(:last-child) {
+                        border-bottom: 1px solid $grey-light-1;
+                    }
+
+                    td {
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        font-size: 1rem;
+
+                        &:nth-child(1) {
+                            padding-left: 10px;
+                            padding-right: 5px;
+                            font-weight: 600;
+                        }
+
+                        &:nth-child(2) {
+                            text-align: center;
+                            width: 50%;
+                        }
+
+                        i {
+                            &.fa-spinner {
+                                color: $navbar-blue;
+                            }
+
+                            &.fa-paper-plane {
+                                color: $orange-light;
+                            }
+
+                            &.fa-check-circle {
+                                color: $success-button-green;
+                            }
+
+                            &.fa-times-circle {
+                                color: $unsuccess-button-red;
+                            }
+
+                            &.fa-exchange-alt {
+                                color: $sidebar-blue;
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
+
+
+
+    .actions-card-summary-orders {
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        width: 60px;
+
+
+        nb-card-body {
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+
+            div {
+
+                display: block;
+
+                button {
+
+                    &.button-action {
+                        display: block;
+                        outline: none;
+                        border: none;
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        font-size: 1.1rem;
+                        color: $white;
+
+                        &:not(:first-child) {
+                            margin-top: 15px;
+                        }
+                    }
+
+                    &.add-new-order {
+                        background-color: $success-button-green;
+                    }
+
+                    &.see-orders-list {
+                        background-color: $sidebar-blue;
+                    }
+
+                }
+
+            }
+
+        }
+    }
+
+}
+
+
+
+
+.success-text-color-green {
+    color: $success-highlighter-button-green;
+}
+
+.unsuccess-text-color-red {
+    color: $unsuccess-button-red;
+}
+
+.static-text-color-white {
+    color: $white;
+}
+
+
+
+
+
+
+
+.charts-area-row-dash {
+    padding-left: 15px;
+    padding-top: 30px;
+
+    nb-reveal-card {
+        width: 100%;
+
+
+
+        nb-card {
+            background-color: $dashboard-view-page-soft-dark;
+            border: none;
+            border-radius: 10px;
+            // height: 400px;
+
+            nb-card-header {
+                text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                text-align: center;
+                color: $white;
+                font-size: 2rem;
+                margin-top: 7px;
+            }
+
+            nb-card-body {
+                display: block;
+
+                .chart-specific-divider-res {
+                    display: flex;
+                    overflow: hidden;
+                    flex: 1 1 auto;
+                    height: 300px;
+                }
+
+            }
+        }
+
+
+
+        nb-card-back {
+            box-shadow: 0px 0px 40px -10px rgba(0, 0, 0, 0.75);
+            -webkit-box-shadow: 0px 0px 40px -10px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 0px 0px 40px -10px rgba(0, 0, 0, 0.75);
+        }
+
+    }
+
+}
+
+
+
+
+.top-famous-products-carousel {
+
+    background-color: $dashboard-view-page-soft-dark;
+    margin-left: 0px;
+    border: none;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+
+
+    .title {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        .header-left-title {
+            font-size: 1.5rem;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            color: $white;
+        }
+
+        .header-right-date {
+            background-color: $grey-light-2;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+        }
+
+    }
+
+
+
+    .carousel-item-custom {
+
+        width: calc(400px - 50px);
+        background-color: $grey-light-2;
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+
+        &:first-child {
+            margin-left: 10px;
+        }
+
+
+        .item {
+
+            &.img {
+
+                width: 70px;
+                height: 70px;
+
+                img {
+                    width: 70px;
+                    height: 70px;
+                    object-fit: cover;
+                    display: block;
+                }
+
+            }
+
+
+            &.description {
+                padding: 0;
+                padding-left: 10px;
+
+                .title {
+                    padding: 0;
+                    width: 100%;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    display: inline-block;
+                    font-weight: 600;
+                    color: $sidebar-blue;
+                }
+
+                .price {
+                    text-align: right;
+                    margin-top: 10px;
+                }
+            }
+
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+.products-list-summary {
+
+    background-color: $dashboard-view-page-soft-dark;
+    border: none;
+    border-radius: 10px;
+    max-height: 885px;
+
+
+    .title {
+        color: $white;
+        text-align: center;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        font-size: 1.8rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        margin-bottom: 25px;
+    }
+
+
+    .category-title {
+        color: $white;
+        font-size: 1.3rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        border-bottom: 1px solid $grey-light-2;
+        padding-bottom: 7px;
+        cursor: pointer;
+    }
+
+    .product-list-summary-hall {
+        background-color: $grey-light-2;
+        margin-top: 10px;
+        padding: 10px 20px 1px 20px;
+        border: none;
+        border-radius: 10px;
+        color: $white;
+    }
+
+}
+
+
+
+.no-products-carousel-found {
+    text-align: center;
+    font-size: 1rem;
+}

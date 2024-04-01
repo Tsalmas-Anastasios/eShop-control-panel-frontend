@@ -1,0 +1,30 @@
+<div class="dropdown">
+
+
+    <button class="status-badge ng-star-inserted" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        [ngStyle]="{ 'color': activeStatus.letters_color, 'background-color': activeStatus.background_color }"
+        [ladda]="statusIsChanging">
+        {{ activeStatus.label }}
+    </button>
+
+
+
+    <div class="dropdown-menu" aria-labelledby="drodDownStatusMenuButton"
+        [ngStyle]="{ 'background-color': options?.dropdown_background_color || null, 'border-color': options?.dropdown_border_color || null }">
+
+
+        <!-- status badges -->
+        <div class="status-badge-item" *ngFor="let status of statuses" [hidden]="status.value === activeStatus.value">
+            <button class="status-badge ng-star-inserted" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"
+                [ngStyle]="{ 'color': status.letters_color, 'background-color': status.background_color }"
+                (click)="onStatusChange(status.value)">
+                {{ status.label }}
+            </button>
+        </div>
+
+
+    </div>
+
+
+</div>

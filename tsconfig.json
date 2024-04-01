@@ -1,0 +1,36 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "strict": false,
+    "strictNullChecks": false,
+    "declaration": false,
+    "strict": false,
+    "strictNullChecks": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "allowJs": true,
+    "target": "es2015",
+    "lib": [
+      "es2018",
+      "es2015",
+      "dom"
+    ],
+    "types": [
+      "googlemaps",
+      "node"
+    ]
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": false
+  }
+}

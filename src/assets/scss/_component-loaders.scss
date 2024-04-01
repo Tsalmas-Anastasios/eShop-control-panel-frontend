@@ -1,0 +1,15 @@
+.overlay-component-loader-here-loader-circle-field {
+    align-items: center;
+    background: url('../images/loader.gif') no-repeat fixed center;
+    background-size: 30px;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    color: var(--dark);
+    z-index: 50;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}

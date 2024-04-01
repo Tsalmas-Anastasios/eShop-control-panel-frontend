@@ -1,0 +1,1889 @@
+<ul class="nav pills mb-3" id="pills-product-options-cats" role="tablist">
+    <li class="nav-item">
+        <a href="#general-warehouse-data" class="nav-link active" aria-current="page" data-toggle="pill" role="tab"
+            aria-controls="general-warehouse-data" aria-selected="true">
+            {{ 'GENERIC.LABELS.OVERVIEW' | translate }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="#warehouse-runways" class="nav-link" aria-current="page" data-toggle="pill" role="tab"
+            aria-controls="warehouse-runways" aria-selected="false">
+            {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.RUNWAYS' | translate }}
+        </a>
+    </li>
+</ul>
+
+
+
+
+
+
+
+<!-- tabs -->
+<div class="tab-content">
+
+
+
+    <!-- general data -->
+    <div class="tab-pane fade show active" id="general-warehouse-data" role="tabpanel"
+        aria-labelledby="generalWarehouseData">
+
+
+        <!-- general data for warehouse -->
+        <div class="card">
+
+            <div class="card-header">
+                <h5>{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.GENERAL_DATA' | translate }}</h5>
+            </div>
+
+
+            <div class="card-body">
+
+
+                <div class="row">
+
+
+                    <!-- distinctive title -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+
+                            <label for="warehouseDistinctiveTitle" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.DISTINCTIVE_TITLE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="warehouseDistinctiveTitle" id="warehouseDistinctiveTitle"
+                                class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.DISTINCTIVE_TITLE' | translate }}"
+                                [(ngModel)]="warehouse.distinctive_title" #warehouseDistinctiveTitle="ngModel"
+                                aria-describedby="warehouseDistinctiveTitleHelp" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="warehouseDistinctiveTitleHelp" class="form-text text-danger"
+                                *ngIf="warehouseDistinctiveTitle.invalid">
+
+                                <span
+                                    *ngIf="warehouseDistinctiveTitle.errors.required && (warehouseDistinctiveTitle.dirty || warehouseDistinctiveTitle.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- code name -->
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                        <div class="form-group">
+
+                            <label for="warehouseCodeName" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.CODE_NAME' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="warehouseCodeName" id="warehouseCodeName" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.CODE_NAME' | translate }}"
+                                [(ngModel)]="warehouse.code_name" #warehouseCodeName="ngModel"
+                                aria-describedby="warehouseDistinctiveTitleHelp" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="warehouseDistinctiveTitleHelp" class="form-text text-danger"
+                                *ngIf="warehouseCodeName.invalid">
+
+                                <span
+                                    *ngIf="warehouseCodeName.errors.required && (warehouseCodeName.dirty || warehouseCodeName.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- warehouse license number -->
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                        <div class="form-group">
+
+                            <label for="warehouseLicenseNumber" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.LICENSE_NUMBER' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="warehouseLicenseNumber" id="warehouseLicenseNumber"
+                                class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.LICENSE_NUMBER' | translate }}"
+                                [(ngModel)]="warehouse.warehouse_license_number" #warehouseLicenseNumber="ngModel"
+                                aria-describedby="warehouseDistinctiveTitleHelp" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="warehouseDistinctiveTitleHelp" class="form-text text-danger"
+                                *ngIf="warehouseLicenseNumber.invalid">
+
+                                <span
+                                    *ngIf="warehouseLicenseNumber.errors.required && (warehouseLicenseNumber.dirty || warehouseLicenseNumber.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- ownership type -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+
+                            <label for="warehouseOwnershipType" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.OWNERSHIP_TYPE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+
+                            <ng-select id="warehouseOwnershipType" name="warehouseOwnershipType"
+                                #warehouseOwnershipType="ngModel"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.OWNERSHIP_TYPE' | translate }}"
+                                [items]="ownership_type" [multiple]="false" bindLabel="label" bindValue="value"
+                                [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                [(ngModel)]="warehouse.ownership_type" [minTermLength]="3" [disabled]="false"
+                                ng-required="true" [searchable]="true" aria-describedby="warehouseOwnershipTypeHelp"
+                                (change)="onUpdateWarehouseData();" (keyup)="onUpdateWarehouseData();" required>
+                            </ng-select>
+
+                            <small id="warehouseDistinctiveTitleHelp" class="form-text text-danger"
+                                *ngIf="warehouseOwnershipType.invalid">
+
+                                <span
+                                    *ngIf="warehouseOwnershipType.errors.required && (warehouseOwnershipType.dirty || warehouseOwnershipType.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+
+        <!-- building details -->
+        <div class="card mt-4">
+
+            <div class="card-header">
+                <h5>{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.BUILDING_DETAILS' | translate }}</h5>
+            </div>
+
+            <div class="card-body">
+
+
+                <div class="row">
+
+
+                    <!-- building permit number -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="buildingPermitNumber" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.BUILDING_PERMIT_NUMBER' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="buildingPermitNumber" id="buildingPermitNumber"
+                                class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.BUILDING_PERMIT_NUMBER' | translate }}"
+                                [(ngModel)]="warehouse.building_permit_number" #buildingPermitNumber="ngModel"
+                                aria-describedby="buildingPermitNumberHelp" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="buildingPermitNumberHelp" class="form-text text-danger"
+                                *ngIf="buildingPermitNumber.invalid">
+
+                                <span
+                                    *ngIf="buildingPermitNumber.errors.required && (buildingPermitNumber.dirty || buildingPermitNumber.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- building year -->
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                        <div class="form-group">
+
+                            <label for="buildingYear" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.BUILDING_YEAR' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="buildingYear" id="buildingYear" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.BUILDING_YEAR' | translate }}"
+                                [(ngModel)]="warehouse.building_year" #buildingYear="ngModel"
+                                aria-describedby="buildingYearHelp" maxlength="4" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="buildingYearHelp" class="form-text text-danger" *ngIf="buildingYear.invalid">
+
+                                <span
+                                    *ngIf="buildingYear.errors.required && (buildingYear.dirty || buildingYear.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- square meters -->
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-1">
+                        <div class="form-group">
+
+                            <label for="squareMeters" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.S_M' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                                &nbsp;
+                                <i class="fas fa-info-circle"
+                                    nbTooltip="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.TOOLTIPS.SQUARE_METERS' | translate }}"></i>
+                            </label>
+
+                            <input type="number" name="squareMeters" id="squareMeters" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.S_M' | translate }}"
+                                [(ngModel)]="warehouse.square_meters" #squareMeters="ngModel"
+                                aria-describedby="squareMetersHelp" min="1" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="squareMetersHelp" class="form-text text-danger" *ngIf="squareMeters.invalid">
+
+                                <span
+                                    *ngIf="squareMeters.errors.required && (squareMeters.dirty || squareMeters.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- power type -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="powerType" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.POWER_TYPE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+
+                            <ng-select id="powerType" name="powerType" #powerType="ngModel"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.POWER_TYPE' | translate }}"
+                                [items]="power_type" [multiple]="false" bindLabel="label" bindValue="value"
+                                [closeOnSelect]="true" [dropdownPosition]="'bottom'" [(ngModel)]="warehouse.power_type"
+                                [minTermLength]="3" [disabled]="false" ng-required="true" [searchable]="true"
+                                aria-describedby="powerTypeHelp" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required>
+                            </ng-select>
+
+                            <small id="warehouseDistinctiveTitleHelp" class="form-text text-danger"
+                                *ngIf="powerType.invalid">
+
+                                <span *ngIf="powerType.errors.required && (powerType.dirty || powerType.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- energy class -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="energyClass" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.ENERGY_CLASS' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+
+                            <ng-select id="energyClass" name="energyClass" #energyClass="ngModel"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.ENERGY_CLASS' | translate }}"
+                                [items]="energy_classes" [multiple]="false" bindLabel="label" bindValue="value"
+                                [closeOnSelect]="true" [dropdownPosition]="'bottom'"
+                                [(ngModel)]="warehouse.energy_class" [minTermLength]="3" [disabled]="false"
+                                ng-required="true" [searchable]="true" aria-describedby="energyClassHelp"
+                                (change)="onUpdateWarehouseData();" (keyup)="onUpdateWarehouseData();" required>
+                            </ng-select>
+
+                            <small id="warehouseDistinctiveTitleHelp" class="form-text text-danger"
+                                *ngIf="energyClass.invalid">
+
+                                <span *ngIf="energyClass.errors.required && (energyClass.dirty || energyClass.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+
+                <div class="row">
+
+
+                    <!-- reception exist -->
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="receptionExist" class="mb-1 d-block">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.RECEPTION_EXIST' | translate }}
+                            </label>
+
+                            <input type="checkbox" name="receptionExist" id="receptionExist"
+                                [(ngModel)]="warehouse.reception_exist" #receptionExist="ngModel"
+                                aria-describedby="receptionExistHelp" (click)="onUpdateWarehouseData();" required />
+
+                        </div>
+                    </div>
+
+
+                    <!-- parking spaces -->
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                        <div class="form-group">
+
+                            <label for="parkingSpaces" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.PARKING_SPACES' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="number" name="parkingSpaces" id="parkingSpaces" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.PARKING_SPACES' | translate }}"
+                                [(ngModel)]="warehouse.parking_spaces" #parkingSpaces="ngModel"
+                                aria-describedby="parkingSpacesHelp" min="1" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="parkingSpacesHelp" class="form-text text-danger" *ngIf="parkingSpaces.invalid">
+
+                                <span
+                                    *ngIf="parkingSpaces.errors.required && (parkingSpaces.dirty || parkingSpaces.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- unloading vehicles places -->
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                        <div class="form-group">
+
+                            <label for="unloadingVehiclesSpaces" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.UNLOADING_VEHICLES' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="number" name="unloadingVehiclesSpaces" id="unloadingVehiclesSpaces"
+                                class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.UNLOADING_VEHICLES_PLACES' | translate }}"
+                                [(ngModel)]="warehouse.unloading_vehicles_places_number"
+                                #unloadingVehiclesSpaces="ngModel" aria-describedby="unloadingVehiclesSpacesHelp"
+                                min="1" (change)="onUpdateWarehouseData();" (keyup)="onUpdateWarehouseData();"
+                                required />
+
+                            <small id="unloadingVehiclesSpacesHelp" class="form-text text-danger"
+                                *ngIf="unloadingVehiclesSpaces.invalid">
+
+                                <span
+                                    *ngIf="unloadingVehiclesSpaces.errors.required && (unloadingVehiclesSpaces.dirty || unloadingVehiclesSpaces.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- bathrooms -->
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                        <div class="form-group">
+
+                            <label for="bahtroomsNumber" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.BATHROOMS' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="number" name="bahtroomsNumber" id="bahtroomsNumber" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.BATHROOMS' | translate }}"
+                                [(ngModel)]="warehouse.bathrooms_number" #bahtroomsNumber="ngModel"
+                                aria-describedby="bahtroomsNumberHelp" min="1" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="bahtroomsNumberHelp" class="form-text text-danger"
+                                *ngIf="bahtroomsNumber.invalid">
+
+                                <span
+                                    *ngIf="bahtroomsNumber.errors.required && (bahtroomsNumber.dirty || bahtroomsNumber.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- offices number -->
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                        <div class="form-group">
+
+                            <label for="officesNumber" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.OFFICES' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="number" name="officesNumber" id="officesNumber" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.OFFICES' | translate }}"
+                                [(ngModel)]="warehouse.offices_number" #officesNumber="ngModel"
+                                aria-describedby="officesNumberHelp" min="1" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="officesNumberHelp" class="form-text text-danger" *ngIf="officesNumber.invalid">
+
+                                <span
+                                    *ngIf="officesNumber.errors.required && (officesNumber.dirty || officesNumber.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Address details -->
+        <div class="card mt-4">
+
+            <div class="card-header">
+                <h5>{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.ADDRESS_DETAILS' | translate }}</h5>
+            </div>
+
+            <div class="card-body">
+
+
+                <div class="row">
+
+                    <div class="col-12">
+
+
+                        <div class="row">
+
+
+                            <!-- street -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+                                <div class="form-group">
+
+                                    <label for="plotAddressStreet" class="mb-1">
+                                        {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.STREET' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </label>
+
+                                    <input type="text" name="plotAddressStreet" id="plotAddressStreet"
+                                        class="form-control"
+                                        placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.STREET' | translate }}"
+                                        [(ngModel)]="warehouse.plot__street" #plotAddressStreet="ngModel"
+                                        aria-describedby="plotAddressStreetHelp"
+                                        (change)="parseAddressDataToContactData('street');onUpdateWarehouseData();"
+                                        (keyup)="parseAddressDataToContactData('street');onUpdateWarehouseData();"
+                                        required />
+
+                                    <small id="plotAddressStreetHelp" class="form-text text-danger"
+                                        *ngIf="plotAddressStreet.invalid">
+
+                                        <span *ngIf="plotAddressStreet.errors.required
+                                                        && (plotAddressStreet.dirty
+                                                        || plotAddressStreet.touched)">
+                                            <app-required-field [type]="'input_invalid'">
+                                            </app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- postal code -->
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                <div class="form-group">
+
+                                    <label for="plotAddressPostalCode" class="mb-1">
+                                        {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.POSTAL_CODE' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </label>
+
+                                    <input type="text" name="plotAddressPostalCode" id="plotAddressPostalCode"
+                                        class="form-control"
+                                        placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.POSTAL_CODE' | translate }}"
+                                        [(ngModel)]="warehouse.plot__postal_code" #plotAddressPostalCode="ngModel"
+                                        aria-describedby="plotAddressPostalCodeHelp"
+                                        (change)="parseAddressDataToContactData('postal_code');onUpdateWarehouseData();"
+                                        (keyup)="parseAddressDataToContactData('postal_code');onUpdateWarehouseData();"
+                                        required />
+
+                                    <small id="plotAddressPostalCodeHelp" class="form-text text-danger"
+                                        *ngIf="plotAddressPostalCode.invalid">
+
+                                        <span *ngIf="plotAddressPostalCode.errors.required
+                                                        && (plotAddressPostalCode.dirty
+                                                        || plotAddressPostalCode.touched)">
+                                            <app-required-field [type]="'input_invalid'">
+                                            </app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- country -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+                                <div class="form-group">
+
+                                    <label for="plotAddressCountry" class="mb-1">
+                                        {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COUNTRY' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </label>
+
+                                    <ng-select id="plotAddressCountry" name="plotAddressCountry"
+                                        #plotAddressCountry="ngModel"
+                                        placeholder="{{ 'GENERIC.LABELS.COUNTRY' | translate }}" [items]="countries"
+                                        [multiple]="false" bindLabel="name" bindValue="name" [closeOnSelect]="true"
+                                        [dropdownPosition]="'bottom'" [(ngModel)]="warehouse.plot__country"
+                                        [minTermLength]="3" [disabled]="false" ng-required="true" [searchable]="true"
+                                        aria-describedby="plotAddressCountryHelp"
+                                        (change)="parseAddressDataToContactData('country');onUpdateWarehouseData();">
+
+                                        <ng-template ng-option-tmp let-item="item">
+                                            {{ item.name }}
+                                        </ng-template>
+
+                                    </ng-select>
+
+                                    <small id="plotAddressCountryHelp" class="form-text text-danger"
+                                        *ngIf="plotAddressCountry.invalid">
+
+                                        <span *ngIf="plotAddressCountry.errors.required
+                                                        && (plotAddressCountry.dirty
+                                                        || plotAddressCountry.touched)">
+                                            <app-required-field [type]="'input_invalid'">
+                                            </app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row">
+
+
+                            <!-- city -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="plotAddressCity" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.CITY' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="plotAddressCity" id="plotAddressCity" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.CITY' | translate }}"
+                                    [(ngModel)]="warehouse.plot__city" #plotAddressCity="ngModel"
+                                    aria-describedby="plotAddressCityHelp"
+                                    (change)="parseAddressDataToContactData('city');onUpdateWarehouseData()"
+                                    (keyup)="parseAddressDataToContactData('city');onUpdateWarehouseData();" required />
+
+                                <small id="plotAddressCityHelp" class="form-text text-danger"
+                                    *ngIf="plotAddressCity.invalid">
+
+                                    <span *ngIf="plotAddressCity.errors.required
+                                                        && (plotAddressCity.dirty
+                                                        || plotAddressCity.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- state -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="plotAddressState" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.STATE' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="plotAddressState" id="plotAddressState" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.STATE' | translate }}"
+                                    [(ngModel)]="warehouse.plot__state" #plotAddressState="ngModel"
+                                    aria-describedby="plotAddressStateHelp"
+                                    (change)="parseAddressDataToContactData('state');onUpdateWarehouseData();"
+                                    (keyup)="parseAddressDataToContactData('state');onUpdateWarehouseData();"
+                                    required />
+
+                                <small id="plotAddressStateHelp" class="form-text text-danger"
+                                    *ngIf="plotAddressState.invalid">
+
+                                    <span *ngIf="plotAddressState.errors.required
+                                                        && (plotAddressState.dirty
+                                                        || plotAddressState.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- latitude -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="plotAddressLatitude" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.LATITUDE' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="plotAddressLatitude" id="plotAddressLatitude"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.LATITUDE' | translate }}"
+                                    [(ngModel)]="warehouse.plot__latitude" #plotAddressLatitude="ngModel"
+                                    aria-describedby="plotAddressLatitudeHelp"
+                                    (change)="parseAddressDataToContactData('latitude');onUpdateWarehouseData();"
+                                    (keyup)="parseAddressDataToContactData('latitude');onUpdateWarehouseData();"
+                                    required />
+
+                                <small id="plotAddressLatitudeHelp" class="form-text text-danger"
+                                    *ngIf="plotAddressLatitude.invalid">
+
+                                    <span *ngIf="plotAddressLatitude.errors.required
+                                                        && (plotAddressLatitude.dirty
+                                                        || plotAddressLatitude.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- longitude -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="plotAddressLongitude" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.LONGITUDE' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="plotAddressLongitude" id="plotAddressLongitude"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.LONGITUDE' | translate }}"
+                                    [(ngModel)]="warehouse.plot__longitude" #plotAddressLongitude="ngModel"
+                                    aria-describedby="plotAddressLongitudeHelp"
+                                    (change)="parseAddressDataToContactData('longitude');onUpdateWarehouseData();"
+                                    (keyup)="parseAddressDataToContactData('longitude');onUpdateWarehouseData();"
+                                    required />
+
+                                <small id="plotAddressLongitudeHelp" class="form-text text-danger"
+                                    *ngIf="plotAddressLongitude.invalid">
+
+                                    <span *ngIf="plotAddressLongitude.errors.required
+                                                        && (plotAddressLongitude.dirty
+                                                        || plotAddressLongitude.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- contact address -->
+        <div class="card mt-4">
+
+            <div class="card-header">
+                <h5>{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.CONTACT_ADDRESS' | translate }}</h5>
+            </div>
+
+            <div class="card-body">
+
+                <!-- set contact address same as main address -->
+                <div class="row">
+                    <div class="col-12">
+
+                        <input type="checkbox" name="sameAsAddress" id="sameAsAddress" class="mr-2"
+                            [(ngModel)]="contact_address_same_as_address" #sameAsAddress="ngModel"
+                            aria-describedby="sameAsAddressHelp" (click)="toggleSameContactAddressWithAddress();"
+                            required />
+                        <label for="sameAsAddress" class="mb-1">
+                            {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.SAME_AS_WAREHOUSE_ADDRESS' | translate }}
+                        </label>
+
+                    </div>
+                </div>
+
+
+
+                <div class="row mt-4">
+
+                    <div class="col-12">
+
+
+                        <div class="row">
+
+
+                            <!-- street -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+                                <div class="form-group">
+
+                                    <label for="contactAddressStreet" class="mb-1">
+                                        {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.STREET' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </label>
+
+                                    <input type="text" name="contactAddressStreet" id="contactAddressStreet"
+                                        class="form-control"
+                                        placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.STREET' | translate }}"
+                                        [(ngModel)]="warehouse.contact__street" #contactAddressStreet="ngModel"
+                                        aria-describedby="contactAddressStreetHelp"
+                                        [disabled]="contact_address_same_as_address" (change)="onUpdateWarehouseData();"
+                                        (keyup)="onUpdateWarehouseData();" required />
+
+                                    <small id="contactAddressStreetHelp" class="form-text text-danger"
+                                        *ngIf="contactAddressStreet.invalid">
+
+                                        <span *ngIf="contactAddressStreet.errors.required
+                                                        && (contactAddressStreet.dirty
+                                                        || contactAddressStreet.touched)">
+                                            <app-required-field [type]="'input_invalid'">
+                                            </app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- postal code -->
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                                <div class="form-group">
+
+                                    <label for="contactAddressPostalCode" class="mb-1">
+                                        {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.POSTAL_CODE' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </label>
+
+                                    <input type="text" name="contactAddressPostalCode" id="contactAddressPostalCode"
+                                        class="form-control"
+                                        placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.POSTAL_CODE' | translate }}"
+                                        [(ngModel)]="warehouse.contact__postal_code" #contactAddressPostalCode="ngModel"
+                                        aria-describedby="contactAddressPostalCodeHelp"
+                                        [disabled]="contact_address_same_as_address" (change)="onUpdateWarehouseData();"
+                                        (keyup)="onUpdateWarehouseData();" required />
+
+                                    <small id="contactAddressPostalCodeHelp" class="form-text text-danger"
+                                        *ngIf="contactAddressPostalCode.invalid">
+
+                                        <span *ngIf="contactAddressPostalCode.errors.required
+                                                        && (contactAddressPostalCode.dirty
+                                                        || contactAddressPostalCode.touched)">
+                                            <app-required-field [type]="'input_invalid'">
+                                            </app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- country -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+                                <div class="form-group">
+
+                                    <label for="contactAddressCountry" class="mb-1">
+                                        {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COUNTRY' | translate }}
+                                        <app-required-field [type]="'asterisk_tooltip'">
+                                        </app-required-field>
+                                    </label>
+
+                                    <ng-select id="contactAddressCountry" name="contactAddressCountry"
+                                        #contactAddressCountry="ngModel"
+                                        placeholder="{{ 'GENERIC.LABELS.COUNTRY' | translate }}" [items]="countries"
+                                        [multiple]="false" bindLabel="name" bindValue="name" [closeOnSelect]="true"
+                                        [dropdownPosition]="'bottom'" [(ngModel)]="warehouse.contact__country"
+                                        [minTermLength]="3" [disabled]="contact_address_same_as_address"
+                                        ng-required="true" [searchable]="true"
+                                        aria-describedby="contactAddressCountryHelp"
+                                        (change)="onUpdateWarehouseData();">
+
+                                        <ng-template ng-option-tmp let-item="item">
+                                            {{ item.name }}
+                                        </ng-template>
+
+                                    </ng-select>
+
+                                    <small id="contactAddressCountryHelp" class="form-text text-danger"
+                                        *ngIf="contactAddressCountry.invalid">
+
+                                        <span *ngIf="contactAddressCountry.errors.required
+                                                        && (contactAddressCountry.dirty
+                                                        || contactAddressCountry.touched)">
+                                            <app-required-field [type]="'input_invalid'">
+                                            </app-required-field>
+                                        </span>
+
+                                    </small>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row">
+
+
+                            <!-- city -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="contactAddressCity" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.CITY' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="contactAddressCity" id="contactAddressCity"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.CITY' | translate }}"
+                                    [(ngModel)]="warehouse.contact__city" #contactAddressCity="ngModel"
+                                    aria-describedby="contactAddressCityHelp"
+                                    [disabled]="contact_address_same_as_address" (change)="onUpdateWarehouseData();"
+                                    (keyup)="onUpdateWarehouseData();" required />
+
+                                <small id="contactAddressCityHelp" class="form-text text-danger"
+                                    *ngIf="contactAddressCity.invalid">
+
+                                    <span *ngIf="contactAddressCity.errors.required
+                                                        && (contactAddressCity.dirty
+                                                        || contactAddressCity.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- state -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="contactAddressState" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.STATE' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="contactAddressState" id="contactAddressState"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.COMPANY_DATA.STATE' | translate }}"
+                                    [(ngModel)]="warehouse.contact__state" #contactAddressState="ngModel"
+                                    aria-describedby="contactAddressStateHelp"
+                                    [disabled]="contact_address_same_as_address" (change)="onUpdateWarehouseData();"
+                                    (keyup)="onUpdateWarehouseData();" required />
+
+                                <small id="contactAddressStateHelp" class="form-text text-danger"
+                                    *ngIf="contactAddressState.invalid">
+
+                                    <span *ngIf="contactAddressState.errors.required
+                                                        && (contactAddressState.dirty
+                                                        || contactAddressState.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- latitude -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="contactAddressLatitude" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.LATITUDE' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="contactAddressLatitude" id="contactAddressLatitude"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.LATITUDE' | translate }}"
+                                    [(ngModel)]="warehouse.contact__latitude" #contactAddressLatitude="ngModel"
+                                    aria-describedby="contactAddressLatitudeHelp"
+                                    [disabled]="contact_address_same_as_address" (change)="onUpdateWarehouseData();"
+                                    (keyup)="onUpdateWarehouseData();" required />
+
+                                <small id="contactAddressLatitudeHelp" class="form-text text-danger"
+                                    *ngIf="contactAddressLatitude.invalid">
+
+                                    <span *ngIf="contactAddressLatitude.errors.required
+                                                        && (contactAddressLatitude.dirty
+                                                        || contactAddressLatitude.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- longitude -->
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+
+                                <label for="contactAddressLongitude" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.LONGITUDE' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="contactAddressLongitude" id="contactAddressLongitude"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.LONGITUDE' | translate }}"
+                                    [(ngModel)]="warehouse.contact__longitude" #contactAddressLongitude="ngModel"
+                                    aria-describedby="contactAddressLongitudeHelp"
+                                    [disabled]="contact_address_same_as_address" (change)="onUpdateWarehouseData();"
+                                    (keyup)="onUpdateWarehouseData();" required />
+
+                                <small id="contactAddressLongitudeHelp" class="form-text text-danger"
+                                    *ngIf="contactAddressLongitude.invalid">
+
+                                    <span *ngIf="contactAddressLongitude.errors.required
+                                                        && (contactAddressLongitude.dirty
+                                                        || contactAddressLongitude.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- contact telephone -->
+                <div class="row mt-4">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="contactPhone" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.CONTACT_TELEPHONE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24"
+                                [phoneValidation]="true" [separateDialCode]="true" id="contactPhone" name="contactPhone"
+                                #contactPhone="ngModel" [(ngModel)]="contact_telephone"
+                                aria-describedby="contactPhoneHelp"
+                                (ngModelChange)="formatTelephone('warehouse', 'contact__phone', contact_telephone)"
+                                required>
+                            </ngx-intl-tel-input>
+
+                            <small id="contactPhoneHelp" class="form-text text-danger" *ngIf="contactPhone.invalid">
+
+                                <span *ngIf="contactPhone.errors.required
+                                            && (contactPhone.dirty
+                                            || contactPhone.touched)">
+                                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.PLEASE_ENTER_A_VALID_PHONE_NUMBER' |
+                                    translate }}
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- contact person -->
+        <div class="card mt-4">
+
+            <div class="card-header">
+                <h5>{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.WAREHOUSE_MANAGER' | translate }}</h5>
+            </div>
+
+            <div class="card-body">
+
+
+                <div class="row">
+
+
+                    <!-- full name -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+
+                            <label for="warehouseManagerFullname" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.FULLNAME' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="warehouseManagerFullname" id="warehouseManagerFullname"
+                                class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.FULLNAME' | translate }}"
+                                [(ngModel)]="warehouse.warehouse_manager__fullname" #warehouseManagerFullname="ngModel"
+                                aria-describedby="warehouseManagerFullnameHelp" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="warehouseManagerFullnameHelp" class="form-text text-danger"
+                                *ngIf="warehouseManagerFullname.invalid">
+
+                                <span *ngIf="warehouseManagerFullname.errors.required
+                                            && (warehouseManagerFullname.dirty
+                                            || warehouseManagerFullname.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- company position -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+
+                            <label for="warehouseManagerCompanyPosition" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COMPANY_POSITION' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="warehouseManagerCompanyPosition"
+                                id="warehouseManagerCompanyPosition" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COMPANY_POSITION' | translate }}"
+                                [(ngModel)]="warehouse.warehouse_manager__company_position"
+                                #warehouseManagerCompanyPosition="ngModel"
+                                aria-describedby="warehouseManagerCompanyPositionHelp"
+                                (change)="onUpdateWarehouseData();" (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="warehouseManagerCompanyPositionHelp" class="form-text text-danger"
+                                *ngIf="warehouseManagerCompanyPosition.invalid">
+
+                                <span *ngIf="warehouseManagerCompanyPosition.errors.required
+                                            && (warehouseManagerCompanyPosition.dirty
+                                            || warehouseManagerCompanyPosition.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- date of birth -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+
+                            <label for="warehouseManagerDateOfBirth" class="mb-1 d-block">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.DATE_OF_BIRTH' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input nbInput id="warehouseManagerDateOfBirth" name="warehouseManagerDateOfBirth"
+                                [nbDatepicker]="birthdayDatePicker" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.DATE_OF_BIRTH' | translate }}"
+                                #warehouseManagerDateOfBirth="ngModel"
+                                [(ngModel)]="warehouse.warehouse_manager__date_of_birth"
+                                (change)="onUpdateWarehouseData();" (keyup)="onUpdateWarehouseData();" required />
+                            <nb-datepicker #birthdayDatePicker format="MM-dd-yyyy"></nb-datepicker>
+
+                            <small id="warehouseManagerDateOfBirthHelp" class="form-text text-danger"
+                                *ngIf="warehouseManagerDateOfBirth.invalid">
+
+                                <span *ngIf="warehouseManagerDateOfBirth.errors.required
+                                            && (warehouseManagerDateOfBirth.dirty
+                                            || warehouseManagerDateOfBirth.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="row">
+
+
+                    <!-- social security number -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="warehouseManagerSocialSecurityNumber" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.SOCIAL_SECURITY_NUMBER' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="warehouseManagerSocialSecurityNumber"
+                                id="warehouseManagerSocialSecurityNumber" class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.SOCIAL_SECURITY_NUMBER' | translate }}"
+                                [(ngModel)]="warehouse.warehouse_manager__social_security_number"
+                                #warehouseManagerSocialSecurityNumber="ngModel"
+                                aria-describedby="warehouseManagerSocialSecurityNumberHelp"
+                                (change)="onUpdateWarehouseData();" (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="warehouseManagerSocialSecurityNumberHelp" class="form-text text-danger"
+                                *ngIf="warehouseManagerSocialSecurityNumber.invalid">
+
+                                <span *ngIf="warehouseManagerSocialSecurityNumber.errors.required
+                                            && (warehouseManagerSocialSecurityNumber.dirty
+                                            || warehouseManagerSocialSecurityNumber.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- tax id -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="warehouseManagerTaxId" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.TAX_ID' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="warehouseManagerTaxId" id="warehouseManagerTaxId"
+                                class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.TAX_ID' | translate }}"
+                                [(ngModel)]="warehouse.warehouse_manager__personal_tax_id"
+                                #warehouseManagerTaxId="ngModel" aria-describedby="warehouseManagerTaxIdHelp"
+                                (change)="onUpdateWarehouseData();" (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="warehouseManagerTaxIdHelp" class="form-text text-danger"
+                                *ngIf="warehouseManagerTaxId.invalid">
+
+                                <span *ngIf="warehouseManagerTaxId.errors.required
+                                            && (warehouseManagerTaxId.dirty
+                                            || warehouseManagerTaxId.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <!-- contact details -->
+                <div class="row">
+
+
+                    <!-- company email -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="warehouseManagerCompanyEmail" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COMPANY_EMAIL' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="email" name="warehouseManagerCompanyEmail" id="warehouseManagerCompanyEmail"
+                                class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COMPANY_EMAIL' | translate }}"
+                                pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                                [(ngModel)]="warehouse.warehouse_manager__company_email"
+                                #warehouseManagerCompanyEmail="ngModel"
+                                aria-describedby="warehouseManagerCompanyEmailHelp" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="warehouseManagerCompanyEmailHelp" class="form-text text-danger"
+                                *ngIf="warehouseManagerCompanyEmail.invalid">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS' |
+                                translate }}
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- personal email -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+
+                            <label for="warehouseManagerPersonalEmail" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.PERSONAL_EMAIL' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="email" name="warehouseManagerPersonalEmail" id="warehouseManagerPersonalEmail"
+                                class="form-control"
+                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.PERSONAL_EMAIL' | translate }}"
+                                pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                                [(ngModel)]="warehouse.warehouse_manager__personal_email"
+                                #warehouseManagerPersonalEmail="ngModel"
+                                aria-describedby="warehouseManagerPersonalEmailHelp" (change)="onUpdateWarehouseData();"
+                                (keyup)="onUpdateWarehouseData();" required />
+
+                            <small id="warehouseManagerPersonalEmailHelp" class="form-text text-danger"
+                                *ngIf="warehouseManagerPersonalEmail.invalid">
+                                {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS' |
+                                translate }}
+                            </small>
+
+
+                        </div>
+                    </div>
+
+
+                    <!-- phone -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="warehouseManagerPhone" class="mb-1 d-block">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.PHONE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24"
+                                [phoneValidation]="true" [separateDialCode]="true" id="warehouseManagerPhone"
+                                name="warehouseManagerPhone" #warehouseManagerPhone="ngModel"
+                                [(ngModel)]="warehouse_manager__phone" aria-describedby="warehouseManagerPhoneHelp"
+                                (ngModelChange)="formatTelephone('warehouse', 'warehouse_manager__phone', warehouse_manager__phone)"
+                                required>
+                            </ngx-intl-tel-input>
+
+                            <small id="warehouseManagerPhoneHelp" class="form-text text-danger"
+                                *ngIf="warehouseManagerPhone.invalid">
+
+                                <span *ngIf="warehouseManagerPhone.errors.required
+                                        && (warehouseManagerPhone.dirty
+                                        || warehouseManagerPhone.touched)">
+                                    {{ 'VIEWS.SETTINGS.COMPANY_DATA.MESSAGES.PLEASE_ENTER_A_VALID_PHONE_NUMBER' |
+                                    translate }}
+                                </span>
+
+                            </small>
+
+                        </div>
+                    </div>
+
+
+                    <!-- phone 2 -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="form-group">
+
+                            <label for="warehouseManagerPhone2" class="mb-1 d-block">
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.PHONE' | translate }} 2
+                            </label>
+
+                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24"
+                                [phoneValidation]="true" [separateDialCode]="true" id="warehouseManagerPhone2"
+                                name="warehouseManagerPhone2" #warehouseManagerPhone2="ngModel"
+                                [(ngModel)]="warehouse_manager__phone2" aria-describedby="warehouseManagerPhone2Help"
+                                (ngModelChange)="formatTelephone('warehouse', 'warehouse_manager__phone2', warehouse_manager__phone2)">
+                            </ngx-intl-tel-input>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+    <!-- runways -->
+    <div class="tab-pane fade" id="warehouse-runways" role="tabpanel" aria-labelledby="warehouseRunways">
+
+        <div class="row">
+
+
+            <div class="col-12 col-sm-12 col-md-4 col-lg-2" *ngFor="let runway of warehouse.runways; let i = index"
+                [hidden]="runway.runway_name === null
+                        || runway.runway_name === ''
+                        || runway.runway_code === null
+                        || runway.runway_code === ''
+                        || current_warehouse_runway === i">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h5>
+                            {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.RUNWAY' | translate }}
+                            # {{ i + 1 }}
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-12">
+                                <label for="runwayName_{{ i }}" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.RUNWAY_NAME' | translate }}
+                                </label>
+                                {{ runway.runway_name }}
+                            </div>
+
+                            <div class="col-12">
+                                <label for="runwayCode_{{ i }}" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.RUNWAY_CODE' | translate }}
+                                </label>
+                                {{ runway.runway_code }}
+                            </div>
+
+                            <div class="col-12">
+                                <label for="columnsCount_{{ i }}" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COLUMN_COUNT' | translate }}
+                                </label>
+                                {{ runway.columns.length }}
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="card-footer">
+
+                        <button type="button" class="btn btn-primary float-right" id="editWarehouseRunway_{{ i }}"
+                            data-toggle="modal" data-target="#addNewWarehouseRunwayModal"
+                            (click)="editWarehouseRunway(i);">
+                            <i class="fas fa-edit"></i>
+                            {{ 'GENERIC.ACTIONS.EDIT' | translate }}
+                        </button>
+
+                        <button type="button" class="btn btn-danger float-left mr-2" id="removeWarehouseRunway_{{ i }}"
+                            (click)="removeWarehouseRunway('runway', { index_runway: i })">
+                            <i class="fas fa-trash"></i>
+                            {{ 'GENERIC.ACTIONS.DELETE' | translate }}
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- add new runway -->
+            <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+
+                <button type="button" class="btn btn-success" id="addNewWarehouseRunway" data-toggle="modal"
+                    data-target="#addNewWarehouseRunwayModal"
+                    (click)="newWarehouseRunway('runways'); newWarehouseRunwayModeChanger();">
+                    <i class="fas fa-plus"></i>
+                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.ACTIONS.ADD_NEW_RUNWAY' | translate }}
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- runways modal -->
+<div class="modal fade" id="addNewWarehouseRunwayModal" role="dialog" aria-labelledby="addNewWarehouseRunwayModalTitle"
+    data-backdrop="static" data-keyboard="false" aria-hidden="true" tabindex="-1"
+    *ngIf="current_warehouse_runway >= 0 && warehouse.runways[current_warehouse_runway]">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 *ngIf="warehouse_runway_mode === 'new'">{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.NEW_RUNWAY' |
+                    translate }}</h5>
+                <h5 *ngIf="warehouse_runway_mode === 'edit'">{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.RUNWAY' |
+                    translate }} # {{ current_warehouse_runway + 1 }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="closeWarehouseRunwayModalFun();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <form #newWarehouseRunwayForm="ngForm" autocomplete="off">
+
+                <div class="modal-body">
+
+
+
+                    <!-- runway's data -->
+                    <div class="row">
+
+
+                        <!-- runway name -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+
+                                <label for="warehouseRunwayName" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.RUNWAY_NAME' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="warehouseRunwayName" id="warehouseRunwayName"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.RUNWAY_NAME' | translate }}"
+                                    [(ngModel)]="warehouse.runways[current_warehouse_runway].runway_name"
+                                    #warehouseRunwayName="ngModel" aria-describedby="warehouseRunwayNameHelp"
+                                    required />
+
+                                <small id="warehouseRunwayNameHelp" class="form-text text-danger"
+                                    *ngIf="warehouseRunwayName.invalid">
+
+                                    <span
+                                        *ngIf="warehouseRunwayName.errors.required && (warehouseRunwayName.dirty || warehouseRunwayName.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+                        <!-- runway code -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+
+                                <label for="warehouseRunwayCode" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.RUNWAY_CODE' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="warehouseRunwayCode" id="warehouseRunwayCode"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.RUNWAY_CODE' | translate }}"
+                                    [(ngModel)]="warehouse.runways[current_warehouse_runway].runway_code"
+                                    #warehouseRunwayCode="ngModel" aria-describedby="warehouseRunwayCodeHelp"
+                                    required />
+
+                                <small id="warehouseRunwayCodeHelp" class="form-text text-danger"
+                                    *ngIf="warehouseRunwayCode.invalid">
+
+                                    <span
+                                        *ngIf="warehouseRunwayCode.errors.required && (warehouseRunwayCode.dirty || warehouseRunwayCode.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- columns data -->
+                    <div class="row mt-4" *ngIf="warehouseRunwayName.valid
+                                                && warehouseRunwayCode.valid
+                                                && warehouse.runways[current_warehouse_runway].runway_name !== ''
+                                                && warehouse.runways[current_warehouse_runway].runway_name !== null
+                                                && warehouse.runways[current_warehouse_runway].runway_code !== ''
+                                                && warehouse.runways[current_warehouse_runway].runway_code !== null">
+                        <div class="col-12">
+
+
+                            <div class="row mt-3"
+                                *ngFor="let column of warehouse.runways[current_warehouse_runway].columns; let c = index">
+                                <div class="col-12">
+                                    <fieldset class="border rounded p-3">
+                                        <legend class="w-auto">
+                                            {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COLUMN' | translate }}
+                                            #{{ c + 1 }}
+                                        </legend>
+
+
+                                        <!-- column's main data -->
+                                        <div class="row">
+
+
+                                            <!-- column name -->
+                                            <div class="col-12 col-sm-12 col-md-6">
+                                                <div class="form-group">
+
+                                                    <label for="warehouseRunwayColumnName_{{ c }}" class="mb-1">
+                                                        {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COLUMN_NAME' |
+                                                        translate }}
+                                                    </label>
+
+                                                    <input type="text" name="warehouseRunwayColumnName_{{ c }}"
+                                                        id="warehouseRunwayColumnName_{{ c }}" class="form-control"
+                                                        placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COLUMN_NAME' | translate }}"
+                                                        [(ngModel)]="column.column_name" required />
+
+                                                </div>
+                                            </div>
+
+
+                                            <!-- column code -->
+                                            <div class="col-12 col-sm-12 col-md-6">
+                                                <div class="form-group">
+
+                                                    <label for="warehouseRunwayColumnCode_{{ c }}" class="mb-1">
+                                                        {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COLUMN_CODE' |
+                                                        translate }}
+                                                    </label>
+
+                                                    <input type="text" name="warehouseRunwayColumnCode_{{ c }}"
+                                                        id="warehouseRunwayColumnCode_{{ c }}" class="form-control"
+                                                        placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COLUMN_CODE' | translate }}"
+                                                        [(ngModel)]="column.column_code" required />
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+
+
+                                        <!-- shelf per column -->
+                                        <div class="row mt-4" *ngIf="column.column_code !== ''
+                                                                    && column.column_code !== null
+                                                                    && column.column_name !== ''
+                                                                    && column.column_name !== null">
+                                            <div class="col-12">
+                                                <h6>{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.COLUMN_SHELF' |
+                                                    translate }}</h6>
+
+
+                                                <div class="row" *ngFor="let shelf of column.shelf; let s = index">
+                                                    <div
+                                                        [ngClass]="{ 'col-12': column.shelf.length <= 1, 'col-10': column.shelf.length > 1 }">
+                                                        <div class="form-group">
+
+                                                            <label for="warehouseRunwayColumnShelfCode_{{ c }}{{ s }}"
+                                                                class="mb-1">
+                                                                {{
+                                                                'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.SHELF_CODE' |
+                                                                translate }}
+                                                            </label>
+
+                                                            <input type="text"
+                                                                name="warehouseRunwayColumnShelfCode_{{ c }}{{ s }}"
+                                                                id="warehouseRunwayColumnShelfCode_{{ c }}{{ s }}"
+                                                                class="form-control"
+                                                                placeholder="{{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.SHELF_CODE' | translate }}"
+                                                                [(ngModel)]="shelf.shelf_code" required />
+
+                                                        </div>
+                                                    </div>
+
+
+                                                    <!-- delete btn -->
+                                                    <div class="col-2" *ngIf="column.shelf.length > 1">
+                                                        <div class="form-group">
+                                                            <label for="deleteWarehouseRunwayColumnShelf_{{ s }}"
+                                                                class="mb-1" style="visibility: hidden">s</label>
+
+                                                            <button type="button" class="btn btn-danger w-100 d-block"
+                                                                id="deleteWarehouseRunwayColumnShelf_{{ s }}"
+                                                                (click)="removeWarehouseRunway('shelf', { index_runway: current_warehouse_runway, index_column: c, index_shelf: s })">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <!-- actions -->
+                                        <div class="row mt-2">
+
+
+                                            <!-- delete current column -->
+                                            <div class="col-12 col-sm-12 col-md-6">
+
+                                                <button type="button" class="btn btn-danger w-100"
+                                                    id="deleteCurrentColumn_{{ c }}"
+                                                    (click)="removeWarehouseRunway('column', { index_runway: current_warehouse_runway, index_column: c })"
+                                                    *ngIf="warehouse.runways[current_warehouse_runway].columns.length > 1">
+                                                    <i class="fas fa-trash"></i>
+                                                    {{ 'GENERIC.ACTIONS.DELETE' | translate }}
+                                                </button>
+
+                                            </div>
+
+
+                                            <!-- add new shelf -->
+                                            <div class="col-12 col-sm-12 col-md-6">
+
+                                                <button type="button" class="btn btn-success w-100"
+                                                    id="addNewShelfToCurrentColumn_{{ c }}"
+                                                    (click)="newWarehouseRunway('shelf', { index_runways: current_warehouse_runway, index_columns: c })"
+                                                    [disabled]="(column.column_code === ''
+                                                                && column.column_code === null
+                                                                && column.column_name === ''
+                                                                && column.column_name === null)
+                                                                || (column.shelf[column.shelf.length - 1].shelf_code === ''
+                                                                || column.shelf[column.shelf.length - 1].shelf_code === null)">
+                                                    <i class="fas fa-plus"></i>
+                                                    {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.ACTIONS.ADD_NEW_SHELF'
+                                                    | translate }}
+                                                </button>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+                        <div class="col-12">
+
+                            <button type="button" class="btn btn-success d-block mt-4 float-right"
+                                id="newWarehouseRunwayColumnActionBtn"
+                                *ngIf="warehouse.runways[current_warehouse_runway].columns[warehouse.runways[current_warehouse_runway].columns.length - 1].column_name !== ''
+                                        && warehouse.runways[current_warehouse_runway].columns[warehouse.runways[current_warehouse_runway].columns.length - 1].column_name !== null
+                                        && warehouse.runways[current_warehouse_runway].columns[warehouse.runways[current_warehouse_runway].columns.length - 1].column_code !== ''
+                                        && warehouse.runways[current_warehouse_runway].columns[warehouse.runways[current_warehouse_runway].columns.length - 1].column_code !== null
+                                        && warehouse.runways[current_warehouse_runway].columns[warehouse.runways[current_warehouse_runway].columns.length - 1].shelf.length >= 1"
+                                (click)="newWarehouseRunway('columns', { index_runways: current_warehouse_runway })">
+                                <i class="fas fa-plus"></i>
+                                {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.ACTIONS.ADD_NEW_COLUMN' | translate }}
+                            </button>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- action buttons -->
+                <div class="modal-footer" *ngIf="checkRequiredRunwayFields();">
+
+                    <button type="button" class="btn btn-secondary" id="closeRunwayModalActionBtn" data-dismiss="modal"
+                        aria-label="Close" (click)="closeWarehouseRunwayModalFun();">
+
+                        <span *ngIf="warehouse_runway_mode === 'new'">
+                            <i class="fas fa-eraser"></i>
+                            {{ 'GENERIC.ACTIONS.CLEAR' | translate }}
+                        </span>
+
+                        <span *ngIf="warehouse_runway_mode === 'edit'">
+                            <i class="fas fa-times"></i>
+                            {{ 'GENERIC.ACTIONS.CLOSE' | translate }}
+                        </span>
+
+                    </button>
+
+                    <button type="button" class="btn btn-primary" id="saveNewRunwayActionBtn"
+                        (click)="saveWarehouseRunwayModalFun();" data-dismiss="modal" aria-label="Close">
+
+                        <span *ngIf="warehouse_runway_mode === 'new'">
+                            <i class="fas fa-save"></i>
+                            {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.ACTIONS.SAVE_NEW_RUNWAY' | translate }}
+                        </span>
+
+                        <span *ngIf="warehouse_runway_mode === 'edit'">
+                            <i class="fas fa-sync-alt"></i>
+                            {{ 'VIEWS.SETTINGS.WAREHOUSES.WAREHOUSE_PAGE.ACTIONS.UPDATE_RUNWAY' | translate }}
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

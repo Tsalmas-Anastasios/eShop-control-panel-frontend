@@ -1,0 +1,28 @@
+<!-- proof of order -->
+<app-order-document-proof-of-order class="printable-document" [order]="order"
+    *ngIf="documents.includes('proof_of_order')">
+</app-order-document-proof-of-order>
+
+
+
+<!-- order invoice / receipt -->
+<app-order-document-receipt-invoice class="printable-document" [order]="order"
+    *ngIf="documents.includes('invoice_receipt')">
+</app-order-document-receipt-invoice>
+
+
+
+
+
+<!-- order dispatch form -->
+<app-order-document-dispatch-form class="printable-document" [order]="order"
+    *ngIf="documents.includes('dispatch_form')">
+</app-order-document-dispatch-form>
+
+
+
+
+<!-- order tracking number -->
+<app-order-document-tracking-number class="printable-document" [order]="order"
+    *ngIf="documents.includes('tracking_number')">
+</app-order-document-tracking-number>

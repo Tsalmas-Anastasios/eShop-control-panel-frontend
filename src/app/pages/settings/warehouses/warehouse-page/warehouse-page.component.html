@@ -1,0 +1,92 @@
+<nav aria-label="breadcrumb d-flex">
+
+    <h3 class="float-left">
+        <small class="text-muted">{{ 'VIEWS.SETTINGS.WAREHOUSES.SINGLE_TITLE' | translate }}</small>
+        {{ mode === 'new' ? [ 'GENERIC.LABELS.NEW' | translate ] : warehouse?.distinctive_title || [
+        'GENERIC.LABELS.N_A' |
+        translate ] }}
+    </h3>
+
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/settings/company']">
+                {{ 'VIEWS.SETTINGS.WAREHOUSES.SETTINGS' | translate }}
+            </a>
+        </li>
+
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/settings/connected-users']">
+                {{ 'VIEWS.SETTINGS.WAREHOUSES.TITLE' | translate }}
+            </a>
+        </li>
+
+        <li class="breadcrumb-item active">
+            {{ mode === 'new' ? [ 'GENERIC.LABELS.NEW' | translate ] : warehouse?.distinctive_title || [
+            'GENERIC.LABELS.N_A' |
+            translate ] }}
+        </li>
+    </ol>
+</nav>
+
+
+
+
+
+<form #warehousesAppUpdateForm="ngForm" autocomplete="off" *ngIf="warehouse">
+
+
+    <app-settings-warehouse-create *ngIf="mode === 'new'" [warehouse]="warehouse" (updateWarehouseData)="onUpdateWarehouseData($event)">
+    </app-settings-warehouse-create>
+
+
+    <!-- edit/preview a warehouse -->
+    <app-settings-warehouse-details [warehouse]="warehouse" [mode]="mode" (addNewWarehouseRunwayData)="saveNewWarehouseRunway($event)"
+        (removeWarehouseRunwayData)="removeRunway($event)">
+    </app-settings-warehouse-details>
+
+
+
+
+
+    <!-- action buttons -->
+    <div class="row mt-4">
+
+        <div class="col-12 text-right">
+
+
+            <button type="button" class="btn btn-primary" [ladda]="isSaving" [disabled]="warehousesAppUpdateForm.invalid && !checkRequiredData()"
+                (click)="saveNewWarehouse();" *ngIf="mode === 'new'">
+                <i class="fas fa-save"></i>
+                {{ 'GENERIC.ACTIONS.SAVE' | translate }}
+            </button>
+
+
+
+
+            <div class="btn-group dropup" *ngIf="(mode === 'preview' || mode === 'edit')">
+
+
+                <button type="button" class="btn btn-primary" *ngIf="mode === 'preview' && user_privileges?.warehouses_edit"
+                    (click)="toggleModeProcessingWarehouse('edit')">
+                    <i class="fas fa-edit"></i>
+                    {{ 'GENERIC.ACTIONS.EDIT' | translate }}
+                </button>
+
+
+                <button type="button" class="btn btn-primary" *ngIf="mode === 'edit'" [disabled]="warehousesAppUpdateForm.invalid && !checkRequiredData()"
+                    [ladda]="isSaving" (click)="updateWarehouseData();">
+                    <i class="fas fa-sync-alt"></i>
+                    {{ 'GENERIC.ACTIONS.UPDATE' | translate }}
+                </button>
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</form>

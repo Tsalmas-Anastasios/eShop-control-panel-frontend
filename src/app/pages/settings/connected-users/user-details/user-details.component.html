@@ -1,0 +1,118 @@
+<nav aria-label="breadcrumb d-flex">
+
+    <h3 class="float-left">
+        <small class="text-muted">{{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.USER' | translate }}</small>
+        {{ mode === 'new' ? [ 'GENERIC.LABELS.NEW' | translate ] : user_full_name || [ 'GENERIC.LABELS.N_A' |
+        translate ] }}
+    </h3>
+
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/settings/company']">
+                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.SETTINGS' | translate }}
+            </a>
+        </li>
+
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/settings/connected-users']">
+                {{ 'VIEWS.SETTINGS.CONNECTED_USERS.USER_PAGE.CONNECTED_USERS' | translate }}
+            </a>
+        </li>
+
+        <li class="breadcrumb-item active">
+            {{ mode === 'new' ? [ 'GENERIC.LABELS.NEW' | translate ] : user_full_name || [ 'GENERIC.LABELS.N_A' |
+            translate ] }}
+        </li>
+    </ol>
+</nav>
+
+
+
+
+
+
+
+
+
+<form #connectedUserDataHandlingForm="ngForm" autocomplete="off">
+
+    <div class="row mt-4">
+        <div class="col-12">
+
+
+            <app-connected-user-creation *ngIf="mode === 'new'" [user]="user" [user_privileges]="user_privileges"
+                (updateUserData)="updateUserData($event)" (updateUserPrivileges)="onUpdateUserPrivileges($event)">
+            </app-connected-user-creation>
+
+
+            <app-connected-user-details *ngIf="mode !== 'new'" [user]="user" [user_privileges]="user_privileges"
+                [profile_picture]="profile_picture" [mode]="mode" [user_id]="user_id"
+                (updateUserData)="updateUserData($event)" (changePassword)="onUserPasswordChange($event)"
+                (updateUserPrivileges)="onUpdateUserPrivileges($event)"
+                (userProfileImageChange)="userProfilePictureChange($event)">
+            </app-connected-user-details>
+
+
+        </div>
+    </div>
+
+
+
+    <div class="row mt-4">
+
+        <div class="col-12">
+
+
+            <button type="button" class="btn btn-primary" id="submitNewUser"
+                [disabled]="connectedUserDataHandlingForm.invalid" [ladda]="isSubmitting" *ngIf="mode === 'new'"
+                (click)="saveNewUser();">
+                <i class="fas fa-save"></i>
+                {{ 'GENERIC.ACTIONS.SAVE' | translate }}
+            </button>
+
+
+
+            <button type="button" class="btn btn-primary" id="updateExistingUser"
+                [disabled]="connectedUserDataHandlingForm.invalid" [ladda]="isSubmitting" *ngIf="mode === 'edit'"
+                (click)="saveUpdateUserData();">
+                <i class="fas fa-sync-alt"></i>
+                {{ 'GENERIC.ACTIONS.UPDATE' | translate }}
+            </button>
+
+
+            <button type="button" class="btn btn-primary" id="goToUpdateView"
+                *ngIf="mode === 'preview' && existing_user_privileges?.users_edit" (click)="toggleEditView();">
+                <i class="fas fa-edit"></i>
+                {{ 'GENERIC.ACTIONS.EDIT' | translate }}
+            </button>
+
+
+
+            <!-- resend activation email -->
+            <button type="button" class="btn btn-secondary-primary ml-3" id="goToUpdateView"
+                *ngIf="(mode === 'preview' || mode === 'edit') && !user?.activated" [ladda]="isSending"
+                (click)="resendActivationEmail();">
+                <i class="fas fa-paper-plane"></i>
+                {{ 'GENERIC.ACTIONS.RESEND_ACTIVATION_EMAIL' | translate }}
+            </button>
+
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+<!-- spinner -->
+<ngx-spinner size="medium" type="square-jelly-box" [fullScreen]="true" color="#E6AF00" bdColor="rgba(0, 0, 0, 0.9)">
+    <p style="color: #fff"> {{ 'GENERIC.LABELS.LOADING' | translate }}... </p>
+</ngx-spinner>

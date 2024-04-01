@@ -1,0 +1,35 @@
+.toast-message {
+    color: #000 !important;
+}
+
+.toast-title {
+    color: #000 !important;
+}
+
+
+
+div#toast-container {
+
+    .ngx-toastr.toast-success {
+        background-color: #a5d9b1 !important;
+        border-color: #81ca92 !important;
+    }
+
+
+    .ngx-toastr.toast-error {
+        background-color: #f0a8ae !important;
+        border-color: #ec939c !important;
+    }
+
+
+    .ngx-toastr.toast-warning {
+        background-color: #ffe180 !important;
+        border-color: #ffd24d !important;
+    }
+
+
+    .ngx-toastr.toast-info {
+        background-color: #b1dfe7 !important;
+        border-color: #9dd8e1 !important;
+    }
+}

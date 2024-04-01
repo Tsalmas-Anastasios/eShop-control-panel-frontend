@@ -1,0 +1,943 @@
+<div class="row">
+
+
+    <div class="col-12 col-sm-12 col-md-7 col-lg-8">
+
+        <div class="card" *ngIf="user_info_display_mode === 'show'">
+
+            <div class="card-body">
+
+
+                <!-- edit action -->
+                <div class="row">
+                    <div class="col-12 text-right">
+
+                        <a class="text-muted edit-action-link" (click)="toggleUserInformationDisplayMode('edit')">
+                            <i class="fas fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <!-- profile data -->
+                <div class="row">
+
+                    <!-- first name -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 text-wrapped">
+                        <div class="form-group">
+                            <label for="profileFirstName" class="mb-1">
+                                {{ 'GENERIC.LABELS.FIRST_NAME' | translate }}
+                            </label>
+                            <p id="profileFirstName">
+                                {{ user.first_name }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- last name -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 text-wrapped">
+                        <div class="form-group">
+                            <label for="profileLastName" class="mb-1">
+                                {{ 'GENERIC.LABELS.LAST_NAME' | translate }}
+                            </label>
+                            <p id="profileLastName">
+                                {{ user.last_name }}
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="row">
+
+                    <!-- email -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="profileEmail" class="mb-1">
+                                {{ 'GENERIC.LABELS.EMAIL' | translate }}
+                            </label>
+                            <p id="profileEmail">
+                                {{ user.email }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- phone number -->
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="profilePhone" class="mb-1">
+                                {{ 'GENERIC.LABELS.PHONE_NUMBER' | translate }}
+                            </label>
+                            <p id="profilePhone">
+                                {{ user.phone }}
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="row">
+
+                    <!-- username -->
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="profileUsername" class="mb-1">
+                                {{ 'GENERIC.LABELS.USERNAME' | translate }}
+                            </label>
+                            <p id="profileUsername">
+                                {{ user.username }}
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="row mt-3">
+
+                    <!-- account type -->
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="profileAccountType" class="mb-1">
+                                {{ 'GENERIC.LABELS.ACCOUNT_TYPE' | translate }}
+                            </label>
+                            <p id="profileAccountType">
+                                <span *ngIf="user.is_account">
+                                    {{ 'GENERIC.LABELS.COMPANY_ADMINISTRATOR' | translate }}
+                                </span>
+                                <span *ngIf="!user.is_account">
+                                    {{ 'GENERIC.LABELS.SIMPLE_USER' | translate }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <!-- using bizyhive cloud -->
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <ng-container [ngTemplateOutlet]="usingBizyhiveCloudStatus"></ng-container>
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+
+
+        <div class="card" *ngIf="user_info_display_mode === 'edit'">
+
+
+            <div class="card-body">
+
+
+                <!-- preview action -->
+                <div class="row">
+                    <div class="col-12 text-right">
+
+                        <a class="text-muted edit-action-link" (click)="toggleUserInformationDisplayMode('show')">
+                            <i class="fas fa-eye"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <!-- user data -->
+                <form #userDataEditor="ngForm">
+
+
+                    <div class="row">
+
+                        <!-- first name -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                            <label for="firstNameEditable" class="mb-1">
+                                {{ 'GENERIC.LABELS.FIRST_NAME' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="firstNameEditable" id="firstNameEditable" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.FIRST_NAME' | translate }}" [(ngModel)]="user_editable_instance.first_name"
+                                #firstNameEditable="ngModel" aria-describedby="firstNameEditableHelp" required />
+
+                            <small id="firstNameEditableHelp" class="form-text text-danger" *ngIf="firstNameEditable.invalid">
+
+                                <span *ngIf="firstNameEditable.errors.required
+                                            && (firstNameEditable.dirty
+                                            || firstNameEditable.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- last name -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+                            <label for="firstNameEditable" class="mb-1">
+                                {{ 'GENERIC.LABELS.LAST_NAME' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'">
+                                </app-required-field>
+                            </label>
+
+                            <input type="text" name="lastNameEditable" id="lastNameEditable" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.LAST_NAME' | translate }}" [(ngModel)]="user_editable_instance.last_name"
+                                #lastNameEditable="ngModel" aria-describedby="lastNameEditableHelp" required />
+
+                            <small id="lastNameEditableHelp" class="form-text text-danger" *ngIf="lastNameEditable.invalid">
+
+                                <span *ngIf="lastNameEditable.errors.required
+                                            && (lastNameEditable.dirty
+                                            || lastNameEditable.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                        <!-- email -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+
+                                <label for="emailEditable" class="mb-1">
+                                    {{ 'GENERIC.LABELS.EMAIL' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="emailEditable" id="emailEditable" class="form-control"
+                                    placeholder="{{ 'GENERIC.LABELS.EMAIL' | translate }}" [(ngModel)]="user_editable_instance.email" #emailEditable="ngModel"
+                                    aria-describedby="emailEditableHelp" required />
+
+                                <small id="emailEditableHelp" class="form-text text-danger" *ngIf="emailEditable.invalid">
+
+                                    <span *ngIf="emailEditable.errors.required
+                                            && (emailEditable.dirty
+                                            || emailEditable.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+                        <!-- phone -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+
+                                <label for="phoneEditable" class="mb-1 d-block">
+                                    {{ 'GENERIC.LABELS.PHONE_NUMBER' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
+                                    [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="true"
+                                    [selectedCountryISO]="selectedCountryISO" [maxLength]="24" [phoneValidation]="true" [separateDialCode]="true"
+                                    id="phoneEditable" name="phoneEditable" #phoneEditable="ngModel" [(ngModel)]="profile_phone"
+                                    aria-describedby="phoneEditableHelp" (ngModelChange)="formatProfileTelephone()" required></ngx-intl-tel-input>
+
+                                <small id="phoneEditableHelp" class="form-text text-danger" *ngIf="phoneEditable.invalid">
+
+                                    <span *ngIf="phoneEditable.errors.required
+                                            && (phoneEditable.dirty
+                                            || phoneEditable.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row">
+
+
+                        <!-- username -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+
+                                <label for="usernameEditable" class="mb-1 d-block">
+                                    {{ 'GENERIC.LABELS.USERNAME' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="usernameEditable" id="usernameEditable" class="form-control"
+                                    placeholder="{{ 'GENERIC.LABELS.USERNAME' | translate }}" [(ngModel)]="user_editable_instance.username"
+                                    #usernameEditable="ngModel" aria-describedby="usernameEditableHelp" required />
+
+                                <small id="usernameEditableHelp" class="form-text text-danger" *ngIf="usernameEditable.invalid">
+
+                                    <span *ngIf="usernameEditable.errors.required
+                                            && (usernameEditable.dirty
+                                            || usernameEditable.touched)">
+                                        <app-required-field [type]="'input_invalid'">
+                                        </app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                        <!-- account type -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="profileAccountType" class="mb-1">
+                                    {{ 'GENERIC.LABELS.ACCOUNT_TYPE' | translate }}
+                                </label>
+                                <p id="profileAccountType">
+                                    <span *ngIf="user.is_account">
+                                        {{ 'GENERIC.LABELS.COMPANY_ADMINISTRATOR' | translate }}
+                                    </span>
+                                    <span *ngIf="!user.is_account">
+                                        {{ 'GENERIC.LABELS.SIMPLE_USER' | translate }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <!-- using bizyhive cloud -->
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <ng-container [ngTemplateOutlet]="usingBizyhiveCloudStatus"></ng-container>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                        <div class="col-12 text-right">
+
+                            <button type="button" class="btn btn-primary" id="submitNewUserData" [ladda]="isUpdatingUserData"
+                                [disabled]="userDataEditor.invalid" (click)="updateUserData();">
+                                <i class="fas fa-sync-alt"></i>
+                                {{ 'GENERIC.ACTIONS.UPDATE' | translate }}
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+
+
+        <nb-accordion class="mt-4">
+            <nb-accordion-item>
+                <nb-accordion-item-header>
+                    <h5>
+                        <i class="fas fa-shield-alt"></i>
+                        {{ 'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY' | translate }}
+                    </h5>
+                </nb-accordion-item-header>
+                <nb-accordion-item-body>
+
+
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <h6>{{ 'VIEWS.SETTINGS.PROFILE.CHANGE_PASSWORD' | translate }}</h6>
+
+                            <form #changePasswordForm="ngForm" autocomplete="off">
+
+                                <div class="row">
+
+                                    <!-- old password input-->
+                                    <div class="col-12 col-sm-12 col-md-4">
+                                        <div class="form-group">
+
+                                            <label for="oldPasswordInput" class="mb-1">
+                                                {{ 'VIEWS.SETTINGS.PROFILE.OLD_PASSWORD' | translate }}
+                                                <app-required-field [type]="'asterisk_tooltip'">
+                                                </app-required-field>
+                                            </label>
+
+                                            <input type="password" name="oldPasswordInput" id="oldPasswordInput" class="form-control"
+                                                placeholder="{{ 'VIEWS.SETTINGS.PROFILE.OLD_PASSWORD' | translate }}"
+                                                [(ngModel)]="change_password_form.old_password" #oldPasswordInput="ngModel"
+                                                aria-describedby="oldPasswordInputHelp" required />
+
+                                            <small id="oldPasswordInputHelp" class="form-text text-danger" *ngIf="oldPasswordInput.invalid">
+
+                                                <span *ngIf="oldPasswordInput.errors.required
+                                                            && (oldPasswordInput.dirty
+                                                            || oldPasswordInput.touched)">
+                                                    <app-required-field [type]="'input_invalid'">
+                                                    </app-required-field>
+                                                </span>
+
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- new password input -->
+                                    <div class="col-12 col-sm-12 col-md-4">
+
+                                        <label for="newPasswordInput" class="mb-1">
+                                            {{ 'VIEWS.SETTINGS.PROFILE.NEW_PASSWORD' | translate }}
+                                            <app-required-field [type]="'asterisk_tooltip'">
+                                            </app-required-field>
+                                        </label>
+
+                                        <input type="password" name="newPasswordInput" id="newPasswordInput" class="form-control"
+                                            placeholder="{{ 'VIEWS.SETTINGS.PROFILE.NEW_PASSWORD' | translate }}"
+                                            [(ngModel)]="change_password_form.new_password" #newPasswordInput="ngModel" aria-describedby="newPasswordInputHelp"
+                                            required />
+
+                                        <small id="newPasswordInputHelp" class="form-text text-danger" *ngIf="newPasswordInput.invalid">
+
+                                            <span *ngIf="newPasswordInput.errors.required
+                                                            && (newPasswordInput.dirty
+                                                            || newPasswordInput.touched)">
+                                                <app-required-field [type]="'input_invalid'">
+                                                </app-required-field>
+                                            </span>
+
+                                        </small>
+
+                                    </div>
+
+
+
+                                    <!-- error message -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 text-danger d-flex align-items-center"
+                                        *ngIf="change_password_form_global_error">
+                                        <span *ngIf="change_password_form_global_error === 'old_password_wrong'">
+                                            {{ 'VIEWS.SETTINGS.PROFILE.OLD_PASSWORD_IS_WRONG' | translate }}
+                                        </span>
+                                        <span *ngIf="change_password_form_global_error === 'same_passwords'">
+                                            {{ 'VIEWS.SETTINGS.PROFILE.THE_NEW_PASSWORD_CANNOT_BE_EQUAL_WITH_OLD' |
+                                            translate }}
+                                        </span>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+
+                                    <!-- submit btn -->
+                                    <div class="col-12 col-sm-12 col-md-4">
+
+                                        <button type="button" class="btn btn-primary" id="submitChangePassword" [disabled]="changePasswordForm.invalid"
+                                            (click)="changeAccountPassword(changePasswordForm);" [ladda]="isPasswordChanging">
+                                            {{ 'GENERIC.ACTIONS.UPDATE' | translate }}
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                            </form>
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <!-- 2FA authentication -->
+                    <hr class="mt-5 mb-5" />
+                    <div class="row">
+
+
+                        <div class="col-12">
+
+                            <h5>
+                                {{ 'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.TWO_FACTOR_AUTHENTICATION' |
+                                translate }}
+                            </h5>
+
+
+                            <div class="row mt-4">
+
+
+                                <!-- via email -->
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+
+                                    <h6>
+                                        {{ 'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.VIA_EMAIL' | translate }}
+                                    </h6>
+
+
+
+                                    <!-- enable service -->
+                                    <div class="row mt-4" *ngIf="!user?.authentication_2fa__email">
+
+                                        <div class="col-12">
+                                            <p>
+                                                <i class="fas fa-info-circle"></i>
+                                                {{
+                                                'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.HERE_YOU_CAN_ACTIVATE_2FA_EMAIL'
+                                                | translate }}
+                                            </p>
+                                        </div>
+
+
+                                        <div class="col-12" *ngIf="two_step_verification === 'none'">
+
+                                            <div class="row mt-3">
+
+                                                <div class="col-12">
+
+                                                    <button type="button" class="btn btn-success" id="enableTwoFactorAuthenticationEmail"
+                                                        (click)="get2FactoryAuthenticationEmailCode();" [ladda]="two_step_verification_isSubmitting">
+                                                        {{ 'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.ENABLE_2FA'
+                                                        | translate }}
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <div class="col-12" *ngIf="two_step_verification === 'email_processing'">
+                                            <div class="row">
+
+                                                <div class="col-12">
+                                                    <div class="form-group">
+
+                                                        <label for="authenticationCodeEmail" class="mb-1">
+                                                            {{
+                                                            'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.ENTER_EMAIL_CODE'
+                                                            | translate }}
+                                                        </label>
+
+                                                        <input type="text" name="authenticationCodeEmail" id="authenticationCodeEmail" class="form-control"
+                                                            #authenticationCodeEmail="ngModel" [(ngModel)]="authentication_code" />
+
+
+                                                        <small class="form-text text-danger" id="authenticationCodeEmailAriaHelp"></small>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- submit button -->
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-success" id="authenticationEmailCodeSubmit"
+                                                        [ladda]="two_step_verification_isSubmitting"
+                                                        [disabled]="authentication_code === '' || authentication_code === null"
+                                                        (click)="submitAuthenticationCodeEmail();">
+                                                        {{ 'GENERIC.ACTIONS.SUBMIT' | translate }}
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- disable service -->
+                                    <div class="row mt-4" *ngIf="user?.authentication_2fa__email">
+                                        <div class="col-12">
+
+                                            <div class="row">
+                                                <div class="col-12 text-success">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    {{
+                                                    'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.TWO_FACTOR_EMAIL_ENABLED'
+                                                    | translate }}
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row mt-3" *ngIf="two_step_verification === 'none'">
+                                                <div class="col-12">
+
+                                                    <button type="button" class="btn btn-danger" id="disableTwoStepVerificationViaEmail"
+                                                        [ladda]="two_step_verification_isSubmitting" (click)="get2FactoryAuthenticationEmailCode();">
+                                                        {{
+                                                        'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.DISABLE_THIS_SERVICE'
+                                                        | translate }}
+                                                    </button>
+
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <div class="row mt-3" *ngIf="two_step_verification === 'email_processing'">
+                                                <div class="col-12">
+                                                    <div class="row">
+
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+
+                                                                <label for="authenticationCodeEmail" class="mb-1">
+                                                                    {{
+                                                                    'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.ENTER_EMAIL_CODE'
+                                                                    | translate }}
+                                                                </label>
+
+                                                                <input type="text" name="authenticationCodeEmail" id="authenticationCodeEmail"
+                                                                    class="form-control" #authenticationCodeEmail="ngModel" [(ngModel)]="authentication_code" />
+
+
+                                                                <small class="form-text text-danger" id="authenticationCodeEmailAriaHelp"></small>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- submit button -->
+                                                        <div class="col-12">
+                                                            <button type="button" class="btn btn-success" id="authenticationEmailCodeSubmit"
+                                                                [ladda]="two_step_verification_isSubmitting"
+                                                                [disabled]="authentication_code === '' || authentication_code === null"
+                                                                (click)="disableAuthenticationViaEmail();">
+                                                                {{ 'GENERIC.ACTIONS.SUBMIT' | translate }}
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- via authenticator app -->
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+
+                                    <h6>
+                                        {{ 'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.VIA_AUTHENTICATOR_APP' |
+                                        translate }}
+                                    </h6>
+
+
+                                    <!-- enable service -->
+                                    <div class="row mt-4" *ngIf="!user?.authentication_2fa__app">
+
+                                        <div class="col-12">
+                                            <p>
+                                                <i class="fas fa-info-circle"></i>
+                                                {{
+                                                'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.HERE_YOU_CAN_ACTIVATE_2FA_APP'
+                                                | translate }}
+                                            </p>
+                                        </div>
+
+
+
+                                        <div class="col-12" *ngIf="two_step_verification_app === 'none'">
+
+                                            <div class="row mt-3">
+
+                                                <div class="col-12">
+
+                                                    <button type="button" class="btn btn-success" id="enableTwoFactorAuthenticationApp"
+                                                        [ladda]="two_step_verification_app_isSubmitting" (click)="enableAuthenticationViaApp();">
+                                                        {{ 'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.ENABLE_2FA'
+                                                        | translate }}
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+
+
+
+                                        <div class="col-12" *ngIf="two_step_verification_app === 'processing'">
+
+                                            <hr class="mt-4 mb-4" />
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <strong>
+                                                        {{
+                                                        'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.USE_APPLICATION_TO_GET_CODE'
+                                                        | translate }}
+                                                    </strong>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row mt-3">
+                                                <div class="col-12"
+                                                    [innerHTML]="'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.HIGHLY_RECOMMENDED_AUTHENTICATOR_APPS' | translate">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-12">
+                                                    {{ 'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.SCAN_IMAGE' |
+                                                    translate }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-4 mb-4">
+                                                <div class="col-12">
+                                                    <strong>
+                                                        {{
+                                                        'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.AUTHENTICATOR_TEXT_CODE'
+                                                        | translate }}
+                                                    </strong>
+                                                </div>
+                                                <div class="col-12">
+                                                    {{ two_step_verification_qr_data.code }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <ngx-kjua [text]="two_step_verification_qr_data.otpauth_url" [renderAsync]="false" [render]="'image'"
+                                                        [crisp]="true" [minVersion]="1" [ecLevel]="'H'" [size]="160" [ratio]="undefined" [fill]="'#fff'"
+                                                        [back]="'transparent'" [rounded]="100" [quiet]="0" [mode]="'plain'">
+                                                    </ngx-kjua>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row mt-4">
+                                                <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                                                    <div class="form-group">
+
+                                                        <input class="form-control" id="sixDigitCode" name="sixDigitCode" type="text" placeholder="XXXXXX"
+                                                            #title="ngModel" [(ngModel)]="two_step_verification_6digit" aria-describedby="fieldTitleHelp"
+                                                            required (change)="validate6DigitCodeActivateAuthenticationAppService()"
+                                                            (keyup)="validate6DigitCodeActivateAuthenticationAppService()" />
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-2 col-sm-6 col-lg-9">
+                                                    <i class="fas fa-sync-alt spinner-icon-circle mt-2" *ngIf="two_step_verification_app_isSubmitting"></i>
+                                                </div>
+                                            </div>
+
+                                            <!-- error message -->
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label class="mb-1" id="authenticationAppError"></label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <!-- disable service -->
+                                    <div class="row mt-4" *ngIf="user?.authentication_2fa__app">
+
+                                        <div class="col-12">
+
+                                            <div class="row">
+                                                <div class="col-12 text-success">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    {{
+                                                    'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.TWO_FACTOR_APP_ENABLED'
+                                                    | translate }}
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row mt-3" *ngIf="two_step_verification === 'none'">
+
+                                                <div class="col-12">
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            {{
+                                                            'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.ENTER_CODE_TO_DISABLE_SERVICE_2FA_APP'
+                                                            | translate }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                                                            <div class="form-group">
+
+                                                                <input class="form-control" id="sixDigitCode" name="sixDigitCode" type="text"
+                                                                    placeholder="XXXXXX" #title="ngModel" [(ngModel)]="two_step_verification_6digit"
+                                                                    aria-describedby="fieldTitleHelp" required />
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- error message -->
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label class="mb-1" id="authenticationAppError"></label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div class="col-12">
+
+                                                    <button type="button" class="btn btn-danger" id="disableTwoStepVerificationViaEmail"
+                                                        [ladda]="two_step_verification_app_isSubmitting" (click)="disableTwoFactorAuthenticationViaApp()"
+                                                        [disabled]="two_step_verification_6digit?.length !== 6">
+                                                        {{
+                                                        'VIEWS.SETTINGS.PROFILE.ACCOUNT_SECURITY_SECTION.DISABLE_THIS_SERVICE'
+                                                        | translate }}
+                                                    </button>
+
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </nb-accordion-item-body>
+            </nb-accordion-item>
+        </nb-accordion>
+
+    </div>
+
+
+
+    <div class="col-12 col-sm-12 col-md-5 col-lg-4">
+
+        <div class="card sticky-top" style="top: 110px;">
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12 profile-pic-container">
+
+                        <div class="profile-pic">
+                            <label class="-label" for="file">
+                                <i class="fas fa-camera"></i>&nbsp;
+                                <span style="padding-top: 5px;" *ngIf="user?.profile_picture_url">
+                                    {{ 'VIEWS.SETTINGS.PROFILE.CHANGE_PROFILE_PICTURE' | translate }}
+                                </span>
+                                <span style="padding-top: 5px;" *ngIf="!user?.profile_picture_url">
+                                    {{ 'VIEWS.SETTINGS.PROFILE.UPLOAD_PROFILE_PICTURE' | translate }}
+                                </span>
+                            </label>
+                            <input type="file" id="file" name="userProfilePictureUploadInput" accept="image/*" hidden="true"
+                                (change)="onUserProfileImageChange($event);" />
+                            <img [src]=" user?.profile_picture_url || '../../../../assets/images/account/user.png'" id="uploadProfilePicture"
+                                onerror="this.src='../../../../assets/images/account/user.png';" alt="" />
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- using bizyhive cloud -->
+<ng-template #usingBizyhiveCloudStatus>
+
+    <app-using-bizyhive-cloud-collapse [using_bizyhive_cloud]="user?.using_bizyhive_cloud">
+    </app-using-bizyhive-cloud-collapse>
+
+</ng-template>

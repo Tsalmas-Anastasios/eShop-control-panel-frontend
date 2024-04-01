@@ -1,0 +1,130 @@
+<div class="full-height d-flex align-items-center justify-content-center">
+
+    <img src="../../../../../assets/logo/logo.png" alt="e-Commerce Bizyhive Control Panel Logo" class="logo" />
+
+
+    <div class="box-options">
+
+
+
+
+        <!-- submit email -->
+        <div class="card">
+            <div class="card-body">
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <strong>
+                            <h6>{{ 'VIEWS.PASSWORD_CHANGE.ENTER_HERE_YOUR_NEW_PASSWORD' | translate }}</h6>
+                        </strong>
+                    </div>
+                </div>
+
+
+                <form #newPasswordSubmit="ngForm" autocomplete="off">
+
+
+                    <div class="row">
+
+                        <!-- new Password -->
+                        <div class="col-12">
+
+                            <label for="newPassword" class="mb-1">
+                                {{ 'VIEWS.PASSWORD_CHANGE.NEW_PASSWORD' | translate }}
+                            </label>
+
+                            <input type="password" name="newPassword" id="newPassword" class="form-control"
+                                placeholder="{{ 'VIEWS.PASSWORD_CHANGE.NEW_PASSWORD' | translate }}"
+                                #newPassword="ngModel" [(ngModel)]="passwords.new_password" required
+                                aria-describedby="newPasswordHelp" autocomplete="off" />
+
+                            <small id="newPasswordHelp" class="form-text text-danger" *ngIf="newPassword.invalid">
+
+                                <span *ngIf="newPassword.errors.required
+                                            && (newPassword.dirty
+                                            || newPassword.touched)">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+
+
+                        <!-- confirm password -->
+                        <div class="col-12">
+
+                            <label for="confirmPassword" class="mb-1">
+                                {{ 'VIEWS.PASSWORD_CHANGE.CONFIRM_PASSWORD' | translate }}
+                            </label>
+
+                            <input type="password" name="confirmPassword" id="confirmPassword" class="form-control"
+                                placeholder="{{ 'VIEWS.PASSWORD_CHANGE.NEW_PASSWORD' | translate }}"
+                                #confirmPassword="ngModel" [(ngModel)]="passwords.confirm_password" required
+                                aria-describedby="confirmPasswordHelp" autocomplete="off" />
+
+                            <small id="confirmPasswordHelp" class="form-text text-danger"
+                                *ngIf="confirmPassword.invalid || passwords_not_match">
+
+                                <span *ngIf="confirmPassword.errors.required
+                                            && (confirmPassword.dirty
+                                            || confirmPassword.touched)
+                                            && !passwords_not_match">
+                                    <app-required-field [type]="'input_invalid'">
+                                    </app-required-field>
+                                </span>
+
+
+                                <span *ngIf="passwords_not_match">
+                                    {{ 'VIEWS.PASSWORD_CHANGE.PASSWORDS_DO_NOT_MATCH' | translate }}
+                                </span>
+
+                            </small>
+
+                        </div>
+
+
+
+
+                        <!-- submit form -->
+                        <div class="col-12 mt-3">
+
+                            <button type="button" class="btn btn-primary w-100" id="submitNewPassword"
+                                [disabled]="newPasswordSubmit.invalid" [ladda]="isSubmitting" (click)="submitForm();">
+                                {{ 'VIEWS.PASSWORD_CHANGE.SAVE_NEW_PASSWORD' | translate }}
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- spinner -->
+<ngx-spinner size="medium" type="square-jelly-box" [fullScreen]="true" color="#E6AF00" bdColor="rgba(0, 0, 0, 0.9)">
+    <p style="color: #fff"> {{ 'GENERIC.LABELS.LOADING' | translate }}... </p>
+</ngx-spinner>

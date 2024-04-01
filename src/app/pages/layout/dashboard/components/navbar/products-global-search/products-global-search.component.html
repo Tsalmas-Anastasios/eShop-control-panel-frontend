@@ -1,0 +1,175 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group" id="adv-search">
+
+                <div class="dropdown dropdown-lg product-appearance-dropdown">
+                    <input type="text" name="product-number-search" id="product-number-search" class="form-control"
+                        placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.PRODUCT_NUMBER' | translate }}"
+                        data-toggle="dropdown" aria-expanded="false" [(ngModel)]="searchers.product_number.value"
+                        (change)="searchProductsList('simple_search');"
+                        (keyup)="searchProductsList('simple_search');" />
+
+                    <div class="dropdown-menu dropdown-menu-left" role="menu" style="padding: 0;"
+                        data-loader="searchProductsMenuLoader">
+
+                        <div class="overlay-component-loader-here-loader-circle-field" *ngIf="searcherLoadingProducts">
+                        </div>
+
+
+
+                        <div class="no-products-found text-muted" *ngIf="products.length <= 0">
+                            {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.NO_PRODUCTS_FOUND' | translate }}
+                        </div>
+
+
+
+                        <div *ngIf="products.length > 0">
+
+
+                            <div class="product-row-card" [routerLink]="['/dashboard/products', product.product_id]"
+                                *ngFor="let product of products">
+
+                                <div class="row">
+
+                                    <div class="col-5 align-middle">
+                                        <img src="../../../../../../../assets/images/loader.gif" alt="Product headline"
+                                            class="w-120px h-120px rounded object-fit-cover d-block mx-auto align-middle" />
+                                    </div>
+
+
+
+                                    <div class="col-7">
+                                        <!-- product info -->
+
+                                        <div class="row">
+
+                                            <div class="col-12">
+                                                <h6>
+                                                    {{ product.headline }}
+                                                </h6>
+                                            </div>
+                                            <div class="col-12">
+                                                {{ product.product_code }}
+                                            </div>
+                                            <div class="col-12 text-muted">
+                                                <small>{{ product.product_id }}</small>
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <div class="row mt-3">
+
+                                            <div class="col-5">
+                                                {{ product.stock }} <span
+                                                    class="text-muted"><small>pieces</small></span>
+                                            </div>
+
+
+                                            <!-- price -->
+                                            <div class="col-7 tex-right" *ngIf="product.fees">
+                                                {{ product.clear_price + product.clear_price * product.fee_percent }} {{
+                                                user?.company_data?.coin_symbol || '€' }}
+                                                <small class="text-muted">({{ product.fee_percent }}%)</small>
+                                            </div>
+
+                                            <div class="col-7 text-right" *ngIf="!product.fees">
+                                                {{ product.clear_price }} {{ user?.company_data?.coin_symbol || '€' }}
+                                                <small class="text-muted">(0%)</small>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+                <div class="input-group-btn">
+
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+
+
+                            <button type="button" class="btn btn-secondary" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fas fa-caret-down"></i>
+                            </button>
+
+
+
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+
+                                <div class="form-group">
+                                    <label for="productHeadline" class="mb-1">
+                                        {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.HEADLINE' | translate }}
+                                    </label>
+                                    <input type="text" name="productHeadline" id="productHeadline" class="form-control"
+                                        placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.HEADLINE' | translate }}"
+                                        [(ngModel)]="searchers.headline.value" />
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="productBrand" class="mb-1">
+                                                {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.BRAND' | translate }}
+                                            </label>
+                                            <input type="text" name="productBrand" id="productBrand"
+                                                class="form-control"
+                                                placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.PRODUCT_BRAND' | translate }}"
+                                                [(ngModel)]="searchers.product_brand.value" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="productModel" class="mb-1">
+                                                {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.MODEL' | translate }}
+                                            </label>
+                                            <input type="text" name="productModel" id="productModel"
+                                                class="form-control"
+                                                placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.PRODUCT_MODEL' | translate }}"
+                                                [(ngModel)]="searchers.product_model.value" />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <button type="button" class="btn btn-primary float-right mt-2 mb-3"
+                                    id="advanced-search-submit" style="border-radius: 4px"
+                                    [disabled]="!checkRequiredFieldToDisableSearch()"
+                                    (click)="advancedSearchRedirectPageSearchGlobal();">
+                                    {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.SEARCH' | translate }}
+                                    <i class="fas fa-search"></i>
+                                </button>
+
+                            </div>
+
+                            <button type="button" class="btn btn-primary" id="simple-search-submit"
+                                [disabled]="searchers.product_number.value === null || searchers.product_number.value === '' || searchers.product_number.value.length < 2"
+                                (click)="simpleSearchRedirectPageSearchGlobal()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

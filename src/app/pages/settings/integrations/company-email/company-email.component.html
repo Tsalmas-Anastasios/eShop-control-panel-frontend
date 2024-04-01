@@ -1,0 +1,683 @@
+<div class="card">
+
+
+    <div class="card-header d-flex justify-content-between">
+
+        <div>
+            <h5>{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.COMPANY_EMAILS' | translate }}</h5>
+        </div>
+
+
+        <div>
+            <button type="button" class="btn btn-primary" id="addNewCompanyEmailModal" data-toggle="modal"
+                data-target="#addNewCompanyEmailModalArea" *ngIf="user_privileges?.integrations_new">
+                <i class="fas fa-plus"></i>
+                {{ 'GENERIC.ACTIONS.ADD_NEW_EMAIL' | translate }}
+            </button>
+        </div>
+
+    </div>
+
+
+
+    <div class="card-body">
+
+        <app-data-table-custom-module [columnHeaders]="columnHeaders" [data]="company_emails"
+            [options]="companyEmailTableOptions">
+        </app-data-table-custom-module>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- new company email -->
+<div class="modal fade" id="addNewCompanyEmailModalArea" aria-labelledby="addNewCompanyEmailModalAreaLabel"
+    aria-hidden="true" *ngIf="user_privileges?.integrations_new">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="addNewCompanyEmailModalAreaTitle">
+                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.NEW_COMPANY_EMAIL' | translate }}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <form #newCompanyEmailForm="ngForm">
+
+
+                <div class="modal-body">
+
+                    <div class="row mt-4 mb-4">
+                        <div class="col-12">
+                            <i class="fas fa-info-circle"></i>
+                            {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.CANNOT_ADD_GOOGLE_ACCOUNT' | translate }}
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+
+                        <!-- email label -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+
+                                <label for="emailLabelNew" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_LABEL' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="emailLabelNew" id="emailLabelNew" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_LABEL' | translate }}"
+                                    [(ngModel)]="company_email.email_label" #emailLabelNew="ngModel"
+                                    aria-describedby="emailLabelNewHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required />
+
+                                <small id="emailLabelNewHelp" class="form-text text-danger"
+                                    *ngIf="emailLabelNew.invalid">
+
+                                    <span
+                                        *ngIf="emailLabelNew.errors.required && (emailLabelNew.dirty || emailLabelNew.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+                        <!-- host -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+
+                                <label for="emailHostNew" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.SMTP_HOST' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="emailHostNew" id="emailHostNew" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.SMTP_HOST' | translate }} (smtp.bizyhive.com)"
+                                    [(ngModel)]="company_email.host" #emailHostNew="ngModel"
+                                    aria-describedby="emaiHostNewHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required />
+
+                                <small id="emaiHostNewHelp" class="form-text text-danger" *ngIf="emailHostNew.invalid">
+
+                                    <span
+                                        *ngIf="emailHostNew.errors.required && (emailHostNew.dirty || emailHostNew.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="row">
+
+
+                        <!-- port -->
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                            <div class="form-group">
+
+                                <label for="emailPortNew" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.SMTP_PORT' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="number" name="emailPortNew" id="emailPortNew" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.SMTP_PORT' | translate }}"
+                                    [(ngModel)]="company_email.port" #emailPortNew="ngModel"
+                                    aria-describedby="emaiHostNewHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required />
+
+                                <small id="emaiHostNewHelp" class="form-text text-danger" *ngIf="emailPortNew.invalid">
+
+                                    <span
+                                        *ngIf="emailPortNew.errors.required && (emailPortNew.dirty || emailPortNew.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <!-- secure (yes ? SSL/TLS : not) -->
+                        <div class="col-12 col-sm-12 col-md-8 col-lg-9">
+
+                            <label for="emailSecureNew" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.SSL_TLS' | translate }}
+                            </label>
+
+                            <div>
+                                <input type="checkbox" name="emailSecureNew" id="emailSecureNew"
+                                    (click)="formatConnectionTesting()" #emailSecureNew="ngModel"
+                                    [(ngModel)]="company_email.secure" />
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row">
+
+
+                        <!-- user -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+
+                                <label for="emailUserNew" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.USER_EMAIL' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="emailUserNew" id="emailUserNew" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.USER_EMAIL' | translate }}"
+                                    [(ngModel)]="company_email.user" #emailUserNew="ngModel"
+                                    aria-describedby="emailUserNewHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required />
+
+                                <small id="emailUserNewHelp" class="form-text text-danger" *ngIf="emailUserNew.invalid">
+
+                                    <span
+                                        *ngIf="emailUserNew.errors.required && (emailUserNew.dirty || emailUserNew.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+                        <!-- password -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+
+                                <label for="emailPasswordNew" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_PASSWORD' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="password" name="emailPasswordNew" id="emailPasswordNew"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_PASSWORD' | translate }}"
+                                    [(ngModel)]="company_email.password" #emailPasswordNew="ngModel"
+                                    aria-describedby="emailPasswordNewHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required />
+
+                                <small id="emailPasswordNewHelp" class="form-text text-danger"
+                                    *ngIf="emailPasswordNew.invalid">
+
+                                    <span
+                                        *ngIf="emailPasswordNew.errors.required && (emailPasswordNew.dirty || emailPasswordNew.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <!-- name -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+
+                                <label for="emailNameNew" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.DEFAULT_NAME' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="emailNameNew" id="emailNameNew" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.DEFAULT_NAME' | translate }}"
+                                    [(ngModel)]="company_email.default_name" #emailNameNew="ngModel"
+                                    aria-describedby="emailNameNewHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required />
+
+                                <small id="emailNameNewHelp" class="form-text text-danger" *ngIf="emailNameNew.invalid">
+
+                                    <span
+                                        *ngIf="emailNameNew.errors.required && (emailNameNew.dirty || emailNameNew.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+
+                    <!-- test the connection -->
+                    <div class="row mt-4 mb-4">
+
+                        <div class="col-12" *ngIf="connection_testing === 'none'">
+                            <button type="button" class="btn btn-success" id="testNewConnection"
+                                [disabled]="newCompanyEmailForm.invalid" (click)="companyEmailTesting();">
+                                {{ 'GENERIC.ACTIONS.TEST_CONNECTION' | translate }}
+                            </button>
+                        </div>
+
+
+                        <div class="col-12" *ngIf="connection_testing === 'testing'">
+                            <div class="indeterminate-progress-bar">
+                                <div class="indeterminate-progress-bar-value"></div>
+                            </div>
+                        </div>
+
+
+                        <!-- messages -->
+                        <div class="col-12 text-success text-center" *ngIf="connection_testing === 'success'">
+                            <i class="fas fa-check-circle"></i>
+                            {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_CONNECTION_VERIFIED' | translate }}
+                        </div>
+
+                        <div class="col-12 text-danger text-center" *ngIf="connection_testing === 'error'">
+                            <i class="fas fa-times-circle"></i>
+                            {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_CONNECTION_NOT_VERIFIED' | translate }}
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="modal-footer" *ngIf="connection_testing === 'success'">
+
+                    <button type="button" class="btn btn-primary" id="saveNewCompanyEmail" (click)="saveNewEmail();"
+                        [ladda]="isSaving">
+                        <i class="fas fa-save"></i>
+                        {{ 'GENERIC.ACTIONS.SAVE_NEW_EMAIL' | translate }}
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- edit company email -->
+<div class="modal fade" role="dialog" aria-labelledby="editCompanyEmailModalArea" aria-hidden="true"
+    id="editCompanyEmailModalArea" #editCompanyEmailModalArea [ngClass]="{ 'show': editModalShow }"
+    [ngStyle]="{ 'display': editModalShow ? 'block' : 'none' }" aria-modal="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <h5>{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EDIT_EXISTING_EMAIL' | translate }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeEditModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+
+            <form #editCompanyEmail="ngForm">
+
+
+                <div class="modal-body">
+
+
+                    <div class="row mt-4 mb-4">
+                        <div class="col-12">
+                            <i class="fas fa-info-circle"></i>
+                            {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.CANNOT_ADD_GOOGLE_ACCOUNT' | translate }}
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+
+                        <!-- email label -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+
+                                <label for="emailLabelEdit" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_LABEL' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="emailLabelEdit" id="emailLabelEdit" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_LABEL' | translate }}"
+                                    [(ngModel)]="company_email.email_label" #emailLabelEdit="ngModel"
+                                    aria-describedby="emailLabelEditHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required
+                                    [readonly]="!user_privileges?.integrations_edit" />
+
+                                <small id="emailLabelEditHelp" class="form-text text-danger"
+                                    *ngIf="emailLabelEdit.invalid">
+
+                                    <span
+                                        *ngIf="emailLabelEdit.errors.required && (emailLabelEdit.dirty || emailLabelEdit.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+                        <!-- host -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+
+                                <label for="emailHostEdit" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.SMTP_HOST' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="emailHostEdit" id="emailHostEdit" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.SMTP_HOST' | translate }} (smtp.bizyhive.com)"
+                                    [(ngModel)]="company_email.host" #emailHostEdit="ngModel"
+                                    aria-describedby="emaiHostEditHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required
+                                    [readonly]="!user_privileges?.integrations_edit" />
+
+                                <small id="emaiHostEditHelp" class="form-text text-danger"
+                                    *ngIf="emailHostEdit.invalid">
+
+                                    <span
+                                        *ngIf="emailHostEdit.errors.required && (emailHostEdit.dirty || emailHostEdit.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="row">
+
+
+                        <!-- port -->
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                            <div class="form-group">
+
+                                <label for="emailPortEdit" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.SMTP_PORT' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="number" name="emailPortEdit" id="emailPortEdit" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.SMTP_PORT' | translate }}"
+                                    [(ngModel)]="company_email.port" #emailPortEdit="ngModel"
+                                    aria-describedby="emaiHostEditHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required
+                                    [readonly]="!user_privileges?.integrations_edit" />
+
+                                <small id="emaiHostEditHelp" class="form-text text-danger"
+                                    *ngIf="emailPortEdit.invalid">
+
+                                    <span
+                                        *ngIf="emailPortEdit.errors.required && (emailPortEdit.dirty || emailPortEdit.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <!-- secure (yes ? SSL/TLS : not) -->
+                        <div class="col-12 col-sm-12 col-md-8 col-lg-9">
+
+                            <label for="emailSecureEdit" class="mb-1">
+                                {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.SSL_TLS' | translate }}
+                            </label>
+
+                            <div>
+                                <input type="checkbox" name="emailSecureEdit" id="emailSecureEdit"
+                                    (click)="formatConnectionTesting()" #emailSecureEdit="ngModel"
+                                    [(ngModel)]="company_email.secure" />
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row">
+
+
+                        <!-- user -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+
+                                <label for="emailUserEdit" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.USER_EMAIL' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="emailUserEdit" id="emailUserEdit" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.USER_EMAIL' | translate }}"
+                                    [(ngModel)]="company_email.user" #emailUserEdit="ngModel"
+                                    aria-describedby="emailUserEditHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required
+                                    [readonly]="!user_privileges?.integrations_edit" />
+
+                                <small id="emailUserEditHelp" class="form-text text-danger"
+                                    *ngIf="emailUserEdit.invalid">
+
+                                    <span
+                                        *ngIf="emailUserEdit.errors.required && (emailUserEdit.dirty || emailUserEdit.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+                        <!-- password -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+
+                                <label for="emailPasswordEdit" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_PASSWORD' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="password" name="emailPasswordEdit" id="emailPasswordEdit"
+                                    class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_PASSWORD' | translate }}"
+                                    [(ngModel)]="company_email.password" #emailPasswordEdit="ngModel"
+                                    aria-describedby="emailPasswordEditHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required
+                                    [readonly]="!user_privileges?.integrations_edit" />
+
+                                <small id="emailPasswordEditHelp" class="form-text text-danger"
+                                    *ngIf="emailPasswordEdit.invalid">
+
+                                    <span
+                                        *ngIf="emailPasswordEdit.errors.required && (emailPasswordEdit.dirty || emailPasswordEdit.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <!-- name -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+
+                                <label for="emailNameEdit" class="mb-1">
+                                    {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.DEFAULT_NAME' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'">
+                                    </app-required-field>
+                                </label>
+
+                                <input type="text" name="emailNameEdit" id="emailNameEdit" class="form-control"
+                                    placeholder="{{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.DEFAULT_NAME' | translate }}"
+                                    [(ngModel)]="company_email.default_name" #emailNameEdit="ngModel"
+                                    aria-describedby="emailNameEditHelp" (change)="formatConnectionTesting()"
+                                    (keyup)="formatConnectionTesting()" required
+                                    [readonly]="!user_privileges?.integrations_edit" />
+
+                                <small id="emailNameEditHelp" class="form-text text-danger"
+                                    *ngIf="emailNameEdit.invalid">
+
+                                    <span
+                                        *ngIf="emailNameEdit.errors.required && (emailNameEdit.dirty || emailNameEdit.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+                    <!-- test the connection -->
+                    <div class="row mt-4 mb-4" *ngIf="user_privileges?.integrations_edit">
+
+                        <div class="col-12" *ngIf="connection_testing === 'none'">
+                            <button type="button" class="btn btn-success" id="testEditConnection"
+                                [disabled]="editCompanyEmail.invalid" (click)="companyEmailTesting();">
+                                {{ 'GENERIC.ACTIONS.TEST_CONNECTION' | translate }}
+                            </button>
+                        </div>
+
+
+                        <div class="col-12" *ngIf="connection_testing === 'testing'">
+                            <div class="indeterminate-progress-bar">
+                                <div class="indeterminate-progress-bar-value"></div>
+                            </div>
+                        </div>
+
+
+                        <!-- messages -->
+                        <div class="col-12 text-success text-center" *ngIf="connection_testing === 'success'">
+                            <i class="fas fa-check-circle"></i>
+                            {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_CONNECTION_VERIFIED' | translate }}
+                        </div>
+
+                        <div class="col-12 text-danger text-center" *ngIf="connection_testing === 'error'">
+                            <i class="fas fa-times-circle"></i>
+                            {{ 'VIEWS.SETTINGS.INTEGRATIONS.COMPANY_EMAIL.EMAIL_CONNECTION_NOT_VERIFIED' | translate }}
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+                <div class="modal-footer"
+                    *ngIf="connection_testing === 'success' && user_privileges?.integrations_edit">
+
+                    <button type="button" class="btn btn-primary" id="updateCompanyEmail" (click)="updateEmail();"
+                        [ladda]="isSaving">
+                        <i class="fas fa-sync-alt"></i>
+                        {{ 'GENERIC.ACTIONS.UPDATE_EMAIL' | translate }}
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+
+        </div>
+    </div>
+</div>

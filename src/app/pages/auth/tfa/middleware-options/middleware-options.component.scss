@@ -1,0 +1,42 @@
+@import '../../../../../assets/scss/colors';
+
+
+.full-height {
+    min-height: 100vh;
+    background-color: $main-background-header-sidebar;
+
+
+    .box-options {
+        width: 500px;
+    }
+}
+
+
+@media only screen and (max-width: 550px) {
+    .box-options {
+        width: calc(100% - 30px);
+    }
+}
+
+
+
+
+
+.service-link {
+    border-radius: 10px;
+    transition: 0.4s;
+
+    &:hover {
+        text-decoration: none;
+        background: linear-gradient(rgba(0, 0, 0, 0.2),
+                rgba(0, 0, 0, 0.2));
+    }
+}
+
+
+
+.logo {
+    width: 150px;
+    position: absolute;
+    bottom: 20px;
+}

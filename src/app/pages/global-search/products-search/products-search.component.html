@@ -1,0 +1,186 @@
+<div class="row">
+
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4" id="simpleSearchArea">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="productNumberSearch" class="mb-1">
+                        {{ 'VIEWS.PRODUCTS_GLOBAL_SEARCH.PRODUCT_NUMBER' | translate }}
+                    </label>
+                    <input type="text" name="productNumberSearch" id="productNumberSearch" class="form-control"
+                        placeholder="{{ 'VIEWS.PRODUCTS_GLOBAL_SEARCH.PRODUCT_NUMBER' | translate }}"
+                        [(ngModel)]="searchers.product_number.value" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary float-right" id="submitSimpleSearch"
+                    [disabled]="searchers.product_number.value === '' || searchers.product_number.value === null || searchers.product_number.value.length < 2"
+                    (click)="submitSearch('simple_search');">
+                    {{ 'GENERIC.ACTIONS.SEARCH' | translate }}
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="col-12 col-sm-12 col-mg-6 col-lg-8" id="advancedSearchArea">
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="float-left">
+                    {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.ADVANCED_SEARCH' | translate }}
+                </h2>
+
+                <button type="button" class="btn btn-primary float-right" id="submitSimpleSearch"
+                    [disabled]="!checkRequiredFieldToDisableSearch()" (click)="submitSearch('advanced_search');">
+                    {{ 'VIEWS.ORDERS_GLOBAL_SEARCH.SEARCH' | translate }}
+                    <i class="fas fa-search"></i>
+                </button>
+
+                <button type="button" class="btn btn-secondary float-right mr-3" id="clearAdvancedSearch"
+                    (click)="clearSearchFormHere()">
+                    {{ 'GENERIC.ACTIONS.CLEAR' | translate }}
+                    <i class="fas fa-eraser"></i>
+                </button>
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="productHeadline" class="mb-1">
+                                {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.HEADLINE' | translate }}
+                            </label>
+                            <input type="text" name="productHeadline" id="productHeadline" class="form-control"
+                                placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.HEADLINE' | translate }}"
+                                [(ngModel)]="searchers.headline.value" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+
+                        <div class="row">
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="productBrand" class="mb-1">
+                                        {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.PRODUCT_BRAND' | translate }}
+                                    </label>
+                                    <input type="text" name="productBrand" id="productBrand" class="form-control"
+                                        placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.PRODUCT_BRAND' | translate }}"
+                                        [(ngModel)]="searchers.product_brand.value" />
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                <label for="productModel" class="mb-1">
+                                    {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.PRODUCT_MODEL' | translate }}
+                                </label>
+                                <input type="text" name="productModel" id="productModel" class="form-control"
+                                    placeholder="{{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.PRODUCT_MODEL' | translate }}"
+                                    [(ngModel)]="searchers.product_model.value" />
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+
+    <div class="col-12 mt-5" *ngIf="products.length <= 0">
+        <h1 class="text-muted text-center">
+            {{ 'VIEWS.PRODUCTS_GLOBAL_SEARCH.NO_PRODUCTS_FOUND' | translate }}
+        </h1>
+    </div>
+
+
+
+    <div class="col-12 mt-5" *ngIf="products.length > 0">
+
+        <div class="row">
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let product of products; let i = index">
+
+                <div class="card">
+                    <img src="{{ product.main_image }}" alt="{{ product.headline }} - Main image"
+                        class="card-img-top object-fit-cover w-285px h-285px d-block mx-auto" />
+                    <div class="card-body">
+                        <h5 class="card-title w-100 d-inline-block text-truncate">
+                            {{ product.headline }}
+                        </h5>
+                        <div class="card-text">
+
+                            <div class="row">
+                                <div class="col-12">{{ product.product_code }}</div>
+                                <div class="col-12 text-muted">{{ product.product_id }}</div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    {{ product.product_brand }}, {{ product.product_model }}
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    {{ product.stock }} <small class="text-muted">pieces</small>
+                                </div>
+
+                                <div class="col-6 text-right" *ngIf="product?.fees">
+                                    {{ product.clear_price + product.fees }}{{ user?.company_data?.coin_symbol || '€' }}
+                                    <small class="text-muted">({{
+                                        product.fee_percent }}%)</small>
+                                </div>
+                                <div class="col-6 text-right" *ngIf="!product?.fees">
+                                    {{ product.clear_price }}{{ user?.company_data?.coin_symbol || '€' }} <small
+                                        class="text-muted">(0%)</small>
+                                </div>
+                            </div>
+
+                        </div>
+                        <button [routerLink]="['/dashboard/products', product.product_id]"
+                            class="btn btn-primary float-right mt-4">
+                            {{ 'GENERIC.ACTIONS.SEE_MORE_DOTS' | translate }}
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>

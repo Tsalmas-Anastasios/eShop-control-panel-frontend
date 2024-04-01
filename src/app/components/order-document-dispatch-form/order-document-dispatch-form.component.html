@@ -1,0 +1,254 @@
+<div id="orderDispatchForm-eCommerceControlPanelBizyhive" class="mx-5 my-5 p-5" *ngIf="order">
+
+
+    <div class="row">
+        <div class="col-12" style="border: 2px solid #ccc; border-radius: 10px;">
+
+
+            <div class="row mt-3 pr-3 pl-3">
+
+                <!-- dates -->
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6 border rounded pt-3">
+                            <div class="form-group">
+                                <label for="dateIssued" class="mb-1">
+                                    <strong>{{ 'PRINT.ORDER_DISPATCH_FORM.DATE_ISSUED' | translate }}</strong>
+                                </label>
+                                <p id="dateIssued" class="mb-0">{{ date_issued }}</p>
+                            </div>
+                        </div>
+                        <div class="col-5 border rounded pt-3 ml-3">
+                            <div class="form-group">
+                                <label for="dateIssued" class="mb-1">
+                                    <strong>{{ 'PRINT.ORDER_DISPATCH_FORM.DATE_OF_SEND' | translate }}</strong>
+                                </label>
+                                <p id="dateIssued" class="mb-0">{{ date_issued }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- numbers -->
+                <div class="col-6 rounded pt-3" style="background-color: #ccc;">
+                    <label for="dateIssued" class="mb-1">
+                        <strong>{{ 'PRINT.ORDER_DISPATCH_FORM.ORDER_NUMBER' | translate }}</strong>
+                    </label>
+                    <p id="dateIssued" class="mb-0">{{ order.order_number }}</p>
+                </div>
+
+            </div>
+
+
+
+
+
+            <div class="row mt-5 pr-3 pl-3">
+
+                <div class="col-6 p-3">
+                    <img src="../../../assets/logo/logo.png" alt="e-Commerce Bizyhive Control Panel logo"
+                        class="w-100" />
+                </div>
+
+                <div class="col-6 border rounded pt-3">
+                    <label for="signature" class="mb-1">
+                        <strong>{{ 'PRINT.ORDER_DISPATCH_FORM.OFFICE_SIGNATURE' | translate }}</strong>
+                    </label>
+                </div>
+
+            </div>
+
+
+
+
+            <!-- address -->
+            <div class="row mt-5 pt-5">
+
+                <div class="col-6">
+
+                    <div class="row">
+                        <div class="col-12">
+                            {{ order.first_name }} {{ order.last_name }}
+                        </div>
+                        <div class="col-12">
+                            {{ order.address }}, {{ order.city }} {{ order.postal_code }}
+                        </div>
+                        <div class="col-12">{{ order.country }}</div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 text-right">
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <strong>{{ 'PRINT.ORDER_DISPATCH_FORM.ORDER_NUMBER' | translate }}</strong>
+                            {{ order.order_number }}
+                        </div>
+                        <div class="col-12">
+                            <strong>{{ 'PRINT.ORDER_DISPATCH_FORM.DATE_ISSUED' | translate }}</strong>
+                            {{ date_issued }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-12">
+                    <div class="row mt-5">
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="transportationType" class="mb-1">
+                                    <strong>{{ 'PRINT.ORDER_DISPATCH_FORM.SHIPPING_TYPE' | translate }}</strong>
+                                </label>
+                                <p id="transportationType">
+                                    {{ order.transfer_courier_details.name }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="placeOfDestination" class="mb-1">
+                                    <strong>{{ 'PRINT.ORDER_DISPATCH_FORM.PLACE_OF_DESTINATION' | translate }}</strong>
+                                </label>
+                                <p id="placeOfDestination">
+                                    {{ order.address }}, {{ order.city }} {{ order.postal_code }} - {{ order.country }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="purposeOfMovement" class="mb-1">
+                                    <strong>{{ 'PRINT.ORDER_DISPATCH_FORM.PURPOSE_OF_MOVEMENT' | translate }}</strong>
+                                </label>
+                                <p id="placeOfDestination">
+                                    {{ 'PRINT.ORDER_DISPATCH_FORM.SALE_OF_PRODUCTS' | translate }}
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+            <!-- products list -->
+            <div class="row mt-5">
+                <div class="col-12">
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th class="w-50">{{ 'PRINT.ORDER_DISPATCH_FORM.PRODUCT' | translate | uppercase }}</th>
+                                <th class="text-center">{{ 'PRINT.ORDER_DISPATCH_FORM.PRICE' | translate | uppercase }}
+                                </th>
+                                <th class="text-center">{{ 'PRINT.ORDER_DISPATCH_FORM.QUANTITY_MIN' | translate |
+                                    uppercase }}</th>
+                                <th class="text-center">{{ 'PRINT.ORDER_DISPATCH_FORM.AMOUNT' | translate | uppercase }}
+                                </th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr *ngFor="let product of order.order_products">
+                                <td>
+                                    <strong class="text-break">{{ product.product_details.headline }}</strong>
+                                    <small class="d-block text-muted">
+                                        {{ product.product_details.product_code }}
+                                    </small>
+                                </td>
+                                <td class="text-center">
+                                    {{ product.supplied_customer_price }} {{ user?.company_data?.coin_symbol || '€' }}
+                                </td>
+                                <td class="text-center">
+                                    {{ product.quantity }}
+                                </td>
+                                <td class="text-center">
+                                    {{ product.supplied_customer_price }} {{ user?.company_data?.coin_symbol || '€' }}
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+
+
+
+
+            <div class="row mt-4" id="order-pricing">
+
+                <!-- blank field -->
+                <div class="col-7"></div>
+
+
+                <!-- pricing -->
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-7">
+                            <h5><strong>{{ 'PRINT.ORDER_DISPATCH_FORM.TOTAL' | translate | uppercase }}</strong></h5>
+                        </div>
+                        <div class="col-5 text-right">
+                            <h5><strong>{{ order.order_total }} {{ user?.company_data?.coin_symbol || '€' }}</strong>
+                            </h5>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+            <div class="row mt-5 pt-5 mb-5 pb-5" id="signed">
+
+                <div class="col-6 pl-5">
+                    <label for="recipientSignature" class="mb-1">
+                        {{ 'PRINT.ORDER_DISPATCH_FORM.RECIPIENT_SIGNATURE' | translate }}
+                    </label>
+                </div>
+
+
+                <div class="col-6 text-right pr-5">
+                    <label for="senderSignature" class="mb-1">
+                        {{ 'PRINT.ORDER_DISPATCH_FORM.SENDER_SIGNATURE' | translate }}
+                    </label>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+<app-printable-documents-footer></app-printable-documents-footer>

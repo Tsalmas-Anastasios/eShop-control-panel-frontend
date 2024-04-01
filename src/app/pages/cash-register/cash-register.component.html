@@ -1,0 +1,1260 @@
+<nav aria-label="breadcrumb d-flex">
+
+    <h3 class="float-left">
+        {{ 'GENERIC.LABELS.CASH_REGISTRY' | translate }}
+    </h3>
+
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/dashboard']">
+                <i class="fas fa-home"></i>
+            </a>
+        </li>
+
+        <li class="breadcrumb-item active">{{ 'GENERIC.LABELS.CASH_REGISTRY' | translate }}</li>
+    </ol>
+</nav>
+
+
+
+
+<nb-alert status="danger" *ngIf="!user?.company_data">
+    <span [innerHTML]="'VIEWS.HOME.ALERTS.COMPANY_DATA_MISSING_CANNOT_SELL' | translate"></span>
+</nb-alert>
+
+
+
+
+
+
+
+<div class="card mt-4" *ngIf="user?.company_data">
+
+    <!-- <div class="card-header">
+        <h5>{{ 'GENERIC.LABELS.PRODUCTS' | translate }}</h5>
+    </div> -->
+
+    <div class="card-body overflow-auto">
+        <div class="row">
+
+            <!-- table -->
+            <div class="col-12">
+
+
+                <table class="table cash-registry-products mt-3">
+
+                    <thead>
+                        <tr>
+                            <th>{{ 'VIEWS.CASH_REGISTRY.PRODUCT_CODE' | translate }}</th>
+                            <th class="w-50">{{ 'VIEWS.CASH_REGISTRY.HEADLINE' | translate }}</th>
+                            <th>{{ 'VIEWS.CASH_REGISTRY.CLEAR_VALUE' | translate }}</th>
+                            <th>{{ 'VIEWS.CASH_REGISTRY.QUANTITY_MIN' | translate }}</th>
+                            <th>{{ 'VIEWS.CASH_REGISTRY.FEES' | translate }}</th>
+                            <th>{{ 'VIEWS.CASH_REGISTRY.DISCOUNT' | translate }}</th>
+                            <th>{{ 'VIEWS.CASH_REGISTRY.AMOUNT' | translate }}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let product of cash_registry_products; let i = index" [nbSpinner]="retrieveProductObject[i]" nbSpinnerStatus="basic">
+
+                            <!-- product code -->
+                            <td>
+
+                                <div class="row">
+                                    <div class="col-3 d-flex align-items-center justify-content-center" *ngIf="cash_registry_products.length > 1
+                                                && i < cash_registry_products.length - 1">
+                                        <a href="javascript:void(0)" title="{{ 'VIEWS.CASH_REGISTRY.TOOLTIPS.DELETE_PRODUCT' | translate }}"
+                                            class="text-danger d-inline-block mb-3" style="font-size: 1.5rem;" (click)="removeProductFromTheList(i);">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-9" [ngClass]="{ 
+                                            'col-9': cash_registry_products.length > 1 && i < cash_registry_products.length - 1,
+                                            'col-12': cash_registry_products.length <= 1 || i === cash_registry_products.length - 1
+                                        }">
+
+                                        <div class="form-group drodpown dropdown-lg product-appearance-dropdown" *ngIf="!fillProductInfo[i]">
+
+                                            <input type="text" name="productCode_{{ i }}" id="productCode_{{ i }}" class="form-control"
+                                                placeholder="{{ 'VIEWS.CASH_REGISTRY.PRODUCT_CODE' | translate }}" data-toggle="dropdown" aria-expanded="false"
+                                                [(ngModel)]="product.product_details.product_code"
+                                                (change)="getProductsList(i, { search_type: 'product_code' });"
+                                                (keyup)="getProductsList(i, { search_type: 'product_code' });"
+                                                (blur)="toggleTextInputs({index: i, type: 'blur'})" required />
+
+
+                                            <div class="dropdown-menu dropdown-menu-lef w-100" role="menu" style="padding: 0px;"
+                                                [nbSpinner]="searchProductCodeDropdown[i]" nbSpinnerStatus="basic">
+
+
+                                                <div class="no-products-found text-muted" *ngIf="products[i].length <= 0">
+                                                    {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.NO_PRODUCTS_FOUND' |
+                                                    translate }}
+                                                </div>
+
+
+
+                                                <div *ngIf="products[i].length > 0">
+
+                                                    <div class="row product-row-card" style="display: block;" *ngFor="let searched_product of products[i]"
+                                                        (click)="getSpecificProductInfo({ index: i, product_id: searched_product.product_id })"
+                                                        (mouseover)="getFocusLinkMenu($event, {index: i, search_type: 'product_code'})">
+
+                                                        <div class="col-12"> {{ searched_product.headline }} </div>
+                                                        <div class="col-12">
+                                                            <small class="text-muted">
+                                                                {{ searched_product.product_code }}
+                                                            </small>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <p class="paragraph-cursor-pointer" id="productCodeParagraph_{{ i }}" *ngIf="fillProductInfo[i]"
+                                            (click)="toggleTextInputs({index: i, type: 'focus', field: 'code'})">
+                                            {{ product.product_details.product_code }}
+                                            <span class="text-muted">
+                                                <i class="fas fa-edit"></i>
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- product headline -->
+                            <td class="w-50">
+
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="form-group drodpown dropdown-lg product-appearance-dropdown" *ngIf="!fillProductInfo[i]">
+
+                                            <input type=" text" name="productHeadline_{{ i }}" id="productHeadline_{{ i }}" class="form-control"
+                                                placeholder="{{ 'VIEWS.CASH_REGISTRY.PLACEHOLDERS.PRODUCT_HEADLINE' | translate }}" data-toggle="dropdown"
+                                                aria-expanded="false" [(ngModel)]="product.product_details.headline"
+                                                (change)="getProductsList(i, { search_type: 'headline' });"
+                                                (keyup)="getProductsList(i, { search_type: 'headline' });" (blur)="toggleTextInputs({index: i, type: 'blur'})"
+                                                required />
+
+
+
+                                            <div class="dropdown-menu dropdown-menu-lef w-100" role="menu" style="padding: 0px;"
+                                                [nbSpinner]="searchProductCodeDropdown[i]" nbSpinnerStatus="basic">
+
+
+                                                <div class="no-products-found text-muted" *ngIf="products[i].length <= 0">
+                                                    {{ 'GENERIC.LAYOUT.NAVBAR.GLOBAL_SEARCH.NO_PRODUCTS_FOUND' |
+                                                    translate }}
+                                                </div>
+
+
+                                                <div *ngIf="products[i].length > 0">
+
+                                                    <div class="row product-row-card" *ngFor="let searched_product of products[i]"
+                                                        (click)="getSpecificProductInfo({ index: i, product_id: searched_product.product_id })"
+                                                        (mouseover)="getFocusLinkMenu($event, {index: i, search_type: 'headline'})">
+
+                                                        <div class="col-12"> {{ searched_product.headline }} </div>
+                                                        <div class="col-12">
+                                                            <small class="text-muted">
+                                                                {{ searched_product.product_code }}
+                                                            </small>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <p class="paragraph-cursor-pointer" id="productHeadlineParagraph_{{ i }}" *ngIf="fillProductInfo[i]"
+                                            (click)="toggleTextInputs({index: i, type: 'focus', field: 'headline'})">
+                                            {{ product.product_details.headline }}
+                                            <span class="text-muted">
+                                                <i class="fas fa-edit"></i>
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </td>
+
+
+                            <!-- clear value of the product -->
+                            <td>
+                                <div class="row">
+                                    <div class="col-12 d-flex align-items-center justify-content-center">
+                                        <div class="form-group">
+                                            <p id="productClearValue_{{ i }}">
+                                                {{ product?.product_details?.clear_price || '---' }}
+                                                <span *ngIf="product?.product_details?.clear_price">
+                                                    {{ user?.company_data?.coin_symbol || '€' }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- product quantity -->
+                            <td style="max-width: 100px;">
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="form-group">
+
+                                            <input type="number" name="productQuantity_{{ i }}" id="productQuantity_{{ i }}" class="form-control"
+                                                placeholder="{{ 'VIEWS.CASH_REGISTRY.QUANTITY_MIN' | translate }}" [(ngModel)]="product.quantity" min="0"
+                                                [max]="product?.product_details?.stock || 0" (change)="updateOrderPricing(); zeroQuantityOfProduct(i)"
+                                                (keyup)="updateOrderPricing(); zeroQuantityOfProduct(i)" [disabled]="!product?.product_id" required />
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- fees -->
+                            <td>
+                                <div class="row">
+                                    <div class="col-12 d-flex align-items-center justify-content-center">
+                                        <div class="form-group">
+                                            <p id="productFees_{{ i }}">
+                                                {{ product?.product_details?.fees || '---' }}
+                                                <span *ngIf="product?.product_details?.fees">
+                                                    {{ user?.company_data?.coin_symbol || '€' }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- discount  -->
+                            <td style="max-width: 150px">
+                                <div class="row">
+                                    <div class="col-12 d-flex align-items-center justify-content-center">
+                                        <div class="form-group">
+
+                                            <input type="number" name="productDiscountPercentage_{{ i }}" id="productDiscountPercentage_{{ i }}"
+                                                class="form-control" placeholder="{{ 'VIEWS.CASH_REGISTRY.DISCOUNT' | translate }}"
+                                                [(ngModel)]="product.discount_percent" min="0" max="0" (change)="updateOrderPricing();updateProductDiscount(i)"
+                                                (keyup)="updateOrderPricing();updateProductDiscount(i)" required [disabled]="!product?.product_id" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- product total -->
+                            <td>
+                                <div class="row">
+                                    <div class="col-12 d-flex align-items-center justify-content-center">
+                                        <div class="form-group">
+                                            <p id="productDiscount_{{ i }}">
+                                                <span *ngIf="product?.supplied_customer_price">
+                                                    {{ product.supplied_customer_price * product.quantity * (1 -
+                                                    product.discount_percent / 100) }}
+                                                </span>
+                                                <span *ngIf="!product?.supplied_customer_price">---</span>
+                                                <span *ngIf="product?.supplied_customer_price">
+                                                    {{ user?.company_data?.coin_symbol || '€' }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+
+
+
+            <!-- <div class="col-12">
+
+                <button type="button" class="btn btn-success" id="btnAddNewProduct" (click)="addNewProductToTheList();"
+                    [disabled]="this.cash_registry_products.length > 0
+                                && (this.cash_registry_products[this.cash_registry_products.length - 1].product_details.product_code === ''
+                                || this.cash_registry_products[this.cash_registry_products.length - 1].product_details.product_code === null)">
+
+                    <i class="fas fa-plus"></i>
+                    {{ 'GENERIC.ACTIONS.ADD_NEW' | translate }}
+
+                </button>
+
+            </div> -->
+
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<!-- order pricing -->
+<div class="row mt-4" *ngIf="user?.company_data">
+
+
+    <!-- action buttons -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-8 d-flex align-items-center">
+        <div class="row w-100">
+
+            <div class="col-12 col-sm-12 col-md-4">
+                <button type="button" class="btn btn-secondary w-100 h-60px" id="clearCashRegistry" (click)="clearCashRegistry();">
+                    <i class="fas fa-eraser"></i>
+                    {{ 'GENERIC.ACTIONS.CLEAR' | translate }}
+                </button>
+            </div>
+
+
+            <div class="col-12 col-sm-12 col-md-4">
+                <button type="button" class="btn btn-secondary-primary w-100 h-60px" id="createNewConfirmedOrder" [disabled]="!disableActions()"
+                    data-toggle="modal" data-target="#chooseInvoiceReceiptOrder" (click)="toggleSellingType('order')">
+                    <i class="fas fa-folder-plus"></i>
+                    {{ 'GENERIC.ACTIONS.CREATE_NEW_ORDER' | translate }}
+                </button>
+            </div>
+
+
+            <div class="col-12 col-sm-12 col-md-4">
+                <button type="button" class="btn btn-primary w-100 h-60px" id="completePayOrder" [disabled]="!disableActions()" data-toggle="modal"
+                    data-target="#chooseInvoiceReceiptOrder" (click)="toggleSellingType('directly')">
+                    <i class="fas fa-cash-register"></i>
+                    {{ 'GENERIC.ACTIONS.PAY_INVOICE' | translate }}
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 style="font-weight: normal">
+
+                    <div class="row">
+                        <div class="col-7">{{ 'VIEWS.CASH_REGISTRY.SUBTOTAL' | translate }}</div>
+                        <div class="col-5 text-right">
+                            {{ order_pricing.subtotal }}
+                            {{ user?.company_data?.coin_symbol || '€' }}
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-7">{{ 'VIEWS.CASH_REGISTRY.TOTAL_DISCOUNT' | translate }}</div>
+                        <div class="col-5 text-right">
+                            {{ order_pricing.total_discount }}
+                            {{ user?.company_data?.coin_symbol || '€' }}
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-7">{{ 'VIEWS.CASH_REGISTRY.FEES' | translate }}</div>
+                        <div class="col-5 text-right">
+                            {{ order_pricing.fees }}
+                            {{ user?.company_data?.coin_symbol || '€' }}
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-7">{{ 'VIEWS.CASH_REGISTRY.EXTRA_FEES' | translate }}</div>
+                        <div class="col-5">
+                            <div class="row">
+
+                                <div class="col-10">
+                                    <div class="form-group">
+
+                                        <input type="text" name="orderExtraFees" id="orderExtraFees" class="form-control"
+                                            placeholder="{{ 'VIEWS.CASH_REGISTRY.EXTRA_FEES' | translate }}" [(ngModel)]="order_pricing.extra_fees" required />
+
+                                    </div>
+                                </div>
+
+                                <div class="col-2 text-left">
+                                    {{ user?.company_data?.coin_symbol || '€' }}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </h5>
+
+
+                <hr />
+
+
+                <h5>
+
+                    <div class="row">
+                        <div class="col-7">{{ 'VIEWS.CASH_REGISTRY.TOTAL' | translate }}</div>
+                        <div class="col-5 text-right">
+                            {{ order_pricing.total }}
+                            {{ user?.company_data?.coin_symbol || '€' }}
+                        </div>
+                    </div>
+
+                </h5>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- address data -->
+<div class="modal fade" id="chooseInvoiceReceiptOrder" role="dialog" aria-labelledby="chooseInvoiceReceiptOrderHelp" aria-hidden="true"
+    *ngIf="user?.company_data">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'VIEWS.CASH_REGISTRY.RECEIPT_OR_INVOICE' | translate }}?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div class="modal-body">
+
+
+                <!-- order payment type -->
+                <div class="row mb-4">
+
+                    <div class="col-12">
+                        <small class="text-muted">
+                            <i class="fas fa-info-circle"></i>
+                            {{ 'VIEWS.ORDER_PAGE.MESSAGES.SPECIFY_WAY_ORDER_PAID' | translate }}
+                        </small>
+                    </div>
+
+                    <div class="col-12">
+
+                        <label for="orderPaymentType" class="mb-1">
+                            {{ 'GENERIC.LABELS.PAYMENT_TYPE' | translate }}
+                            <app-required-field [type]="'asterisk_tooltip'">
+                            </app-required-field>
+                        </label>
+
+                        <ng-select id="orderPaymentType" name="orderPaymentType" #orderPaymentType="ngModel"
+                            placeholder="{{ 'GENERIC.LABELS.PAYMENT_TYPE' | translate }}" [items]="order_payment_types" [multiple]="false" bindLabel="label"
+                            bindValue="rec_id" [closeOnSelect]="true" [dropdownPosition]="'bottom'" [(ngModel)]="order.payment_type" [minTermLength]="3"
+                            [disabled]="false" ng-required="true" [searchable]="true" aria-describedby="orderPaymentTypeHelp" required>
+
+                            <ng-template ng-option-tmp let-item="item">
+                                {{ item.label }} <small>&nbsp;({{ item.service }})</small>
+                            </ng-template>
+
+                            <ng-template ng-label-tmp let-item="item">
+                                {{ item.label }} <small>&nbsp;({{ item.service }})</small>
+                            </ng-template>
+
+                        </ng-select>
+
+                        <small id="orderPaymentTypeHelp" class="form-text text-danger" *ngIf="orderPaymentType.invalid">
+
+                            <span *ngIf="orderPaymentType.errors.required && (orderPaymentType.dirty || orderPaymentType.touched)">
+                                <app-required-field [type]="'input_invalid'"></app-required-field>
+                            </span>
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- order address here -->
+                <div class="row">
+                    <div class="col-12 pb-3">
+                        <small class="text-muted">
+                            <i class="fas fa-info-circle"></i>
+                            {{ 'VIEWS.CASH_REGISTRY.SPECIFY_RECEIVING_OF_ORDER' | translate }}
+                        </small>
+                    </div>
+
+                    <div class="col-12">
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="orderAddress" id="receiveFromShop" value="receive_from_shop"
+                                (click)="toggleCustomerAddress('receive_from_shop')" [checked]="order_address === 'receive_from_shop'" />
+                            <label class="form-check-label" for="receiveFromShop">
+                                {{ 'VIEWS.CASH_REGISTRY.PICKUP_FROM_STORE' | translate }}
+                            </label>
+                        </div>
+
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="orderAddress" id="customerAddress" value="customer_address"
+                                (click)="toggleCustomerAddress('customer_address')" [checked]="order_address === 'customer_address'" />
+                            <label class="form-check-label" for="customerAddress">
+                                {{ 'VIEWS.CASH_REGISTRY.CUSTOMER_ADDRESS' | translate }}
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- receiving from the shop -->
+                <div class="row mt-3" *ngIf="order_address === 'receive_from_shop'">
+
+
+                    <div class="col-6">
+
+                        <div class="form-group">
+
+                            <label for="firstNameOrderInformation" class="mb-1">
+                                {{ 'GENERIC.LABELS.FIRST_NAME' | translate }}
+                            </label>
+
+                            <input type="text" name="firstNameOrderInformation" id="firstNameOrderInformation" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.FIRST_NAME' | translate }}" [(ngModel)]="order.first_name" #firstNameOrderInformation="ngModel"
+                                aria-describedby="firstNameOrderInformationHelp" />
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-6">
+
+                        <div class="form-group">
+
+                            <label for="lastNameOrderInformation" class="mb-1">
+                                {{ 'GENERIC.LABELS.LAST_NAME' | translate }}
+                            </label>
+
+                            <input type="text" name="lastNameOrderInformation" id="lastNameOrderInformation" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.LAST_NAME' | translate }}" [(ngModel)]="order.last_name" #lastNameOrderInformation="ngModel"
+                                aria-describedby="lastNameOrderInformationHelp" />
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-6">
+
+                        <div class="form-group">
+
+                            <label for="postalCodeOrderInformation" class="mb-1">
+                                {{ 'GENERIC.LABELS.POSTAL_CODE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <input type="text" name="postalCodeOrderInformation" id="postalCodeOrderInformation" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.POSTAL_CODE' | translate }}" [(ngModel)]="order.postal_code"
+                                #postalCodeOrderInformation="ngModel" aria-describedby="postalCodeOrderInformationHelp" required />
+
+                            <small id="postalCodeOrderInformationHelp" class="form-text text-danger" *ngIf="postalCodeOrderInformation.invalid">
+
+                                <span
+                                    *ngIf="postalCodeOrderInformation.errors.required && (postalCodeOrderInformation.dirty || postalCodeOrderInformation.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- customer phone - required -->
+                    <div class="col-6">
+
+                        <div class="form-group">
+
+                            <label for="phoneOrderInformation" class="mb-1">
+                                {{ 'GENERIC.LABELS.PHONE_NUMBER' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
+                                [enablePlaceholder]="true" [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24" [phoneValidation]="true"
+                                [separateDialCode]="true" id="phoneOrderInformation" name="phoneOrderInformation" #phoneOrderInformation="ngModel"
+                                [(ngModel)]="order_phone" aria-describedby="phoneOrderInformationHelp" (ngModelChange)="formatTelephone('phone', order_phone)"
+                                required></ngx-intl-tel-input>
+
+                            <small id="phoneOrderInformationHelp" class="form-text text-danger" *ngIf="phoneOrderInformation.invalid">
+
+                                <span *ngIf="phoneOrderInformation.errors.required && (phoneOrderInformation.dirty || phoneOrderInformation.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- customer address here -->
+                <div class="row mt-3" *ngIf="order_address === 'customer_address'">
+
+                    <!-- first name -->
+                    <div class="col-6">
+
+                        <div class="form-group">
+
+                            <label for="firstNameOrderInformation" class="mb-1">
+                                {{ 'GENERIC.LABELS.FIRST_NAME' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <input type="text" name="firstNameOrderInformation" id="firstNameOrderInformation" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.FIRST_NAME' | translate }}" [(ngModel)]="order.first_name" #firstNameOrderInformation="ngModel"
+                                aria-describedby="firstNameOrderInformationHelp" required />
+
+                            <small id="firstNameOrderInformationHelp" class="form-text text-danger" *ngIf="firstNameOrderInformation.invalid">
+
+                                <span
+                                    *ngIf="firstNameOrderInformation.errors.required && (firstNameOrderInformation.dirty || firstNameOrderInformation.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- last name -->
+                    <div class="col-6">
+
+                        <div class="form-group">
+
+                            <label for="lastNameOrderInformation" class="mb-1">
+                                {{ 'GENERIC.LABELS.LAST_NAME' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <input type="text" name="lastNameOrderInformation" id="lastNameOrderInformation" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.LAST_NAME' | translate }}" [(ngModel)]="order.last_name" #lastNameOrderInformation="ngModel"
+                                aria-describedby="lastNameOrderInformationHelp" required />
+
+                            <small id="lastNameOrderInformationHelp" class="form-text text-danger" *ngIf="lastNameOrderInformation.invalid">
+
+                                <span *ngIf="lastNameOrderInformation.errors.required && (lastNameOrderInformation.dirty || lastNameOrderInformation.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- address (street) -->
+                    <div class="col-12">
+
+                        <div class="form-group">
+
+                            <label for="addressOrderInformation" class="mb-1">
+                                {{ 'GENERIC.LABELS.ADDRESS' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <input type="text" name="addressOrderInformation" id="addressOrderInformation" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.ADDRESS_STREET' | translate }}" [(ngModel)]="order.address" #addressOrderInformation="ngModel"
+                                aria-describedby="addressOrderInformationHelp" required />
+
+                            <small id="addressOrderInformationHelp" class="form-text text-danger" *ngIf="addressOrderInformation.invalid">
+
+                                <span *ngIf="addressOrderInformation.errors.required && (addressOrderInformation.dirty || addressOrderInformation.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- address (postal code)-->
+                    <div class="col-6">
+
+                        <div class="form-group">
+
+                            <label for="addressPostalCodeOrderInformation" class="mb-1">
+                                {{ 'GENERIC.LABELS.POSTAL_CODE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <input type="text" name="addressPostalCodeOrderInformation" id="addressPostalCodeOrderInformation" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.ADDRESS_POSTAL_CODE' | translate }}" [(ngModel)]="order.postal_code"
+                                #addressPostalCodeOrderInformation="ngModel" aria-describedby="addressPostalCodeOrderInformationHelp" required />
+
+                            <small id="addressPostalCodeOrderInformationHelp" class="form-text text-danger" *ngIf="addressPostalCodeOrderInformation.invalid">
+
+                                <span
+                                    *ngIf="addressPostalCodeOrderInformation.errors.required && (addressPostalCodeOrderInformation.dirty || addressPostalCodeOrderInformation.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- address (city) -->
+                    <div class="col-6">
+
+                        <label for="cityOrderInformation" class="mb-1">
+                            {{ 'GENERIC.LABELS.CITY' | translate }}
+                            <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                        </label>
+
+                        <input type="text" name="cityOrderInformation" id="cityOrderInformation" class="form-control"
+                            placeholder="{{ 'GENERIC.LABELS.CITY' | translate }}" [(ngModel)]="order.city" #cityOrderInformation="ngModel"
+                            aria-describedby="cityOrderInformationHelp" required />
+
+                        <small id="cityOrderInformationHelp" class="form-text text-danger" *ngIf="cityOrderInformation.invalid">
+
+                            <span *ngIf="cityOrderInformation.errors.required && (cityOrderInformation.dirty || cityOrderInformation.touched)">
+                                <app-required-field [type]="'input_invalid'"></app-required-field>
+                            </span>
+
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- address (country) -->
+                    <div class="col-12">
+
+                        <label for="addressCountryOrderInformation" class="mb-1">
+                            {{ 'GENERIC.LABELS.COUNTRY' | translate }}
+                            <app-required-field [type]="'asterisk_tooltip'">
+                            </app-required-field>
+                        </label>
+
+                        <ng-select id="addressCountryOrderInformation" name="addressCountryOrderInformation" #addressCountryOrderInformation="ngModel"
+                            placeholder="{{ 'GENERIC.LABELS.COUNTRY' | translate }}" [items]="countries" [multiple]="false" bindLabel="name" bindValue="name"
+                            [closeOnSelect]="true" [dropdownPosition]="'bottom'" [(ngModel)]="order.country" [minTermLength]="3" [disabled]="false"
+                            ng-required="true" [searchable]="true" aria-describedby="addressCountryOrderInformationHelp" required>
+
+                            <ng-template ng-option-tmp let-item="item">
+                                {{ item.name }}
+                            </ng-template>
+
+                        </ng-select>
+
+                        <small id="addressCountryOrderInformationHelp" class="form-text text-danger" *ngIf="addressCountryOrderInformation.invalid">
+
+                            <span
+                                *ngIf="addressCountryOrderInformation.errors.required && (addressCountryOrderInformation.dirty || addressCountryOrderInformation.touched)">
+                                <app-required-field [type]="'input_invalid'"></app-required-field>
+                            </span>
+
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- phone -->
+                    <div class="col-6">
+
+                        <label for="phoneOrderInformation" class="mb-1">
+                            {{ 'GENERIC.LABELS.PHONE_NUMBER' | translate }}
+                            <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                        </label>
+
+                        <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
+                            [enablePlaceholder]="true" [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                            [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24" [phoneValidation]="true"
+                            [separateDialCode]="true" id="phoneOrderInformation" name="phoneOrderInformation" #phoneOrderInformation="ngModel"
+                            [(ngModel)]="order_phone" aria-describedby="phoneOrderInformationHelp" (ngModelChange)="formatTelephone('phone', order_phone)"
+                            required></ngx-intl-tel-input>
+
+                        <small id="phoneOrderInformationHelp" class="form-text text-danger" *ngIf="phoneOrderInformation.invalid">
+
+                            <span *ngIf="phoneOrderInformation.errors.required && (phoneOrderInformation.dirty || phoneOrderInformation.touched)">
+                                <app-required-field [type]="'input_invalid'"></app-required-field>
+                            </span>
+
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- cell phone -->
+                    <div class="col-6">
+
+                        <div class="form-group">
+
+                            <label for="cellPhoneOrderInformation" class="mb-1">
+                                {{ 'GENERIC.LABELS.CELL_PHONE' | translate }}
+                            </label>
+
+                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
+                                [enablePlaceholder]="true" [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24" [phoneValidation]="true"
+                                [separateDialCode]="true" id="cellPhoneOrderInformation" name="cellPhoneOrderInformation" #cellPhoneOrderInformation="ngModel"
+                                [(ngModel)]="order_cell_phone" aria-describedby="cellPhoneOrderInformationHelp"
+                                (ngModelChange)="formatTelephone('cell_phone', order_cell_phone)"></ngx-intl-tel-input>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- customer's email -->
+                    <div class="col-12">
+
+                        <div class="form-group">
+
+                            <label for="emailOrderInformation" class="mb-1">
+                                {{ 'GENERIC.LABELS.EMAIL' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <input type="text" name="emailOrderInformation" id="emailOrderInformation" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.EMAIL' | translate }}" [(ngModel)]="order.email" #emailOrderInformation="ngModel"
+                                aria-describedby="emailOrderInformationHelp" required />
+
+                            <small id="emailOrderInformationHelp" class="form-text text-danger" *ngIf="emailOrderInformation.invalid">
+
+                                <span *ngIf="emailOrderInformation.errors.required && (emailOrderInformation.dirty || emailOrderInformation.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer w-100">
+
+                <h5>{{ 'VIEWS.CASH_REGISTRY.ALERTS.ORDER_DOCUMENT_CHOOSING' | translate }}</h5>
+
+                <div class="text-muted mt-4" [innerHTML]="'VIEWS.CASH_REGISTRY.ALERTS.ORDER_DOCUMENT_CHOOSING_EXPLAIN' | translate">
+                </div>
+
+                <div class="row w-100">
+
+                    <div class="col-6">
+                        <button type="button" class="btn btn-secondary-primary w-100" id="invoiceDocumentOrder" data-dismiss="modal" aria-label="Close"
+                            data-toggle="modal" data-target="#invoiceInformationInsertOrder" [disabled]="(order_address === 'receive_from_shop' && (!order?.postal_code || !order?.phone))
+                                        || (!checkAddressRequiredFields() && order_address === 'customer_address')
+                                        || !order?.payment_type">
+                            {{ 'VIEWS.CASH_REGISTRY.ALERTS.INVOICE' | translate }}
+                        </button>
+                    </div>
+
+                    <div class="col-6">
+                        <button type="button" class="btn btn-primary w-100" id="receiptDocumentOrder" data-dismiss="modal" aria-label="Close"
+                            (click)="createNewOrder('receipt')" [disabled]="(order_address === 'receive_from_shop' && (!order.postal_code || !order?.phone))
+                                        || (!checkAddressRequiredFields() && order_address === 'customer_address')
+                                        || !order?.payment_type">
+                            {{ 'VIEWS.CASH_REGISTRY.ALERTS.RECEIPT' | translate }}
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- invoice data -->
+<form #invoiceInformationFormInsert="ngForm" autocomplete="off" *ngIf="user?.company_data">
+    <div class="modal fade" id="invoiceInformationInsertOrder" role="dialog" aria-labelledby="invoiceInformationInsertOrderHelp" aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'VIEWS.CASH_REGISTRY.INVOICE_INFORMATION' | translate }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <!-- fields here-->
+                <div class="modal-body">
+
+
+                    <!-- first name, last name -->
+                    <div class="row">
+
+
+                        <!-- first name -->
+                        <div class="col-6">
+                            <div class="form-group">
+
+                                <label for="invoiceInformationFirstName" class="mb-1">
+                                    {{ 'GENERIC.LABELS.FIRST_NAME' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                                </label>
+
+                                <input type="text" name="invoiceInformationFirstName" id="invoiceInformationFirstName" class="form-control"
+                                    placeholder="{{ 'GENERIC.LABELS.FIRST_NAME' | translate }}" [(ngModel)]="order.invoice_data__first_name"
+                                    #invoiceInformationFirstName="ngModel" aria-describedby="invoiceInformationFirstNameHelp" required />
+
+                                <small id="invoiceInformationFirstNameHelp" class="form-text text-danger" *ngIf="invoiceInformationFirstName.invalid">
+
+                                    <span
+                                        *ngIf="invoiceInformationFirstName.errors.required && (invoiceInformationFirstName.dirty || invoiceInformationFirstName.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+                        <!-- last name -->
+                        <div class="col-6">
+                            <div class="form-group">
+
+                                <label for="invoiceInformationLastName" class="mb-1">
+                                    {{ 'GENERIC.LABELS.LAST_NAME' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                                </label>
+
+                                <input type="text" name="invoiceInformationLastName" id="invoiceInformationLastName" class="form-control"
+                                    placeholder="{{ 'GENERIC.LABELS.LAST_NAME' | translate }}" [(ngModel)]="order.invoice_data__last_name"
+                                    #invoiceInformationLastName="ngModel" aria-describedby="invoiceInformationLastNameHelp" required />
+
+                                <small id="invoiceInformationLastNameHelp" class="form-text text-danger" *ngIf="invoiceInformationLastName.invalid">
+
+                                    <span
+                                        *ngIf="invoiceInformationLastName.errors.required && (invoiceInformationLastName.dirty || invoiceInformationLastName.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row">
+
+
+                        <!-- company -->
+                        <div class="col-12">
+
+                            <div class="form-group">
+
+                                <label for="invoiceInformationCompany" class="mb-1">
+                                    {{ 'GENERIC.LABELS.COMPANY' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                                </label>
+
+                                <input type="text" name="invoiceInformationCompany" id="invoiceInformationCompany" class="form-control"
+                                    placeholder="{{ 'GENERIC.LABELS.COMPANY' | translate }}" [(ngModel)]="order.invoice_data__company"
+                                    #invoiceInformationCompany="ngModel" aria-describedby="invoiceInformationCompanyHelp" required />
+
+                                <small id="invoiceInformationCompanyHelp" class="form-text text-danger" *ngIf="invoiceInformationCompany.invalid">
+
+                                    <span
+                                        *ngIf="invoiceInformationCompany.errors.required && (invoiceInformationCompany.dirty || invoiceInformationCompany.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- tax number -->
+                        <div class="col-6">
+
+                            <label for="invoiceInformationTaxNumber" class="mb-1">
+                                {{ 'GENERIC.LABELS.TAX_NUMBER' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <input type="text" name="invoiceInformationTaxNumber" id="invoiceInformationTaxNumber" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.TAX_NUMBER' | translate }}" [(ngModel)]="order.invoice_data__tax_number"
+                                #invoiceInformationTaxNumber="ngModel" aria-describedby="invoiceInformationTaxNumberHelp" required />
+
+                            <small id="invoiceInformationTaxNumberHelp" class="form-text text-danger" *ngIf="invoiceInformationTaxNumber.invalid">
+
+                                <span
+                                    *ngIf="invoiceInformationTaxNumber.errors.required && (invoiceInformationTaxNumber.dirty || invoiceInformationTaxNumber.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- tax administration -->
+                        <div class="col-6">
+
+                            <label for="invoiceInformationTaxAdministration" class="mb-1">
+                                {{ 'GENERIC.LABELS.TAX_ADMINISTRATION' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <input type="text" name="invoiceInformationTaxAdministration" id="invoiceInformationTaxAdministration" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.TAX_ADMINISTRATION' | translate }}" [(ngModel)]="order.invoice_data__doy"
+                                #invoiceInformationTaxAdministration="ngModel" aria-describedby="invoiceInformationTaxAdministrationHelp" required />
+
+                            <small id="invoiceInformationTaxAdministrationHelp" class="form-text text-danger"
+                                *ngIf="invoiceInformationTaxAdministration.invalid">
+
+                                <span
+                                    *ngIf="invoiceInformationTaxAdministration.errors.required && (invoiceInformationTaxAdministration.dirty || invoiceInformationTaxAdministration.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- company address -->
+                        <div class="col-12">
+
+                            <div class="form-group">
+
+                                <label for="invoiceInformationCompanyAddress" class="mb-1">
+                                    {{ 'GENERIC.LABELS.COMPANY_ADDRESS' | translate }}
+                                    <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                                </label>
+
+                                <input type="text" name="invoiceInformationCompanyAddress" id="invoiceInformationCompanyAddress" class="form-control"
+                                    placeholder="{{ 'GENERIC.LABELS.COMPANY_ADDRESS' | translate }}" [(ngModel)]="order.invoice_data__address"
+                                    #invoiceInformationCompanyAddress="ngModel" aria-describedby="invoiceInformationCompanyAddressHelp" required />
+
+                                <small id="invoiceInformationCompanyAddressHelp" class="form-text text-danger" *ngIf="invoiceInformationCompanyAddress.invalid">
+
+                                    <span
+                                        *ngIf="invoiceInformationCompanyAddress.errors.required && (invoiceInformationCompanyAddress.dirty || invoiceInformationCompanyAddress.touched)">
+                                        <app-required-field [type]="'input_invalid'"></app-required-field>
+                                    </span>
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- company address (postal code) -->
+                        <div class="col-6">
+
+                            <label for="invoiceInformationPostalCompany" class="mb-1">
+                                {{ 'GENERIC.LABELS.COMPANY_ADDRESS_POSTAL_CODE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <input type="text" name="invoiceInformationPostalCompany" id="invoiceInformationPostalCompany" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.COMPANY_ADDRESS_POSTAL_CODE' | translate }}" [(ngModel)]="order.invoice_data__postal_code"
+                                #invoiceInformationPostalCompany="ngModel" aria-describedby="invoiceInformationPostalCompanyHelp" required />
+
+                            <small id="invoiceInformationPostalCompanyHelp" class="form-text text-danger" *ngIf="invoiceInformationPostalCompany.invalid">
+
+                                <span
+                                    *ngIf="invoiceInformationPostalCompany.errors.required && (invoiceInformationPostalCompany.dirty || invoiceInformationPostalCompany.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- company address (city) -->
+                        <div class="col-6">
+
+                            <label for="invoiceInformationCity" class="mb-1">
+                                {{ 'GENERIC.LABELS.COMPANY_ADDRESS_CITY' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <input type="text" name="invoiceInformationCity" id="invoiceInformationCity" class="form-control"
+                                placeholder="{{ 'GENERIC.LABELS.COMPANY_ADDRESS_CITY' | translate }}" [(ngModel)]="order.invoice_data__city"
+                                #invoiceInformationCity="ngModel" aria-describedby="invoiceInformationCityHelp" required />
+
+
+                            <small id="invoiceInformationCityHelp" class="form-text text-danger" *ngIf="invoiceInformationCity.invalid">
+
+                                <span *ngIf="invoiceInformationCity.errors.required && (invoiceInformationCity.dirty || invoiceInformationCity.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- company address (country) -->
+                        <div class="col-12">
+
+                            <label for="invoiceInformationAddressCountry" class="mb-1">
+                                {{ 'GENERIC.LABELS.COMPANY_ADDRESS_COUNTRY' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <ng-select id="invoiceInformationAddressCountry" name="invoiceInformationAddressCountry" #invoiceInformationAddressCountry="ngModel"
+                                placeholder="{{ 'GENERIC.LABELS.COMPANY_ADDRESS_COUNTRY' | translate }}" [items]="countries" [multiple]="false" bindLabel="name"
+                                bindValue="name" [closeOnSelect]="true" [dropdownPosition]="'bottom'" [(ngModel)]="order.invoice_data__country"
+                                [minTermLength]="3" [disabled]="false" ng-required="true" [searchable]="true"
+                                aria-describedby="invoiceInformationAddressCountryHelp" required>
+
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{ item.name }}
+                                </ng-template>
+
+                            </ng-select>
+
+                            <small id="invoiceInformationAddressCountryHelp" class="form-text text-danger" *ngIf="invoiceInformationAddressCountry.invalid">
+
+                                <span
+                                    *ngIf="invoiceInformationAddressCountry.errors.required && (invoiceInformationAddressCountry.dirty || invoiceInformationAddressCountry.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- company phone -->
+                        <div class="col-6">
+
+                            <label for="invoiceInformationPhone" class="mb-1">
+                                {{ 'GENERIC.LABELS.COMPANY_PHONE' | translate }}
+                                <app-required-field [type]="'asterisk_tooltip'"></app-required-field>
+                            </label>
+
+                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
+                                [enablePlaceholder]="true" [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24" [phoneValidation]="true"
+                                [separateDialCode]="true" id="invoiceInformationPhone" name="invoiceInformationPhone" #invoiceInformationPhone="ngModel"
+                                [(ngModel)]="invoice_data__phone" aria-describedby="invoiceInformationPhoneHelp"
+                                (ngModelChange)="formatTelephone('invoice_data__phone', invoice_data__phone)" required></ngx-intl-tel-input>
+
+                            <small id="invoiceInformationPhoneHelp" class="form-text text-danger" *ngIf="invoiceInformationPhone.invalid">
+
+                                <span *ngIf="invoiceInformationPhone.errors.required && (invoiceInformationPhone.dirty || invoiceInformationPhone.touched)">
+                                    <app-required-field [type]="'input_invalid'"></app-required-field>
+                                </span>
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- company cell phone -->
+                        <div class="col-6">
+
+                            <label for="invoiceInformationCellPhone" class="mb-1">
+                                {{ 'GENERIC.LABELS.COMPANY_CELL_PHONE' | translate }}
+                            </label>
+
+                            <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
+                                [enablePlaceholder]="true" [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                [selectFirstCountry]="true" [selectedCountryISO]="selectedCountryISO" [maxLength]="24" [phoneValidation]="true"
+                                [separateDialCode]="true" id="invoiceInformationCellPhone" name="invoiceInformationCellPhone"
+                                #invoiceInformationCellPhone="ngModel" [(ngModel)]="invoice_data__cell_phone" aria-describedby="invoiceInformationCellPhoneHelp"
+                                (ngModelChange)="formatTelephone('invoice_data__cell_phone', invoice_data__phone)"></ngx-intl-tel-input>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                        {{ 'GENERIC.ACTIONS.CLOSE' | translate }}
+                    </button>
+
+                    <button type="button" class="btn btn-primary" id="confirmOrder" data-dismiss="modal" aria-label="Close" (click)="createNewOrder('invoice')"
+                        [disabled]="invoiceInformationFormInsert.invalid">
+                        <i class="fas fa-save"></i>
+                        {{ 'GENERIC.ACTIONS.SAVE' | translate }}
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</form>

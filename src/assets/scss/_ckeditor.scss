@@ -1,0 +1,48 @@
+.ck-editor__editable {
+    // height: 150px !important;
+    min-height: 150px !important;
+    max-height: 400px !important;
+    margin-top: 10px !important;
+    border: 1px solid $ckeditor-editable-border !important;
+    border-radius: 15px !important;
+    transition: 0.4s !important;
+    background-color: $ckeditor-editable-background !important;
+
+    &:active,
+    &:focus {
+        border-color: $ckeditor-editable-border-active !important;
+    }
+}
+
+.ck-toolbar_grouping {
+    background-color: transparent !important;
+    border: none !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.ck-toolbar__items {
+    background-color: $ckeditor-toolbar-background !important;
+    border-radius: 50px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    width: 100% !important;
+
+
+    .ck-button {
+        color: $ckeditor-toolbar-buttons-color !important;
+        border: none !important;
+
+        &:hover {
+            background: transparent !important;
+            border: none !important;
+        }
+
+        &.ck-on {
+            background: transparent !important;
+            color: $ckeditor-toolbar-buttons-color-active !important;
+        }
+    }
+}

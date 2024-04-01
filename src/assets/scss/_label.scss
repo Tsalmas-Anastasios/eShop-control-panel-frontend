@@ -1,0 +1,16 @@
+label {
+    color: $label-color;
+}
+
+
+label.mb-0 {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+label.mb-1 {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}

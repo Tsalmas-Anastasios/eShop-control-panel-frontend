@@ -1,0 +1,80 @@
+<div class="navbar-content">
+
+    <div class="header-container title">
+        <a [routerLink]="['/dashboard']">
+            <img src="../../../../../../assets/logo/logo-icon.png" alt="e-Commerce Control Panel Bizyhive logo" class="ecommerce-control-panel-logo" />
+        </a>
+        <nb-actions size="small">
+            <nb-action icon="menu-2-outline"
+                (click)="changeSideBarStatus('app-sidebar-dashboard');hideSidebarLabelElements('app-sidebar-dashboard')"></nb-action>
+        </nb-actions>
+    </div>
+
+    <div class="header-container actions-area">
+        <!-- <nb-search type="rotate-layout" tag="search-outline-icon-actions-button"></nb-search>
+        <nb-actions size="small">
+            <nb-action icon="search-outline" id="search-outline-icon-actions-button"
+                (click)="activateSearchComponent('rotate-layout', 'search-outline-icon-actions-button')"></nb-action>
+        </nb-actions> -->
+
+        <!-- <div size="large" class="btn-group dropdown mr-1">
+            <nb-actions size="small" data-toggle="dropdown" aria-expanded="false" data-offset="10,20">
+                <nb-action icon="inbox-outline"></nb-action>
+            </nb-actions>
+            <div class="dropdown-menu dropdown-menu-right notifications-dropdown" id="notifications-menu">
+                <h3 class="notifications-dropdown__header-title">
+                    {{ 'GENERIC.LAYOUT.NAVBAR.UNIFIED_INBOX.TITLE' | translate }}
+                </h3>
+
+
+                <div class="notifications-dropdown__inboxes-list">
+
+                    <div class="no-inboxes-found-message" *ngIf="notifications.length <= 0">
+                        {{ 'GENERIC.LAYOUT.NAVBAR.UNIFIED_INBOX.NO_INBOXES_FOUND' | translate }}
+                    </div>
+
+                    <div *ngIf="notifications.length > 0">
+
+                        <a href="javascript:void(0);" class="notification-item"
+                            *ngFor="let notification of notifications">
+                            <div class="grid-notification d-flex">
+                                <div class="item ball-notification">
+                                    <i class="fas fa-circle"></i>
+                                </div>
+
+                                <div class="item text-area">
+                                    <div class="title">
+                                        {{ notification.title }}
+                                    </div>
+                                    <div class="details">
+                                        <div class="time">
+                                            {{ notification.date }}
+                                        </div>
+                                        <div class="category-belongs">
+                                            {{ notification.category }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div> -->
+
+        <!-- <div *ngIf="account_actions.length > 0"> -->
+        <nb-actions size="small">
+            <nb-action icon="home-outline" href="dashboard"></nb-action>
+            <nb-action icon="question-mark-circle-outline" href="mailto:{{ support_email }}"></nb-action>
+            <!-- <nb-action [icon]="disabledIconConfig" disabled></nb-action> -->
+            <nb-action class="account-navbar-icon" [nbContextMenu]="account_actions">
+                <img [src]="profilePictureUrl ||'../../../../../../assets/images/account/user.png'" alt="user-navbar-icon" />
+                {{ username }}
+            </nb-action>
+        </nb-actions>
+        <!-- </div> -->
+    </div>
+
+</div>
