@@ -530,6 +530,7 @@
             "COLUMN_CODE": "Column code",
             "SHELF": "Shelf",
             "SHELF_CODE": "Shelf code",
+            "SHARE_DETAILS": "Share details",
             "ACTIONS": {
                 "ADD_NEW_FEATURE_CATEGORY": "Add a new feature category",
                 "ADD_ATTRIBUTE_FIELD": "Add attribute field",
