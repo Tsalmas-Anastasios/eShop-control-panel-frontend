@@ -591,4 +591,16 @@ export class ProductComponent implements OnInit {
 
 
 
+  // generate the link and make it shared
+  async makeProductShared(): Promise<void> {
+
+
+
+
+
+  }
+
+
+
+
 }

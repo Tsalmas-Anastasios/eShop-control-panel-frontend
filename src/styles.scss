@@ -166,7 +166,9 @@ button {
     .nb-theme-default p,
     .nb-theme-default .p,
     .nb-theme-default .paragraph,
-    legend {
+    legend,
+    ul,
+    li {
         color: $entire-body-color !important;
     }
 
@@ -177,7 +179,9 @@ div,
 .nb-theme-default p,
 .nb-theme-default .p,
 .nb-theme-default .paragraph,
-legend {
+legend,
+ul,
+li {
     color: $entire-body-color !important;
 }
 
@@ -252,7 +256,9 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+ul,
+li {
     color: $headers-color;
 }
 
@@ -271,7 +277,9 @@ h6 {
 .nb-theme-default .h3,
 .nb-theme-default .h4,
 .nb-theme-default .h5,
-.nb-theme-default .h6 {
+.nb-theme-default .h6,
+ul,
+li {
     color: $headers-color;
 }
 
