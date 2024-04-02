@@ -7,10 +7,8 @@ import { SeoService } from '../../../services/seo.service';
 import { StorageService } from '../../../services/storage.service';
 import { UtilsService } from '../../../services/utils.service';
 import {
-  CompanyWarehouse,
-  Product, ProductCategory, ProductStock, ProductTransaction, SessionDataObject, StatusDropdownCustomModuleOptions,
-  StatusDropdownCustomModuleStatusItem,
-  UserPrivilegesSettings
+  CompanyWarehouse, Product, ProductCategory, ProductStock, ProductTransaction, SessionDataObject, StatusDropdownCustomModuleOptions,
+  StatusDropdownCustomModuleStatusItem, UserPrivilegesSettings
 } from '../../../models';
 import { environment } from '../../../../environments/environment';
 
@@ -445,7 +443,7 @@ export class ProductComponent implements OnInit {
 
       this.notes_updating_procedure_description = 'saved';
 
-      this.product.notes = notes;
+      // this.product.notes = notes;
 
     } catch (error) {
 
